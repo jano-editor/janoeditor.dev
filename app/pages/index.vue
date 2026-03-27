@@ -17,7 +17,7 @@
           <UButton size="lg" color="primary">
             {{ $t("hero.getStarted") }}
           </UButton>
-          <UButton size="lg" color="plum" variant="outline">
+          <UButton size="lg" color="plum" variant="outline" to="/plugins">
             {{ $t("hero.pluginStore") }}
           </UButton>
         </div>

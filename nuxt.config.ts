@@ -3,7 +3,14 @@ export default defineNuxtConfig({
   compatibilityDate: "2025-07-15",
   devtools: { enabled: true },
 
-  modules: ["@nuxt/a11y", "@nuxt/image", "@nuxt/test-utils", "@nuxt/ui", "@nuxtjs/i18n"],
+  modules: [
+    "@nuxt/a11y",
+    "@nuxt/image",
+    "@nuxt/test-utils",
+    "@nuxt/ui",
+    "@nuxtjs/i18n",
+    "nuxt-auth-utils",
+  ],
 
   css: ["~/assets/css/main.css"],
 

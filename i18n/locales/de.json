@@ -18,5 +18,14 @@
       "title": "Bekannte Shortcuts",
       "description": "Ctrl+S, Ctrl+Z, Ctrl+C/V. Keine Lernkurve."
     }
+  },
+  "pluginStore": {
+    "title": "Plugin Store",
+    "loginWithGithub": "Mit GitHub anmelden",
+    "logout": "Abmelden",
+    "publishPlugin": "Veröffentlichen",
+    "repoPlaceholder": "owner/repo oder GitHub URL",
+    "searchPlaceholder": "Plugins suchen...",
+    "comingSoon": "Noch keine Plugins. Sei der Erste!"
   }
 }
