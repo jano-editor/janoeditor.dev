@@ -23,6 +23,10 @@ RUN pnpm install --frozen-lockfile
 # Copy source
 COPY . .
 
+# Remove vite-plus overrides for clean Nuxt build (overrides are for local dev only)
+RUN node -e "const f='package.json';const p=JSON.parse(require('fs').readFileSync(f,'utf8'));delete p.pnpm;require('fs').writeFileSync(f,JSON.stringify(p,null,2)+'\n');"
+RUN pnpm install --no-frozen-lockfile
+
 # Build the SSR app
 RUN NUXT_SESSION_PASSWORD=build-time-placeholder-min-32-chars pnpm build
 
