@@ -1,0 +1,22 @@
+{
+  "hero": {
+    "tagline": "A modern terminal editor with plugin support.",
+    "subtitle": "nano simplicity. VS Code power. Zero bloat.",
+    "getStarted": "Get Started",
+    "pluginStore": "Plugin Store"
+  },
+  "features": {
+    "plugins": {
+      "title": "Plugin System",
+      "description": "Syntax highlighting, formatting, and more — all through plugins."
+    },
+    "multiCursor": {
+      "title": "Multi-Cursor",
+      "description": "Edit multiple lines at once. Cut, copy, paste — everywhere."
+    },
+    "shortcuts": {
+      "title": "Familiar Shortcuts",
+      "description": "Ctrl+S, Ctrl+Z, Ctrl+C/V. No learning curve."
+    }
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "hero": {
+    "tagline": "Ein moderner Terminal-Editor mit Plugin-Unterstutzung.",
+    "subtitle": "nano Einfachheit. VS Code Power. Kein Ballast.",
+    "getStarted": "Loslegen",
+    "pluginStore": "Plugin Store"
+  },
+  "features": {
+    "plugins": {
+      "title": "Plugin System",
+      "description": "Syntax-Highlighting, Formatierung und mehr — alles uber Plugins."
+    },
+    "multiCursor": {
+      "title": "Multi-Cursor",
+      "description": "Mehrere Zeilen gleichzeitig bearbeiten. Ausschneiden, Kopieren, Einfugen — uberall."
+    },
+    "shortcuts": {
+      "title": "Bekannte Shortcuts",
+      "description": "Ctrl+S, Ctrl+Z, Ctrl+C/V. Keine Lernkurve."
+    }
+  }
+}
