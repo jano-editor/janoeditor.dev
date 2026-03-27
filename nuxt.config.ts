@@ -10,4 +10,10 @@ export default defineNuxtConfig({
   colorMode: {
     preference: "dark",
   },
+
+  ui: {
+    theme: {
+      colors: ["jano", "plum", "charcoal"],
+    },
+  },
 });
