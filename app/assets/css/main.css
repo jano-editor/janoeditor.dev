@@ -1,0 +1,43 @@
+@import "tailwindcss";
+@import "@nuxt/ui";
+
+@theme static {
+  /* Primary — #d250ef (vibrant purple/magenta) */
+  --color-jano-50: #fdf2ff;
+  --color-jano-100: #f9e5ff;
+  --color-jano-200: #f3c9ff;
+  --color-jano-300: #eba3ff;
+  --color-jano-400: #de6df7;
+  --color-jano-500: #d250ef;
+  --color-jano-600: #b830d0;
+  --color-jano-700: #9b24ab;
+  --color-jano-800: #80218b;
+  --color-jano-900: #6a2070;
+  --color-jano-950: #470a4d;
+
+  /* Secondary — #7d3d60 (dark bordeaux/plum) */
+  --color-plum-50: #fdf2f8;
+  --color-plum-100: #fce7f3;
+  --color-plum-200: #f9c6e2;
+  --color-plum-300: #f09ec8;
+  --color-plum-400: #d66da0;
+  --color-plum-500: #b8507e;
+  --color-plum-600: #9a3d65;
+  --color-plum-700: #7d3d60;
+  --color-plum-800: #6b3450;
+  --color-plum-900: #5a2f45;
+  --color-plum-950: #351728;
+
+  /* Neutral — #363636 base (dark charcoal) */
+  --color-charcoal-50: #f6f6f6;
+  --color-charcoal-100: #e7e7e7;
+  --color-charcoal-200: #d1d1d1;
+  --color-charcoal-300: #b0b0b0;
+  --color-charcoal-400: #888888;
+  --color-charcoal-500: #6d6d6d;
+  --color-charcoal-600: #5d5d5d;
+  --color-charcoal-700: #4f4f4f;
+  --color-charcoal-800: #454545;
+  --color-charcoal-900: #363636;
+  --color-charcoal-950: #1a1a1a;
+}
