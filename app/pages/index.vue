@@ -13,10 +13,38 @@
           {{ $t("hero.subtitle") }}
         </p>
 
-        <div class="flex justify-center gap-4 pt-8">
-          <UButton size="lg" color="primary">
-            {{ $t("hero.getStarted") }}
-          </UButton>
+        <!-- Install commands -->
+        <div class="pt-8 space-y-3 max-w-lg mx-auto">
+          <div class="flex gap-2">
+            <button
+              v-for="tab in ['Linux/Mac', 'Windows']"
+              :key="tab"
+              class="px-4 py-1.5 rounded-lg text-sm transition-colors"
+              :class="
+                activeTab === tab
+                  ? 'bg-jano-600 text-white'
+                  : 'bg-charcoal-800 text-charcoal-400 hover:bg-charcoal-700'
+              "
+              @click="activeTab = tab"
+            >
+              {{ tab }}
+            </button>
+          </div>
+
+          <div
+            class="p-4 rounded-xl bg-charcoal-900 border border-charcoal-800 font-mono text-sm text-left flex items-center justify-between"
+          >
+            <code class="text-jano-400">{{ installCommand }}</code>
+            <button
+              class="text-charcoal-500 hover:text-charcoal-300 ml-3 shrink-0"
+              @click="copyInstall"
+            >
+              {{ copied ? "✓" : "⎘" }}
+            </button>
+          </div>
+        </div>
+
+        <div class="flex justify-center gap-4 pt-4">
           <UButton size="lg" color="plum" variant="outline" to="/plugins">
             {{ $t("hero.pluginStore") }}
           </UButton>
@@ -52,3 +80,22 @@
     </div>
   </div>
 </template>
+
+<script setup lang="ts">
+const activeTab = ref("Linux/Mac");
+const copied = ref(false);
+
+const installCommand = computed(() =>
+  activeTab.value === "Windows"
+    ? "irm https://janoeditor.dev/install.ps1 | iex"
+    : "curl -fsSL https://janoeditor.dev/install.sh | bash",
+);
+
+function copyInstall() {
+  void navigator.clipboard.writeText(installCommand.value);
+  copied.value = true;
+  setTimeout(() => {
+    copied.value = false;
+  }, 2000);
+}
+</script>
