@@ -26,6 +26,13 @@
     "publishPlugin": "Veröffentlichen",
     "repoPlaceholder": "owner/repo oder GitHub URL",
     "searchPlaceholder": "Plugins suchen...",
-    "comingSoon": "Noch keine Plugins. Sei der Erste!"
+    "comingSoon": "Noch keine Plugins. Sei der Erste!",
+    "by": "von",
+    "versions": "Versionen",
+    "deletePlugin": "Plugin löschen",
+    "deleteVersion": "Löschen",
+    "confirmDeletePlugin": "Bist du sicher, dass du dieses Plugin und alle Versionen löschen willst?",
+    "confirmDeleteVersion": "Bist du sicher, dass du Version {version} löschen willst?",
+    "install": "Installieren"
   }
 }

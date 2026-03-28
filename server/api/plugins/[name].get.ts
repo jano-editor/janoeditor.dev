@@ -19,7 +19,7 @@ export default defineEventHandler(async (event) => {
 
   return {
     ...plugin,
-    extensions: JSON.parse(plugin.extensions),
+    extensions: JSON.parse(plugin.extensions) as string[],
     versions,
   };
 });
