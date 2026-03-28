@@ -25,6 +25,7 @@
     "@nuxt/test-utils": "4.0.0",
     "@nuxt/ui": "4.6.0",
     "@nuxtjs/i18n": "10.2.4",
+    "archiver": "^7.0.1",
     "better-sqlite3": "^12.8.0",
     "drizzle-orm": "^0.45.2",
     "nuxt": "^4.4.2",
@@ -42,11 +43,5 @@
     "vite-plus": "latest",
     "vitest": "npm:@voidzero-dev/vite-plus-test@^0.1.14"
   },
-  "packageManager": "pnpm@10.33.0",
-  "pnpm": {
-    "overrides": {
-      "vite": "npm:@voidzero-dev/vite-plus-core@latest",
-      "vitest": "npm:@voidzero-dev/vite-plus-test@latest"
-    }
-  }
+  "packageManager": "pnpm@10.33.0"
 }
