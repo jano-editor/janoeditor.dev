@@ -3,9 +3,10 @@ import { eq } from "drizzle-orm";
 import { parseRepoUrl, fetchRepoFile, repoExists } from "~~/server/utils/github";
 import { validateManifest, compareVersions } from "~~/server/utils/validate-plugin";
 import { execSync } from "node:child_process";
-import { mkdirSync, existsSync, rmSync, copyFileSync } from "node:fs";
+import { mkdirSync, existsSync, rmSync, createWriteStream } from "node:fs";
 import { join } from "node:path";
 import { tmpdir } from "node:os";
+import archiver from "archiver";
 
 export default defineEventHandler(async (event) => {
   const session = await requireUserSession(event);
@@ -92,17 +93,17 @@ export default defineEventHandler(async (event) => {
           `Plugin '${manifest.name}' is owned by @${existing.publishedByLogin}.`,
         );
       }
-      if (compareVersions(manifest.version, existing.version) <= 0) {
+      if (compareVersions(manifest.version, existing.latestVersion) <= 0) {
         return sendError(
           "check-version",
-          `Version ${manifest.version} is not higher than current ${existing.version}.`,
+          `Version ${manifest.version} is not higher than current ${existing.latestVersion}.`,
         );
       }
     }
     sendStep(
       "check-version",
       "done",
-      existing ? `Updating from ${existing.version}` : "New plugin",
+      existing ? `Updating from ${existing.latestVersion}` : "New plugin",
     );
 
     // Step 5: Check extension conflicts
@@ -177,12 +178,22 @@ export default defineEventHandler(async (event) => {
     }
     sendStep("build", "done");
 
-    // Step 8: Save artifact
+    // Step 8: Save artifact as ZIP
     sendStep("save", "running");
-    const artifactDir = join(process.cwd(), "data", "artifacts", manifest.name, manifest.version);
+    const artifactDir = join(process.cwd(), "data", "artifacts", manifest.name);
     mkdirSync(artifactDir, { recursive: true });
-    copyFileSync(builtFile, join(artifactDir, "index.js"));
-    copyFileSync(join(tmpDir, "plugin.json"), join(artifactDir, "plugin.json"));
+    const zipPath = join(artifactDir, `${manifest.version}.zip`);
+
+    await new Promise<void>((resolveZip, rejectZip) => {
+      const output = createWriteStream(zipPath);
+      const archive = archiver("zip", { zlib: { level: 9 } });
+      output.on("close", resolveZip);
+      archive.on("error", rejectZip);
+      archive.pipe(output);
+      archive.file(builtFile, { name: "index.js" });
+      archive.file(join(tmpDir, "plugin.json"), { name: "plugin.json" });
+      void archive.finalize();
+    });
 
     // cleanup tmp
     rmSync(tmpDir, { recursive: true, force: true });
@@ -200,7 +211,7 @@ export default defineEventHandler(async (event) => {
     if (existing) {
       db.update(schema.plugins)
         .set({
-          version: manifest.version,
+          latestVersion: manifest.version,
           apiVersion: manifest.api,
           description: manifest.description,
           extensions: JSON.stringify(manifest.extensions),
@@ -217,7 +228,7 @@ export default defineEventHandler(async (event) => {
       db.insert(schema.plugins)
         .values({
           name: manifest.name,
-          version: manifest.version,
+          latestVersion: manifest.version,
           apiVersion: manifest.api,
           description: manifest.description,
           extensions: JSON.stringify(manifest.extensions),
@@ -233,6 +244,16 @@ export default defineEventHandler(async (event) => {
         })
         .run();
     }
+
+    // register this version
+    db.insert(schema.pluginVersions)
+      .values({
+        pluginName: manifest.name,
+        version: manifest.version,
+        apiVersion: manifest.api,
+        createdAt: now,
+      })
+      .run();
 
     sendStep("publish", "done");
     sendComplete({

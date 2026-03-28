@@ -91,8 +91,8 @@
               </div>
             </div>
             <div class="text-right text-sm text-charcoal-500">
-              <div>v{{ plugin.version }}</div>
-              <div>{{ plugin.downloads }} downloads</div>
+              <div>v{{ plugin.latestVersion }}</div>
+              <div>{{ plugin.totalDownloads }} downloads</div>
             </div>
           </div>
         </NuxtLink>

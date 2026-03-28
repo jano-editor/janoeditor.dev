@@ -1,5 +1,5 @@
 import { useDB, schema } from "~~/server/database";
-import { eq } from "drizzle-orm";
+import { eq, and } from "drizzle-orm";
 import { join } from "node:path";
 import { existsSync, readFileSync } from "node:fs";
 
@@ -7,32 +7,68 @@ export default defineEventHandler(async (event) => {
   const name = getRouterParam(event, "name");
   if (!name) throw createError({ statusCode: 400, message: "Plugin name required" });
 
+  const query = getQuery(event);
+  const requestedVersion = (query.version as string) || null;
+
   const db = useDB();
   const plugin = db.select().from(schema.plugins).where(eq(schema.plugins.name, name)).get();
   if (!plugin) throw createError({ statusCode: 404, message: "Plugin not found" });
 
-  const artifactDir = join(process.cwd(), "data", "artifacts", plugin.name, plugin.version);
-  const indexPath = join(artifactDir, "index.js");
-  const manifestPath = join(artifactDir, "plugin.json");
+  const version = requestedVersion || plugin.latestVersion;
 
-  if (!existsSync(indexPath) || !existsSync(manifestPath)) {
+  // verify version exists
+  if (requestedVersion) {
+    const versionEntry = db
+      .select()
+      .from(schema.pluginVersions)
+      .where(
+        and(eq(schema.pluginVersions.pluginName, name), eq(schema.pluginVersions.version, version)),
+      )
+      .get();
+    if (!versionEntry) {
+      throw createError({ statusCode: 404, message: `Version ${version} not found.` });
+    }
+  }
+
+  const zipPath = join(process.cwd(), "data", "artifacts", plugin.name, `${version}.zip`);
+
+  if (!existsSync(zipPath)) {
     throw createError({
       statusCode: 404,
       message: "Artifact not found. Plugin may need to be republished.",
     });
   }
 
-  // increment download count
+  // increment download counts
   db.update(schema.plugins)
-    .set({ downloads: plugin.downloads + 1 })
+    .set({ totalDownloads: plugin.totalDownloads + 1 })
     .where(eq(schema.plugins.name, name))
     .run();
 
-  // return both files as JSON
-  return {
-    name: plugin.name,
-    version: plugin.version,
-    indexJs: readFileSync(indexPath, "utf8"),
-    pluginJson: readFileSync(manifestPath, "utf8"),
-  };
+  db.update(schema.pluginVersions)
+    .set({
+      downloads:
+        (db
+          .select()
+          .from(schema.pluginVersions)
+          .where(
+            and(
+              eq(schema.pluginVersions.pluginName, name),
+              eq(schema.pluginVersions.version, version),
+            ),
+          )
+          .get()?.downloads || 0) + 1,
+    })
+    .where(
+      and(eq(schema.pluginVersions.pluginName, name), eq(schema.pluginVersions.version, version)),
+    )
+    .run();
+
+  setResponseHeader(event, "Content-Type", "application/zip");
+  setResponseHeader(
+    event,
+    "Content-Disposition",
+    `attachment; filename="${plugin.name}-${version}.zip"`,
+  );
+  return readFileSync(zipPath);
 });
