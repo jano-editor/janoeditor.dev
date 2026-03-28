@@ -1,22 +1,34 @@
 {
+  "nav": {
+    "plugins": "Plugins",
+    "docs": "Docs"
+  },
   "hero": {
-    "tagline": "Ein moderner Terminal-Editor mit Plugin-Unterstutzung.",
+    "tagline": "Ein moderner Terminal-Editor mit Plugin-Unterstützung.",
     "subtitle": "nano Einfachheit. VS Code Power. Kein Ballast.",
     "getStarted": "Loslegen",
     "pluginStore": "Plugin Store"
   },
   "features": {
-    "plugins": {
-      "title": "Plugin System",
-      "description": "Syntax-Highlighting, Formatierung und mehr — alles uber Plugins."
+    "formatValidation": {
+      "title": "Formatieren & Validieren",
+      "description": "Ein Tastendruck zum Formatieren. Fehler werden inline angezeigt -sofort beheben."
     },
     "multiCursor": {
-      "title": "Multi-Cursor",
-      "description": "Mehrere Zeilen gleichzeitig bearbeiten. Ausschneiden, Kopieren, Einfugen — uberall."
+      "title": "Multi-Cursor Editing",
+      "description": "Cursors nach oben oder unten hinzufügen. 20 Zeilen wie eine bearbeiten."
+    },
+    "plugins": {
+      "title": "Jede Sprache. Ein Plugin.",
+      "description": "YAML, JSON, Shell, Markdown -und alles was du brauchst. Jedes Dateiformat ist nur ein Plugin entfernt."
+    },
+    "performance": {
+      "title": "JavaScript-powered. Ja, wirklich.",
+      "description": "60.000+ Zeilen. Zero Lag. 59KB. Gebaut auf Node.js -und es fliegt."
     },
     "shortcuts": {
-      "title": "Bekannte Shortcuts",
-      "description": "Ctrl+S, Ctrl+Z, Ctrl+C/V. Keine Lernkurve."
+      "title": "Dein Muskelgedächtnis funktioniert hier.",
+      "description": "Ctrl+C, Ctrl+V, Ctrl+Z, Ctrl+S, Ctrl+A -gleich auf jedem OS. Kein Spickzettel nötig."
     }
   },
   "pluginStore": {
@@ -33,6 +45,84 @@
     "deleteVersion": "Löschen",
     "confirmDeletePlugin": "Bist du sicher, dass du dieses Plugin und alle Versionen löschen willst?",
     "confirmDeleteVersion": "Bist du sicher, dass du Version {version} löschen willst?",
-    "install": "Installieren"
+    "install": "Installieren",
+    "publishHint": "GitHub Repo-URL einfügen (z.B. owner/repo). Der Store liest deine plugin.json und baut das Plugin automatisch. Für Updates: neue Version pushen und nochmal publishen.",
+    "howItWorks": "So funktioniert's",
+    "howItWorksSteps": [
+      "Plugin-Code in ein öffentliches GitHub Repo pushen",
+      "Repo braucht eine plugin.json und src/index.ts",
+      "Repo-URL oben einfügen und Publish klicken",
+      "Der Store klont, baut und verpackt automatisch",
+      "Für Updates: Version in plugin.json hochsetzen und nochmal publishen"
+    ]
+  },
+  "pluginDocs": {
+    "title": "Plugin bauen",
+    "intro": "Ein jano Plugin ist eine einzelne TypeScript-Datei die ein LanguagePlugin-Objekt exportiert. Kein Build-System nötig -esbuild bundlet es für dich.",
+    "required": "Pflichtfelder",
+    "requiredFields": {
+      "name": "Anzeigename des Plugins",
+      "extensions": "Dateiendungen die das Plugin behandelt (z.B. [\".yaml\", \".yml\"])"
+    },
+    "optional": "Optionale Hooks",
+    "optionalHooks": {
+      "highlight": "Regex-basiertes Syntax-Highlighting -Patterns für Kommentare, Strings, Keywords etc.",
+      "highlightLine": "Eigenes Highlighting -Tokens pro Zeile, mit Zugriff auf alle Zeilen (für mehrzeilige Strings, Block-Kommentare etc.)",
+      "onKeyDown": "Jede Taste abfangen bevor der Editor sie verarbeitet. handled: true verhindert Standardverhalten. Für Auto-Close Brackets, Snippets, Custom Shortcuts.",
+      "onCursorAction": "Feuert nach jedem Edit (Zeichen, Newline, Backspace, Delete, Tab, Paste). Für Auto-Indent, Auto-Close, Listen-Fortsetzung etc.",
+      "onFormat": "Feuert bei F3. Gesamtes Dokument neu formatieren.",
+      "onSave": "Feuert bei Ctrl+S. Edits vor dem Speichern anwenden.",
+      "onOpen": "Feuert wenn eine Datei geöffnet wird.",
+      "onValidate": "Dokument validieren. Diagnostics (Fehler, Warnungen) werden inline angezeigt."
+    },
+    "structure": "Dateistruktur",
+    "structureDesc": "Dein GitHub Repo braucht diese Dateien:",
+    "manifest": "Plugin Manifest",
+    "manifestDesc": "Die plugin.json sagt jano was dein Plugin macht:",
+    "example": "Minimales Beispiel",
+    "exampleRepo": "Ein echtes Plugin als Referenz:",
+    "tips": "Tipps",
+    "tipsList": [
+      "Alle Hooks sind optional -fang mit highlight an und erweitere nach Bedarf",
+      "onKeyDown bekommt die volle Key-Info (name, ctrl, alt, shift) und kann das Editor-Standardverhalten verhindern",
+      "onCursorAction erhält deletedText bei Backspace/Delete -nützlich für Auto-Close Bracket-Paare",
+      "highlightLine überschreibt regex-basiertes highlight wenn beides definiert ist",
+      "replaceAll in EditResult ersetzt das gesamte Dokument (z.B. für Formatierung)",
+      "Das Plugin sieht nie Editor-Internals -es arbeitet nur mit Lines, Cursors und Edits"
+    ]
+  },
+  "stats": {
+    "size": "59KB",
+    "sizeLabel": "Binary-Größe",
+    "deps": "0",
+    "depsLabel": "Dependencies",
+    "plugins": "4",
+    "pluginsLabel": "Plugins",
+    "js": "100%",
+    "jsLabel": "JavaScript",
+    "oss": "open",
+    "ossLabel": "source"
+  },
+  "compare": {
+    "title": "Warum jano?",
+    "nano": {
+      "name": "nano",
+      "verdict": "Zu simpel.",
+      "description": "Keine Plugins. Kein Multi-Cursor. Kein Syntax-Highlighting. Gut für schnelle Edits -aber das war's."
+    },
+    "vim": {
+      "name": "vim",
+      "verdict": "Zu komplex.",
+      "description": "Mächtig, aber Modes, Macros und .vimrc-Configs sind nicht für jeden. Steile Lernkurve."
+    },
+    "jano": {
+      "name": "jano",
+      "verdict": "Genau richtig.",
+      "description": "Plugins wenn du sie brauchst. Shortcuts die du schon kennst. Öffnet in Millisekunden. Fertig."
+    }
+  },
+  "footer": {
+    "license": "MIT Lizenz",
+    "madeWith": "Gebaut mit Node.js"
   }
 }

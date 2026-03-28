@@ -1,33 +1,38 @@
 <template>
   <div class="min-h-screen bg-charcoal-950 text-charcoal-50">
-    <div class="max-w-5xl mx-auto px-6 py-12">
-      <!-- Header -->
-      <div class="flex items-center justify-between mb-12">
-        <div class="flex items-center gap-4">
-          <NuxtLink to="/">
-            <img src="/images/logo_180-180.png" alt="jano" class="w-10 h-10 rounded-lg" />
-          </NuxtLink>
-          <h1 class="text-3xl font-bold">
+    <div class="hero-bg">
+      <div class="max-w-5xl mx-auto px-6 pt-20 pb-10">
+        <div class="flex items-center justify-between animate-fade-up">
+          <h1 class="text-4xl font-extrabold tracking-tight">
             {{ $t("pluginStore.title") }}
           </h1>
-        </div>
 
-        <div v-if="isLoggedIn && user" class="flex items-center gap-4">
-          <img :src="user.avatarUrl" :alt="user.login" class="w-8 h-8 rounded-full" />
-          <span class="text-charcoal-400 text-sm">{{ user.login }}</span>
-          <UButton size="sm" color="plum" variant="outline" @click="handleLogout">
-            {{ $t("pluginStore.logout") }}
-          </UButton>
-        </div>
-        <div v-else>
-          <UButton size="sm" color="primary" @click="handleLogin">
-            {{ $t("pluginStore.loginWithGithub") }}
-          </UButton>
+          <div v-if="isLoggedIn && user" class="flex items-center gap-4">
+            <img
+              :src="user.avatarUrl"
+              :alt="user.login"
+              class="w-8 h-8 rounded-full ring-2 ring-charcoal-700"
+            />
+            <span class="text-charcoal-400 text-sm">{{ user.login }}</span>
+            <UButton size="sm" color="plum" variant="outline" @click="handleLogout">
+              {{ $t("pluginStore.logout") }}
+            </UButton>
+          </div>
+          <div v-else>
+            <UButton size="sm" color="primary" @click="handleLogin">
+              {{ $t("pluginStore.loginWithGithub") }}
+            </UButton>
+          </div>
         </div>
       </div>
+    </div>
 
+    <div class="max-w-5xl mx-auto px-6 pb-20">
       <!-- Publish -->
-      <div v-if="isLoggedIn" class="mb-8 p-4 rounded-xl bg-charcoal-900 border border-charcoal-800">
+      <div
+        v-if="isLoggedIn"
+        class="mb-10 p-6 rounded-xl bg-charcoal-900/60 border border-charcoal-800/50 backdrop-blur-sm"
+      >
         <form class="flex items-center gap-4" @submit.prevent="publishPlugin">
           <UInput
             v-model="repoUrl"
@@ -35,20 +40,48 @@
             :disabled="publishing"
             class="flex-1"
           />
-          <UButton type="submit" color="primary" :loading="publishing">
+          <UButton
+            type="submit"
+            color="primary"
+            :loading="publishing"
+            class="shadow-lg shadow-jano-600/10"
+          >
             {{ $t("pluginStore.publishPlugin") }}
           </UButton>
         </form>
 
-        <div v-if="publishSteps.length > 0" class="mt-4 space-y-1 text-sm font-mono">
+        <p class="text-xs text-charcoal-500 mt-3">
+          {{ $t("pluginStore.publishHint") }}
+          <NuxtLink to="/docs" class="text-jano-400 hover:underline ml-1">
+            {{ $t("nav.docs") }} →
+          </NuxtLink>
+        </p>
+
+        <details class="mt-4">
+          <summary
+            class="text-sm text-charcoal-400 cursor-pointer hover:text-charcoal-300 transition-colors"
+          >
+            {{ $t("pluginStore.howItWorks") }}
+          </summary>
+          <ol class="mt-3 space-y-2 text-sm text-charcoal-500 list-decimal list-inside">
+            <li v-for="i in 5" :key="i">
+              {{ $t(`pluginStore.howItWorksSteps[${i - 1}]`) }}
+            </li>
+          </ol>
+        </details>
+
+        <div
+          v-if="publishSteps.length > 0"
+          class="mt-5 p-4 rounded-lg bg-charcoal-950/50 space-y-2 text-sm font-mono"
+        >
           <div v-for="step in publishSteps" :key="step.step" class="flex items-center gap-2">
-            <span v-if="step.status === 'running'" class="text-jano-400">●</span>
+            <span v-if="step.status === 'running'" class="text-jano-400 animate-pulse">●</span>
             <span v-else-if="step.status === 'done'" class="text-green-400">✓</span>
             <span v-else class="text-red-400">✗</span>
             <span :class="step.status === 'error' ? 'text-red-400' : 'text-charcoal-300'">
               {{ stepLabels[step.step] || step.step }}
             </span>
-            <span v-if="step.message" class="text-charcoal-500">— {{ step.message }}</span>
+            <span v-if="step.message" class="text-charcoal-600">{{ step.message }}</span>
           </div>
         </div>
       </div>
@@ -68,11 +101,15 @@
         <div
           v-for="plugin in filteredPlugins"
           :key="plugin.name"
-          class="rounded-xl bg-charcoal-900 border border-charcoal-800 transition-colors"
-          :class="expanded === plugin.name ? 'border-jano-600' : 'hover:border-charcoal-700'"
+          class="glow-card rounded-xl bg-charcoal-900/60 border transition-all duration-200"
+          :class="
+            expanded === plugin.name
+              ? 'border-jano-500/40 ring-1 ring-jano-500/10'
+              : 'border-charcoal-800/50 hover:border-charcoal-700'
+          "
         >
-          <!-- Card header (always visible) -->
-          <div class="p-5 cursor-pointer" @click="toggleExpand(plugin.name)">
+          <!-- Card header -->
+          <div class="p-6 cursor-pointer" @click="toggleExpand(plugin.name)">
             <div class="flex items-start justify-between">
               <div>
                 <h3 class="text-lg font-semibold text-jano-400">
@@ -85,15 +122,15 @@
                   <span
                     v-for="ext in plugin.extensions"
                     :key="ext"
-                    class="text-xs px-2 py-0.5 rounded bg-charcoal-800 text-charcoal-300"
+                    class="text-xs px-2.5 py-1 rounded-md bg-charcoal-800/60 text-charcoal-300 font-mono"
                   >
                     {{ ext }}
                   </span>
                 </div>
               </div>
-              <div class="text-right text-sm text-charcoal-500">
-                <div>v{{ plugin.latestVersion }}</div>
-                <div>{{ plugin.totalDownloads }} downloads</div>
+              <div class="text-right text-sm text-charcoal-500 shrink-0 ml-6">
+                <div class="font-mono text-charcoal-400">v{{ plugin.latestVersion }}</div>
+                <div class="mt-1">{{ plugin.totalDownloads }} downloads</div>
                 <div class="text-charcoal-600 mt-1">
                   {{ $t("pluginStore.by") }} {{ plugin.author }}
                 </div>
@@ -102,24 +139,27 @@
           </div>
 
           <!-- Expanded detail -->
-          <div v-if="expanded === plugin.name" class="px-5 pb-5 border-t border-charcoal-800 pt-4">
+          <div
+            v-if="expanded === plugin.name"
+            class="px-6 pb-6 border-t border-charcoal-800/50 pt-5"
+          >
             <!-- Install command -->
             <div
-              class="mb-4 p-3 rounded-lg bg-charcoal-950 font-mono text-sm text-charcoal-300 flex items-center justify-between"
+              class="mb-5 p-4 rounded-lg bg-charcoal-950/60 font-mono text-sm text-charcoal-300 flex items-center justify-between border border-charcoal-800/30"
             >
-              <span>jano plugin install {{ plugin.name }}</span>
+              <span class="text-jano-400">jano plugin install {{ plugin.name }}</span>
               <UButton
                 size="xs"
                 color="neutral"
                 variant="ghost"
                 @click.stop="copyToClipboard(`jano plugin install ${plugin.name}`)"
               >
-                {{ copied === plugin.name ? "✓" : "⎘" }}
+                {{ copied === plugin.name ? "✓ Copied" : "Copy" }}
               </UButton>
             </div>
 
             <!-- Info -->
-            <div class="grid grid-cols-2 gap-4 text-sm mb-4">
+            <div class="grid grid-cols-2 gap-4 text-sm mb-5">
               <div v-if="plugin.repoUrl">
                 <span class="text-charcoal-500">Repository: </span>
                 <a :href="plugin.repoUrl" target="_blank" class="text-jano-400 hover:underline">
@@ -135,21 +175,21 @@
             <!-- README -->
             <div
               v-if="pluginDetail?.readme"
-              class="mb-4 p-4 rounded-lg bg-charcoal-950 text-sm text-charcoal-400 whitespace-pre-wrap max-h-60 overflow-y-auto"
+              class="mb-5 p-5 rounded-lg bg-charcoal-950/60 border border-charcoal-800/30 text-sm text-charcoal-400 whitespace-pre-wrap max-h-60 overflow-y-auto leading-relaxed"
             >
               {{ pluginDetail.readme }}
             </div>
 
             <!-- Versions -->
-            <div v-if="pluginDetail?.versions?.length" class="mb-4">
-              <h4 class="text-sm font-semibold text-charcoal-300 mb-2">
+            <div v-if="pluginDetail?.versions?.length" class="mb-5">
+              <h4 class="text-sm font-semibold text-charcoal-300 mb-3">
                 {{ $t("pluginStore.versions") }}
               </h4>
-              <div class="space-y-1">
+              <div class="space-y-2">
                 <div
                   v-for="ver in pluginDetail.versions"
                   :key="ver.version"
-                  class="flex items-center justify-between p-2 rounded bg-charcoal-950 text-sm"
+                  class="flex items-center justify-between p-3 rounded-lg bg-charcoal-950/60 border border-charcoal-800/30 text-sm"
                 >
                   <div class="flex items-center gap-3">
                     <span class="text-charcoal-300 font-mono">v{{ ver.version }}</span>
@@ -171,7 +211,7 @@
                         )
                       "
                     >
-                      {{ copied === `${plugin.name}@${ver.version}` ? "✓ Copied" : "⎘ Copy" }}
+                      {{ copied === `${plugin.name}@${ver.version}` ? "✓ Copied" : "Copy" }}
                     </UButton>
                     <UButton
                       v-if="isOwner(plugin) && pluginDetail.versions.length > 1"
@@ -188,7 +228,7 @@
             </div>
 
             <!-- Delete plugin button -->
-            <div v-if="isOwner(plugin)" class="pt-3 border-t border-charcoal-800">
+            <div v-if="isOwner(plugin)" class="pt-4 border-t border-charcoal-800/50">
               <UButton
                 size="sm"
                 color="neutral"
@@ -202,8 +242,11 @@
         </div>
       </div>
 
-      <div v-else class="text-center text-charcoal-500 py-20">
-        {{ $t("pluginStore.comingSoon") }}
+      <div v-else class="text-center py-24">
+        <p class="text-charcoal-500 text-lg">{{ $t("pluginStore.comingSoon") }}</p>
+        <NuxtLink to="/docs" class="text-jano-400 hover:underline text-sm mt-2 inline-block">
+          {{ $t("nav.docs") }} →
+        </NuxtLink>
       </div>
     </div>
   </div>

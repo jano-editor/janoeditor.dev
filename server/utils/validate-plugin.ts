@@ -38,9 +38,9 @@ export function validateManifest(raw: unknown): {
     errors.push("'extensions' must be a non-empty array");
   if (typeof obj.entry !== "string" || !obj.entry) errors.push("Missing or invalid 'entry'");
 
-  // name convention
-  if (typeof obj.name === "string" && !obj.name.startsWith("jano-plugin-")) {
-    errors.push("Plugin name must start with 'jano-plugin-'");
+  // name must be lowercase, alphanumeric + hyphens
+  if (typeof obj.name === "string" && !/^[a-z0-9-]+$/.test(obj.name)) {
+    errors.push("Plugin name must be lowercase alphanumeric with hyphens only");
   }
 
   // semver check

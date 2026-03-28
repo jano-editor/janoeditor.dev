@@ -1,4 +1,8 @@
 {
+  "nav": {
+    "plugins": "Plugins",
+    "docs": "Docs"
+  },
   "hero": {
     "tagline": "A modern terminal editor with plugin support.",
     "subtitle": "nano simplicity. VS Code power. Zero bloat.",
@@ -6,17 +10,25 @@
     "pluginStore": "Plugin Store"
   },
   "features": {
-    "plugins": {
-      "title": "Plugin System",
-      "description": "Syntax highlighting, formatting, and more — all through plugins."
+    "formatValidation": {
+      "title": "Format & Validate",
+      "description": "One keypress to format. Errors show inline -fix them as you type."
     },
     "multiCursor": {
-      "title": "Multi-Cursor",
-      "description": "Edit multiple lines at once. Cut, copy, paste — everywhere."
+      "title": "Multi-Cursor Editing",
+      "description": "Add cursors above or below. Edit 20 lines like one."
+    },
+    "plugins": {
+      "title": "Any Language. One Plugin.",
+      "description": "YAML, JSON, Shell, Markdown -and anything you need. Every file format is just a plugin away."
+    },
+    "performance": {
+      "title": "Powered by JavaScript. Yes, really.",
+      "description": "60,000+ lines. Zero lag. 59KB. Built on Node.js -and it flies."
     },
     "shortcuts": {
-      "title": "Familiar Shortcuts",
-      "description": "Ctrl+S, Ctrl+Z, Ctrl+C/V. No learning curve."
+      "title": "Your Muscle Memory Works Here.",
+      "description": "Ctrl+C, Ctrl+V, Ctrl+Z, Ctrl+S, Ctrl+A -the same on every OS. No cheat sheet needed."
     }
   },
   "pluginStore": {
@@ -33,6 +45,84 @@
     "deleteVersion": "Delete",
     "confirmDeletePlugin": "Are you sure you want to delete this plugin and all its versions?",
     "confirmDeleteVersion": "Are you sure you want to delete version {version}?",
-    "install": "Install"
+    "install": "Install",
+    "publishHint": "Paste your GitHub repo URL (e.g. owner/repo). The store reads your plugin.json and builds the plugin automatically. To publish an update, just push a new version to your repo and publish again.",
+    "howItWorks": "How publishing works",
+    "howItWorksSteps": [
+      "Push your plugin code to a public GitHub repo",
+      "Your repo needs a plugin.json and src/index.ts",
+      "Paste the repo URL above and hit Publish",
+      "The store clones, builds, and packages it automatically",
+      "To update: bump the version in plugin.json and publish again"
+    ]
+  },
+  "pluginDocs": {
+    "title": "Build a Plugin",
+    "intro": "A jano plugin is a single TypeScript file that exports a LanguagePlugin object. No build system required -esbuild bundles it for you.",
+    "required": "Required",
+    "requiredFields": {
+      "name": "Plugin display name",
+      "extensions": "File extensions this plugin handles (e.g. [\".yaml\", \".yml\"])"
+    },
+    "optional": "Optional Hooks",
+    "optionalHooks": {
+      "highlight": "Regex-based syntax highlighting -define patterns for comments, strings, keywords etc.",
+      "highlightLine": "Full custom highlighting -return tokens per line, with access to all lines (for multiline strings, block comments etc.)",
+      "onKeyDown": "Intercept any key press before the editor handles it. Return handled: true to prevent default behavior. Great for auto-close brackets, snippets, custom shortcuts.",
+      "onCursorAction": "Fires after each edit (char typed, newline, backspace, delete, tab, paste). Use for auto-indent, auto-close, list continuation etc.",
+      "onFormat": "Fires on F3. Reformat the entire document.",
+      "onSave": "Fires on Ctrl+S. Apply edits before saving.",
+      "onOpen": "Fires when a file is opened.",
+      "onValidate": "Validate the document content. Return diagnostics (errors, warnings) shown inline."
+    },
+    "structure": "File Structure",
+    "structureDesc": "Your GitHub repo needs these files:",
+    "manifest": "Plugin Manifest",
+    "manifestDesc": "The plugin.json tells jano what your plugin does:",
+    "example": "Minimal Example",
+    "exampleRepo": "See a real plugin as reference:",
+    "tips": "Tips",
+    "tipsList": [
+      "All hooks are optional -start with just highlight and add more as needed",
+      "onKeyDown gets the full key info (name, ctrl, alt, shift) and can prevent default editor behavior",
+      "onCursorAction receives deletedText for backspace/delete -useful for auto-close bracket pairs",
+      "highlightLine overrides regex-based highlight when both are defined",
+      "Use replaceAll in EditResult to replace the entire document (e.g. for formatting)",
+      "The plugin never sees editor internals -it only works with lines, cursors, and edits"
+    ]
+  },
+  "stats": {
+    "size": "59KB",
+    "sizeLabel": "binary size",
+    "deps": "0",
+    "depsLabel": "dependencies",
+    "plugins": "4",
+    "pluginsLabel": "plugins",
+    "js": "100%",
+    "jsLabel": "JavaScript",
+    "oss": "open",
+    "ossLabel": "source"
+  },
+  "compare": {
+    "title": "Why jano?",
+    "nano": {
+      "name": "nano",
+      "verdict": "Too simple.",
+      "description": "No plugins. No multi-cursor. No syntax highlighting. Great for quick edits -but that's it."
+    },
+    "vim": {
+      "name": "vim",
+      "verdict": "Too complex.",
+      "description": "Powerful, but modes, macros, and .vimrc configs aren't for everyone. Steep learning curve."
+    },
+    "jano": {
+      "name": "jano",
+      "verdict": "Just right.",
+      "description": "Plugins when you need them. Shortcuts you already know. Opens in milliseconds. Done."
+    }
+  },
+  "footer": {
+    "license": "MIT License",
+    "madeWith": "Made with Node.js"
   }
 }
