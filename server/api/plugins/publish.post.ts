@@ -150,6 +150,14 @@ export default defineEventHandler(async (event) => {
 
     try {
       mkdirSync(distDir, { recursive: true });
+      // install dependencies before building
+      if (existsSync(join(tmpDir, "package.json"))) {
+        try {
+          execSync("npm install --ignore-scripts", { stdio: "pipe", timeout: 60000, cwd: tmpDir });
+        } catch {
+          // non-fatal
+        }
+      }
       // try esbuild first, fallback to simple copy if already built
       try {
         execSync(
