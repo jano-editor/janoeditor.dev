@@ -303,6 +303,9 @@
 <script setup lang="ts">
 const { t } = useI18n();
 
+const { data: plugins } = await useAsyncData("plugins", () => $fetch("/api/plugins"));
+const pluginCount = computed(() => String(plugins.value?.length || 0));
+
 const activeTab = ref("Linux/Mac");
 const copied = ref(false);
 const modalVideo = ref<string | null>(null);
@@ -316,7 +319,7 @@ const installCommand = computed(() =>
 const stats = computed(() => [
   { value: t("stats.size"), label: t("stats.sizeLabel") },
   { value: t("stats.deps"), label: t("stats.depsLabel") },
-  { value: t("stats.plugins"), label: t("stats.pluginsLabel") },
+  { value: pluginCount.value, label: t("stats.pluginsLabel") },
   { value: t("stats.js"), label: t("stats.jsLabel") },
   { value: t("stats.oss"), label: t("stats.ossLabel") },
 ]);
