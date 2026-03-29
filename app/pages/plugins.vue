@@ -81,7 +81,9 @@
             <span :class="step.status === 'error' ? 'text-red-400' : 'text-charcoal-300'">
               {{ stepLabels[step.step] || step.step }}
             </span>
-            <span v-if="step.message" class="text-charcoal-600">{{ step.message }}</span>
+            <span v-if="step.message" class="text-charcoal-600 whitespace-pre-wrap">{{
+              step.message
+            }}</span>
           </div>
         </div>
       </div>
@@ -284,6 +286,7 @@ const stepLabels: Record<string, string> = {
   "check-version": "Checking version",
   "check-conflicts": "Checking extension conflicts",
   clone: "Cloning repository",
+  security: "Security scan",
   build: "Building plugin",
   save: "Saving artifact",
   readme: "Fetching README",

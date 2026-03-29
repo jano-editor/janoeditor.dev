@@ -2,6 +2,7 @@ import { useDB, schema } from "~~/server/database";
 import { eq } from "drizzle-orm";
 import { parseRepoUrl, fetchRepoFile, repoExists } from "~~/server/utils/github";
 import { validateManifest, compareVersions } from "~~/server/utils/validate-plugin";
+import { scanPlugin, hasCritical, formatIssues } from "~~/server/utils/security-scan";
 import { execSync } from "node:child_process";
 import { mkdirSync, existsSync, rmSync, createWriteStream } from "node:fs";
 import { join } from "node:path";
@@ -138,7 +139,21 @@ export default defineEventHandler(async (event) => {
     }
     sendStep("clone", "done");
 
-    // Step 7: Build
+    // Step 7: Security scan
+    sendStep("security", "running");
+    const issues = scanPlugin(join(tmpDir, "src"));
+    if (hasCritical(issues)) {
+      const report = formatIssues(issues);
+      rmSync(tmpDir, { recursive: true, force: true });
+      return sendError("security", report);
+    }
+    if (issues.length > 0) {
+      sendStep("security", "done", `${issues.length} warning(s)`);
+    } else {
+      sendStep("security", "done", "No issues found");
+    }
+
+    // Step 8: Build
     sendStep("build", "running");
     const entryFile = join(tmpDir, "src", "index.ts");
     const distDir = join(tmpDir, "dist");
