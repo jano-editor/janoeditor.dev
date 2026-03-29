@@ -176,7 +176,7 @@ export default defineEventHandler(async (event) => {
       // try esbuild first, fallback to simple copy if already built
       try {
         execSync(
-          `npx --yes esbuild "${entryFile}" --bundle --format=esm --platform=node --outfile="${join(distDir, "index.js")}" --external:@jano-editor/*`,
+          `npx --yes esbuild "${entryFile}" --bundle --format=esm --platform=node --outfile="${join(distDir, "index.js")}" --external:@jano-editor/* --external:process`,
           { stdio: "pipe", timeout: 30000, cwd: tmpDir },
         );
       } catch {
