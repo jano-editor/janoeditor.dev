@@ -164,28 +164,20 @@ export default defineEventHandler(async (event) => {
     }
 
     try {
-      mkdirSync(distDir, { recursive: true });
-      // install dependencies before building
+      // install dependencies
       if (existsSync(join(tmpDir, "package.json"))) {
-        try {
-          execSync("npm install --ignore-scripts", { stdio: "pipe", timeout: 60000, cwd: tmpDir });
-        } catch {
-          // non-fatal
-        }
+        execSync("npm install", { stdio: "pipe", timeout: 60000, cwd: tmpDir });
       }
-      // try esbuild first, fallback to simple copy if already built
+      // use the plugin's own build script
       try {
-        execSync(
-          `npx --yes esbuild "${entryFile}" --bundle --format=esm --platform=node --outfile="${join(distDir, "index.js")}" --external:@jano-editor/* --external:process`,
-          { stdio: "pipe", timeout: 30000, cwd: tmpDir },
-        );
+        execSync("npm run build", { stdio: "pipe", timeout: 30000, cwd: tmpDir });
       } catch {
-        // if esbuild fails, try if dist already exists in repo
-        const repoDistFile = join(tmpDir, "dist", "index.js");
-        if (!existsSync(repoDistFile)) {
+        // no build script or build failed — check if dist already exists
+        if (!existsSync(join(tmpDir, "dist", "index.js"))) {
           throw new Error("Build failed and no pre-built dist/index.js found.");
         }
       }
+      mkdirSync(distDir, { recursive: true });
     } catch (err) {
       rmSync(tmpDir, { recursive: true, force: true });
       return sendError(
