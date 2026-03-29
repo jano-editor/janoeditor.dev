@@ -114,8 +114,13 @@
           <div class="p-6 cursor-pointer" @click="toggleExpand(plugin.name)">
             <div class="flex items-start justify-between">
               <div>
-                <h3 class="text-lg font-semibold text-jano-400">
+                <h3 class="text-lg font-semibold text-jano-400 flex items-center gap-2">
                   {{ plugin.name }}
+                  <span
+                    v-if="isOfficial(plugin)"
+                    class="text-xs px-2 py-0.5 rounded-full bg-jano-600/15 text-jano-400 font-medium"
+                    >official</span
+                  >
                 </h3>
                 <p class="text-sm text-charcoal-400 mt-1">
                   {{ plugin.description }}
@@ -307,6 +312,10 @@ const filteredPlugins = computed(() => {
       p.extensions.some((e: string) => e.toLowerCase().includes(q)),
   );
 });
+
+function isOfficial(plugin: any): boolean {
+  return plugin.repoUrl?.includes("github.com/jano-editor/");
+}
 
 function isOwner(plugin: any): boolean {
   return isLoggedIn.value && user.value?.id === plugin.publishedBy;
