@@ -24,7 +24,7 @@
     },
     "performance": {
       "title": "JavaScript-powered. Ja, wirklich.",
-      "description": "60.000+ Zeilen. Zero Lag. 59KB. Gebaut auf Node.js -und es fliegt."
+      "description": "60.000+ Zeilen. Zero Lag. Gebaut mit TypeScript, kompiliert mit Bun zu einer einzigen Binary. Keine Runtime nötig."
     },
     "shortcuts": {
       "title": "Dein Muskelgedächtnis funktioniert hier.",
@@ -92,14 +92,14 @@
     ]
   },
   "stats": {
-    "size": "59KB",
-    "sizeLabel": "Binary-Größe",
+    "size": "1",
+    "sizeLabel": "Single Binary",
     "deps": "0",
     "depsLabel": "Dependencies",
     "plugins": "4",
     "pluginsLabel": "Plugins",
     "js": "100%",
-    "jsLabel": "JavaScript",
+    "jsLabel": "TypeScript",
     "oss": "open",
     "ossLabel": "source"
   },
@@ -123,6 +123,6 @@
   },
   "footer": {
     "license": "MIT Lizenz",
-    "madeWith": "Gebaut mit Node.js"
+    "madeWith": "Gebaut mit TypeScript"
   }
 }
