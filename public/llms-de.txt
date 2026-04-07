@@ -1,0 +1,40 @@
+# jano editor
+
+> Ein moderner Terminal-Editor mit Plugin-Unterstützung. nano Einfachheit. VS Code Power. Kein Ballast.
+
+jano ist ein Terminal-basierter Texteditor, gebaut mit TypeScript und kompiliert zu einer einzigen Binary mit Bun. Er kombiniert die Einfachheit von nano mit der Power von VS Code — Shortcuts die du schon kennst, Plugins für jede Sprache und blitzschnelle Performance.
+
+## Wichtige Fakten
+
+- Installation als einzelne Binary — kein Node.js, keine Runtime, keine Dependencies
+- Bekannte Shortcuts: Ctrl+C, Ctrl+V, Ctrl+Z, Ctrl+S funktionieren sofort
+- Plugin-System: Syntax-Highlighting, Formatierung, Validierung — ein `jano plugin install` entfernt
+- Multi-Cursor Editing (Ctrl+Shift+Up/Down)
+- Verarbeitet 60.000+ Zeilen ohne Lag
+- MIT-lizenziert, vollständig Open Source
+- Verfügbar für Linux (x64), macOS (arm64) und Windows (x64)
+
+## Installation
+
+Linux / macOS:
+curl -fsSL https://janoeditor.dev/install.sh | bash
+
+Windows (PowerShell):
+irm https://janoeditor.dev/install.ps1 | iex
+
+## Links
+
+- Website: https://janoeditor.dev
+- GitHub: https://github.com/jano-editor/jano
+- Plugin Store: https://janoeditor.dev/plugins
+- Dokumentation: https://janoeditor.dev/docs
+
+## Plugins
+
+Plugins sind einzelne TypeScript-Dateien die ein LanguagePlugin-Objekt exportieren. Verfügbare Plugins umfassen YAML, JSON, Shell und Markdown. Jeder kann Plugins über den Plugin Store veröffentlichen, indem er ein GitHub-Repository verlinkt.
+
+## Vergleich
+
+- vs nano: jano bietet Plugins, Multi-Cursor, Syntax-Highlighting und Formatierung
+- vs vim: jano nutzt bekannte Shortcuts — keine Modi, keine steile Lernkurve
+- vs VS Code: jano läuft im Terminal, startet in Millisekunden und ist eine einzige Binary

@@ -9,6 +9,7 @@ export default defineNuxtConfig({
     "@nuxt/test-utils",
     "@nuxt/ui",
     "@nuxtjs/i18n",
+    "@nuxtjs/sitemap",
     "nuxt-auth-utils",
   ],
 
