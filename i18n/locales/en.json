@@ -44,6 +44,62 @@
       "To update: bump the version in plugin.json and publish again"
     ]
   },
+  "docs": {
+    "title": "Documentation",
+    "intro": "Everything you need to use jano and build plugins for it.",
+    "tabs": {
+      "usage": "Usage & Shortcuts",
+      "plugins": "Build a Plugin"
+    },
+    "cli": {
+      "title": "CLI Commands",
+      "open": "Open a new untitled file",
+      "openFile": "Open or create a file",
+      "version": "Show installed version",
+      "update": "Update jano to the latest version"
+    },
+    "pluginCli": {
+      "title": "Plugin Commands",
+      "install": "Install a plugin from the store",
+      "installVersion": "Install a specific version",
+      "remove": "Remove an installed plugin",
+      "list": "List all installed plugins",
+      "search": "List all available plugins",
+      "searchQuery": "Search plugins by name"
+    },
+    "shortcuts": {
+      "title": "Keyboard Shortcuts",
+      "fileOps": "File",
+      "save": "Save file",
+      "quit": "Exit editor",
+      "editing": "Editing",
+      "undo": "Undo",
+      "redo": "Redo",
+      "cut": "Cut selection or line",
+      "copy": "Copy selection or line",
+      "paste": "Paste from clipboard",
+      "selectAll": "Select all",
+      "navigation": "Navigation",
+      "search": "Search & Replace",
+      "goToLine": "Go to line",
+      "wordNav": "Jump word by word",
+      "lineNav": "Start / end of line",
+      "pageNav": "Scroll by page",
+      "multiCursor": "Multi-Cursor",
+      "addCursor": "Add cursor (Linux/macOS)",
+      "addCursorWin": "Add cursor (Windows/WSL)",
+      "clearCursors": "Clear extra cursors",
+      "lines": "Lines",
+      "moveLine": "Move line up/down",
+      "deleteWordBack": "Delete word backward",
+      "deleteWordFwd": "Delete word forward",
+      "functionKeys": "Function Keys",
+      "help": "Help",
+      "history": "History browser",
+      "format": "Format document (plugin)",
+      "diagnostics": "Show diagnostics (plugin)"
+    }
+  },
   "pluginDocs": {
     "title": "Build a Plugin",
     "intro": "A jano plugin is a single TypeScript file that exports a LanguagePlugin object. No build system required -esbuild bundles it for you.",

@@ -44,6 +44,62 @@
       "Für Updates: Version in plugin.json hochsetzen und nochmal publishen"
     ]
   },
+  "docs": {
+    "title": "Dokumentation",
+    "intro": "Alles was du brauchst um jano zu nutzen und Plugins dafür zu bauen.",
+    "tabs": {
+      "usage": "Bedienung & Shortcuts",
+      "plugins": "Plugin bauen"
+    },
+    "cli": {
+      "title": "CLI-Befehle",
+      "open": "Neue leere Datei öffnen",
+      "openFile": "Datei öffnen oder erstellen",
+      "version": "Installierte Version anzeigen",
+      "update": "jano auf die neueste Version aktualisieren"
+    },
+    "pluginCli": {
+      "title": "Plugin-Befehle",
+      "install": "Plugin aus dem Store installieren",
+      "installVersion": "Eine bestimmte Version installieren",
+      "remove": "Installiertes Plugin entfernen",
+      "list": "Alle installierten Plugins auflisten",
+      "search": "Alle verfügbaren Plugins auflisten",
+      "searchQuery": "Plugins nach Name suchen"
+    },
+    "shortcuts": {
+      "title": "Tastenkürzel",
+      "fileOps": "Datei",
+      "save": "Datei speichern",
+      "quit": "Editor beenden",
+      "editing": "Bearbeiten",
+      "undo": "Rückgängig",
+      "redo": "Wiederherstellen",
+      "cut": "Auswahl oder Zeile ausschneiden",
+      "copy": "Auswahl oder Zeile kopieren",
+      "paste": "Aus Zwischenablage einfügen",
+      "selectAll": "Alles auswählen",
+      "navigation": "Navigation",
+      "search": "Suchen & Ersetzen",
+      "goToLine": "Zu Zeile springen",
+      "wordNav": "Wortweise springen",
+      "lineNav": "Zeilenanfang / -ende",
+      "pageNav": "Seitenweise scrollen",
+      "multiCursor": "Multi-Cursor",
+      "addCursor": "Cursor hinzufügen (Linux/macOS)",
+      "addCursorWin": "Cursor hinzufügen (Windows/WSL)",
+      "clearCursors": "Extra-Cursor entfernen",
+      "lines": "Zeilen",
+      "moveLine": "Zeile hoch/runter verschieben",
+      "deleteWordBack": "Wort rückwärts löschen",
+      "deleteWordFwd": "Wort vorwärts löschen",
+      "functionKeys": "Funktionstasten",
+      "help": "Hilfe",
+      "history": "Änderungsverlauf",
+      "format": "Dokument formatieren (Plugin)",
+      "diagnostics": "Diagnose anzeigen (Plugin)"
+    }
+  },
   "pluginDocs": {
     "title": "Plugin bauen",
     "intro": "Ein jano Plugin ist eine einzelne TypeScript-Datei die ein LanguagePlugin-Objekt exportiert. Kein Build-System nötig -esbuild bundlet es für dich.",
