@@ -19,76 +19,101 @@ echo ""
 echo -e "${BOLD}jano editor installer${RESET}"
 echo ""
 
-# check node
-if command -v node &> /dev/null; then
-  NODE_VERSION=$(node -v | sed 's/v//' | cut -d. -f1)
-  echo -e "${GREEN}✓${RESET} Node.js v$(node -v | sed 's/v//') found"
-
-  if [ "$NODE_VERSION" -lt 22 ]; then
-    echo -e "${YELLOW}⚠ Node.js >= 22 required, you have v$(node -v | sed 's/v//')${RESET}"
-    echo ""
-    read -p "Install Node.js 22? (y/n) " -n 1 -r
-    echo ""
-    if [[ $REPLY =~ ^[Yy]$ ]]; then
-      echo "Installing Node.js 22..."
-      if command -v curl &> /dev/null; then
-        curl -fsSL https://deb.nodesource.com/setup_22.x | sudo -E bash -
-        sudo apt-get install -y nodejs
-      else
-        echo -e "${RED}✗ curl not found. Please install Node.js 22 manually: https://nodejs.org${RESET}"
-        exit 1
-      fi
-    else
-      echo -e "${RED}✗ Node.js >= 22 required${RESET}"
-      exit 1
-    fi
-  fi
-else
-  echo -e "${YELLOW}⚠ Node.js not found${RESET}"
-  echo ""
-  read -p "Install Node.js 22? (y/n) " -n 1 -r
-  echo ""
-  if [[ $REPLY =~ ^[Yy]$ ]]; then
-    echo "Installing Node.js 22..."
-    if [[ "$OSTYPE" == "darwin"* ]]; then
-      if command -v brew &> /dev/null; then
-        brew install node@22
-      else
-        echo -e "${RED}✗ Homebrew not found. Please install Node.js 22 manually: https://nodejs.org${RESET}"
-        exit 1
-      fi
-    else
-      if command -v curl &> /dev/null; then
-        curl -fsSL https://deb.nodesource.com/setup_22.x | sudo -E bash -
-        sudo apt-get install -y nodejs
-      else
-        echo -e "${RED}✗ curl not found. Please install Node.js 22 manually: https://nodejs.org${RESET}"
-        exit 1
-      fi
-    fi
-  else
-    echo -e "${RED}✗ Node.js required${RESET}"
+# Detect OS
+case "$(uname -s)" in
+  Linux*)  OS="linux" ;;
+  Darwin*) OS="darwin" ;;
+  *)
+    echo -e "${RED}✗ Unsupported operating system: $(uname -s)${RESET}"
+    echo "  Please visit https://github.com/jano-editor/jano/releases for manual installation."
     exit 1
-  fi
-fi
+    ;;
+esac
 
-# install jano
+# Detect architecture
+case "$(uname -m)" in
+  x86_64|amd64) ARCH="x64" ;;
+  aarch64|arm64) ARCH="arm64" ;;
+  *)
+    echo -e "${RED}✗ Unsupported architecture: $(uname -m)${RESET}"
+    echo "  Please visit https://github.com/jano-editor/jano/releases for manual installation."
+    exit 1
+    ;;
+esac
+
+BINARY="jano-${OS}-${ARCH}"
+DOWNLOAD_URL="https://github.com/jano-editor/jano/releases/latest/download/${BINARY}"
+INSTALL_DIR="$HOME/.local/bin"
+
+echo -e "  Platform: ${BOLD}${OS}-${ARCH}${RESET}"
 echo ""
-echo "Installing jano editor..."
-sudo npm install -g @jano-editor/editor@latest
 
-# verify
-if command -v jano &> /dev/null; then
-  echo ""
-  echo -e "${GREEN}✓ jano installed successfully!${RESET}"
-  echo ""
-  echo "  Usage:"
-  echo "    jano                   Open new file"
-  echo "    jano file.txt          Open file"
-  echo "    jano plugin search     Browse plugins"
-  echo "    jano plugin install    Install a plugin"
-  echo ""
+# Check if curl or wget is available
+if command -v curl &> /dev/null; then
+  DOWNLOAD_CMD="curl -fSL --progress-bar -o"
+elif command -v wget &> /dev/null; then
+  DOWNLOAD_CMD="wget -q --show-progress -O"
 else
-  echo -e "${RED}✗ Installation failed. Try: sudo npm install -g @jano-editor/editor${RESET}"
+  echo -e "${RED}✗ curl or wget required${RESET}"
   exit 1
 fi
+
+# Download binary
+echo "Downloading jano..."
+TMPFILE=$(mktemp)
+trap 'rm -f "$TMPFILE"' EXIT
+
+if ! $DOWNLOAD_CMD "$TMPFILE" "$DOWNLOAD_URL"; then
+  echo ""
+  echo -e "${RED}✗ Download failed${RESET}"
+  echo "  No binary available for ${OS}-${ARCH}."
+  echo "  Please visit https://github.com/jano-editor/jano/releases"
+  exit 1
+fi
+
+# Install
+mkdir -p "$INSTALL_DIR"
+mv "$TMPFILE" "$INSTALL_DIR/jano"
+chmod +x "$INSTALL_DIR/jano"
+
+# Verify
+if "$INSTALL_DIR/jano" --version &> /dev/null; then
+  echo ""
+  echo -e "${GREEN}✓ jano installed to ${INSTALL_DIR}/jano${RESET}"
+else
+  echo ""
+  echo -e "${RED}✗ Installation failed - binary may be incompatible with your system${RESET}"
+  rm -f "$INSTALL_DIR/jano"
+  exit 1
+fi
+
+# Check if install dir is in PATH
+if ! echo "$PATH" | tr ':' '\n' | grep -qx "$INSTALL_DIR"; then
+  echo ""
+  echo -e "${YELLOW}⚠ ${INSTALL_DIR} is not in your PATH${RESET}"
+  echo ""
+  SHELL_NAME=$(basename "$SHELL")
+  case "$SHELL_NAME" in
+    zsh)  RC_FILE="~/.zshrc" ;;
+    bash) RC_FILE="~/.bashrc" ;;
+    fish) RC_FILE="~/.config/fish/config.fish" ;;
+    *)    RC_FILE="your shell config" ;;
+  esac
+  echo "  Add it by running:"
+  if [ "$SHELL_NAME" = "fish" ]; then
+    echo "    fish_add_path $INSTALL_DIR"
+  else
+    echo "    echo 'export PATH=\"\$HOME/.local/bin:\$PATH\"' >> ${RC_FILE}"
+  fi
+  echo ""
+  echo "  Then restart your terminal or run:"
+  echo "    source ${RC_FILE}"
+fi
+
+echo ""
+echo "  Usage:"
+echo "    jano                   Open new file"
+echo "    jano file.txt          Open file"
+echo "    jano plugin search     Browse plugins"
+echo "    jano plugin install    Install a plugin"
+echo ""
