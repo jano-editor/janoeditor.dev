@@ -22,40 +22,42 @@
           </p>
 
           <!-- Install commands -->
-          <div class="pt-10 space-y-3 max-w-xl mx-auto">
-            <div class="flex gap-2 justify-center">
-              <button
-                v-for="tab in ['Linux/Mac', 'Windows']"
-                :key="tab"
-                class="px-5 py-2 rounded-lg text-sm font-medium transition-all"
-                :class="
-                  activeTab === tab
-                    ? 'bg-jano-600 text-white shadow-lg shadow-jano-600/20'
-                    : 'bg-charcoal-800 text-charcoal-400 hover:bg-charcoal-700 hover:text-charcoal-300'
-                "
-                @click="activeTab = tab"
-              >
-                {{ tab }}
-              </button>
-            </div>
+          <ClientOnly>
+            <div class="pt-10 space-y-3 max-w-xl mx-auto">
+              <div class="flex gap-2 justify-center">
+                <button
+                  v-for="tab in ['Linux/Mac', 'Windows']"
+                  :key="tab"
+                  class="px-5 py-2 rounded-lg text-sm font-medium transition-all"
+                  :class="
+                    activeTab === tab
+                      ? 'bg-jano-600 text-white shadow-lg shadow-jano-600/20'
+                      : 'bg-charcoal-800 text-charcoal-400 hover:bg-charcoal-700 hover:text-charcoal-300'
+                  "
+                  @click="activeTab = tab"
+                >
+                  {{ tab }}
+                </button>
+              </div>
 
-            <div
-              class="p-4 rounded-xl bg-charcoal-900/80 border border-charcoal-700/50 backdrop-blur-sm font-mono text-sm text-left flex items-center justify-between"
-            >
-              <code class="text-jano-400">{{ installCommand }}</code>
-              <button
-                class="ml-3 shrink-0 px-3 py-1 rounded-md text-sm transition-all"
-                :class="
-                  copied
-                    ? 'text-green-400 bg-green-400/10'
-                    : 'text-charcoal-500 hover:text-charcoal-300 hover:bg-charcoal-800'
-                "
-                @click="copyInstall"
+              <div
+                class="p-4 rounded-xl bg-charcoal-900/80 border border-charcoal-700/50 backdrop-blur-sm font-mono text-sm text-left flex items-center justify-between"
               >
-                {{ copied ? "✓ Copied!" : "Copy" }}
-              </button>
+                <code class="text-jano-400">{{ installCommand }}</code>
+                <button
+                  class="ml-3 shrink-0 px-3 py-1 rounded-md text-sm transition-all"
+                  :class="
+                    copied
+                      ? 'text-green-400 bg-green-400/10'
+                      : 'text-charcoal-500 hover:text-charcoal-300 hover:bg-charcoal-800'
+                  "
+                  @click="copyInstall"
+                >
+                  {{ copied ? "✓ Copied!" : "Copy" }}
+                </button>
+              </div>
             </div>
-          </div>
+          </ClientOnly>
 
           <div class="flex justify-center gap-4 pt-6">
             <UButton size="lg" color="plum" variant="outline" to="/plugins" class="px-8">
@@ -306,16 +308,9 @@ const { t } = useI18n();
 const { data: plugins } = await useAsyncData("plugins", () => $fetch("/api/plugins"));
 const pluginCount = computed(() => String(plugins.value?.length || 0));
 
-const detectedTab = computed(() => {
-  if (import.meta.server) return "Linux/Mac";
-  const ua = navigator.userAgent;
-  if (/Win/i.test(ua)) return "Windows";
-  return "Linux/Mac";
-});
-const activeTab = ref(detectedTab.value);
-onMounted(() => {
-  activeTab.value = detectedTab.value;
-});
+const activeTab = ref(
+  import.meta.client && /Win/i.test(navigator.userAgent) ? "Windows" : "Linux/Mac",
+);
 const copied = ref(false);
 const modalVideo = ref<string | null>(null);
 
