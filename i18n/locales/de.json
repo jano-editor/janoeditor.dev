@@ -17,18 +17,6 @@
     "multiCursor": {
       "title": "Multi-Cursor Editing",
       "description": "Cursors nach oben oder unten hinzufügen. 20 Zeilen wie eine bearbeiten."
-    },
-    "plugins": {
-      "title": "Jede Sprache. Ein Plugin.",
-      "description": "YAML, JSON, Shell, Markdown -und alles was du brauchst. Jedes Dateiformat ist nur ein Plugin entfernt."
-    },
-    "performance": {
-      "title": "JavaScript-powered. Ja, wirklich.",
-      "description": "60.000+ Zeilen. Zero Lag. Gebaut mit TypeScript, kompiliert mit Bun zu einer einzigen Binary. Keine Runtime nötig."
-    },
-    "shortcuts": {
-      "title": "Dein Muskelgedächtnis funktioniert hier.",
-      "description": "Ctrl+C, Ctrl+V, Ctrl+Z, Ctrl+S, Ctrl+A -gleich auf jedem OS. Kein Spickzettel nötig."
     }
   },
   "pluginStore": {
@@ -102,6 +90,45 @@
     "jsLabel": "TypeScript",
     "oss": "open",
     "ossLabel": "source"
+  },
+  "highlights": {
+    "subtitle": "Sieh was jano in Sekunden kann."
+  },
+  "whyJano": {
+    "title": "Warum du jano lieben wirst",
+    "subtitle": "Ein Editor, der sich anfühlt als würde er Gedanken lesen.",
+    "facts": [
+      {
+        "title": "Deine Finger kennen es schon.",
+        "description": "Ctrl+C, Ctrl+V, Ctrl+Z, Ctrl+S — jeder Shortcut funktioniert genau wie erwartet. Keine Modi, keine Überraschungen. Einfach öffnen und tippen."
+      },
+      {
+        "title": "Eine Binary. Null Setup.",
+        "description": "Ein Befehl installiert jano. Kein Node.js, kein Paketmanager, keine Config-Dateien. Es läuft einfach."
+      },
+      {
+        "title": "Plugins machen es deins.",
+        "description": "YAML, JSON, Shell, Markdown — jede Sprache ist ein Plugin-Install entfernt. Schreib dein eigenes in einer einzigen TypeScript-Datei."
+      },
+      {
+        "title": "Schnell. Wirklich schnell.",
+        "description": "60.000+ Zeilen ohne Ruckler. Startet in Millisekunden. Gebaut mit TypeScript, kompiliert zu einer nativen Binary mit Bun."
+      },
+      {
+        "title": "Open Source. Offene Türen.",
+        "description": "MIT-lizenziert. Jede Zeile Code ist auf GitHub. Idee? Öffne ein Issue. Willst du mitbauen? Schick einen PR. Wir würden uns freuen."
+      }
+    ]
+  },
+  "support": {
+    "title": "Unterstütze jano",
+    "subtitle": "jano ist kostenlos, Open Source und mit Liebe gebaut. So kannst du helfen.",
+    "star": "Star auf GitHub",
+    "starDescription": "Ein Star hilft anderen jano zu entdecken. Kostenlos und unbezahlbar.",
+    "sponsor": "Werde Sponsor",
+    "sponsorDescription": "Unterstütze jano's Entwicklung auf GitHub Sponsors.",
+    "coffee": "Kauf mir einen Kaffee",
+    "coffeeDescription": "Ein schnelles Danke. Jeder Kaffee zählt."
   },
   "compare": {
     "title": "Warum jano?",

@@ -17,18 +17,6 @@
     "multiCursor": {
       "title": "Multi-Cursor Editing",
       "description": "Add cursors above or below. Edit 20 lines like one."
-    },
-    "plugins": {
-      "title": "Any Language. One Plugin.",
-      "description": "YAML, JSON, Shell, Markdown -and anything you need. Every file format is just a plugin away."
-    },
-    "performance": {
-      "title": "Powered by JavaScript. Yes, really.",
-      "description": "60,000+ lines. Zero lag. Built with TypeScript, compiled with Bun into a single binary. No runtime needed."
-    },
-    "shortcuts": {
-      "title": "Your Muscle Memory Works Here.",
-      "description": "Ctrl+C, Ctrl+V, Ctrl+Z, Ctrl+S, Ctrl+A -the same on every OS. No cheat sheet needed."
     }
   },
   "pluginStore": {
@@ -102,6 +90,45 @@
     "jsLabel": "TypeScript",
     "oss": "open",
     "ossLabel": "source"
+  },
+  "highlights": {
+    "subtitle": "See what jano can do in seconds."
+  },
+  "whyJano": {
+    "title": "Why you'll love jano",
+    "subtitle": "An editor that feels like it reads your mind.",
+    "facts": [
+      {
+        "title": "Your fingers already know it.",
+        "description": "Ctrl+C, Ctrl+V, Ctrl+Z, Ctrl+S — every shortcut works exactly like you'd expect. No modes, no surprises. Just open and type."
+      },
+      {
+        "title": "One binary. Zero setup.",
+        "description": "One command installs jano. No Node.js, no package manager, no config files. It just runs."
+      },
+      {
+        "title": "Plugins make it yours.",
+        "description": "YAML, JSON, Shell, Markdown — every language is one plugin install away. Write your own in a single TypeScript file."
+      },
+      {
+        "title": "Fast. Like, actually fast.",
+        "description": "60,000+ lines without a stutter. Starts in milliseconds. Built with TypeScript, compiled to a native binary with Bun."
+      },
+      {
+        "title": "Open source. Open doors.",
+        "description": "MIT licensed. Every line of code is on GitHub. Got an idea? Open an issue. Want to build it? Send a PR. We'd love that."
+      }
+    ]
+  },
+  "support": {
+    "title": "Support jano",
+    "subtitle": "jano is free, open source, and built with love. Here's how you can help it grow.",
+    "star": "Star on GitHub",
+    "starDescription": "A star helps others discover jano. It's free and means the world.",
+    "sponsor": "Become a Sponsor",
+    "sponsorDescription": "Support jano's development on GitHub Sponsors.",
+    "coffee": "Buy me a coffee",
+    "coffeeDescription": "A quick way to say thanks. Every coffee counts."
   },
   "compare": {
     "title": "Why jano?",

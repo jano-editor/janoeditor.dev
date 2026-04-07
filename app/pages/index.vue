@@ -87,7 +87,11 @@
       </div>
 
       <!-- Video Showcases -->
-      <div class="mt-32 space-y-32">
+      <h2 class="text-4xl font-bold text-center mt-32 mb-4">Highlights</h2>
+      <p class="text-center text-charcoal-500 mb-14 max-w-md mx-auto">
+        {{ $t("highlights.subtitle") }}
+      </p>
+      <div class="space-y-32">
         <!-- Format & Validation -->
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <div class="space-y-4">
@@ -155,46 +159,39 @@
         </div>
       </div>
 
-      <!-- Feature Cards -->
-      <div class="mt-32 grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div
-          class="glow-card p-7 rounded-xl bg-charcoal-900/80 border border-charcoal-800 cursor-default"
-        >
-          <div class="w-10 h-10 rounded-lg bg-jano-600/10 flex items-center justify-center mb-4">
-            <span class="text-jano-400 text-lg">⚡</span>
+      <!-- Why you'll love jano -->
+      <div class="mt-32">
+        <h2 class="text-4xl font-bold text-center mb-4">
+          {{ $t("whyJano.title") }}
+        </h2>
+        <p class="text-center text-charcoal-500 mb-14 max-w-md mx-auto">
+          {{ $t("whyJano.subtitle") }}
+        </p>
+        <div class="space-y-6 max-w-3xl mx-auto">
+          <div
+            v-for="(fact, i) in facts"
+            :key="i"
+            class="flex items-start gap-5 p-6 rounded-xl bg-charcoal-900/40 border border-charcoal-800/40 hover:border-charcoal-700/60 transition-colors"
+          >
+            <div
+              class="shrink-0 w-12 h-12 rounded-xl flex items-center justify-center"
+              :class="i % 2 === 0 ? 'bg-jano-600/10' : 'bg-plum-600/10'"
+            >
+              <UIcon
+                :name="factIcons[i]"
+                class="w-6 h-6"
+                :class="i % 2 === 0 ? 'text-jano-400' : 'text-plum-400'"
+              />
+            </div>
+            <div>
+              <h3 class="text-lg font-semibold text-charcoal-100 mb-1">
+                {{ fact.title }}
+              </h3>
+              <p class="text-sm text-charcoal-400 leading-relaxed">
+                {{ fact.description }}
+              </p>
+            </div>
           </div>
-          <h3 class="text-lg font-semibold text-charcoal-100 mb-2">
-            {{ $t("features.plugins.title") }}
-          </h3>
-          <p class="text-sm text-charcoal-400 leading-relaxed">
-            {{ $t("features.plugins.description") }}
-          </p>
-        </div>
-        <div
-          class="glow-card p-7 rounded-xl bg-charcoal-900/80 border border-charcoal-800 cursor-default"
-        >
-          <div class="w-10 h-10 rounded-lg bg-plum-600/10 flex items-center justify-center mb-4">
-            <span class="text-plum-400 text-lg">🚀</span>
-          </div>
-          <h3 class="text-lg font-semibold text-charcoal-100 mb-2">
-            {{ $t("features.performance.title") }}
-          </h3>
-          <p class="text-sm text-charcoal-400 leading-relaxed">
-            {{ $t("features.performance.description") }}
-          </p>
-        </div>
-        <div
-          class="glow-card p-7 rounded-xl bg-charcoal-900/80 border border-charcoal-800 cursor-default"
-        >
-          <div class="w-10 h-10 rounded-lg bg-jano-600/10 flex items-center justify-center mb-4">
-            <span class="text-jano-400 text-lg">⌨</span>
-          </div>
-          <h3 class="text-lg font-semibold text-charcoal-100 mb-2">
-            {{ $t("features.shortcuts.title") }}
-          </h3>
-          <p class="text-sm text-charcoal-400 leading-relaxed">
-            {{ $t("features.shortcuts.description") }}
-          </p>
         </div>
       </div>
 
@@ -232,6 +229,86 @@
             <p class="text-sm text-charcoal-400 leading-relaxed">
               {{ $t(`compare.${editor}.description`) }}
             </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Support -->
+    <div class="max-w-5xl mx-auto px-6 mt-32">
+      <div
+        class="relative overflow-hidden rounded-2xl bg-gradient-to-br from-charcoal-900 to-charcoal-950 border border-charcoal-800/40 p-12 text-center"
+      >
+        <div
+          class="absolute inset-0 bg-gradient-to-br from-jano-600/5 to-plum-600/5 pointer-events-none"
+        />
+        <div class="relative">
+          <h2 class="text-4xl font-bold mb-4">
+            {{ $t("support.title") }}
+          </h2>
+          <p class="text-charcoal-400 mb-10 max-w-md mx-auto">
+            {{ $t("support.subtitle") }}
+          </p>
+          <div
+            class="flex flex-col md:flex-row items-stretch md:items-center justify-center gap-4 md:gap-6"
+          >
+            <a
+              href="https://github.com/jano-editor/jano"
+              target="_blank"
+              rel="noopener"
+              class="group flex items-center gap-3 px-8 py-4 rounded-xl bg-charcoal-800 border border-charcoal-700/50 hover:border-yellow-500/50 hover:bg-charcoal-800/80 transition-all"
+            >
+              <UIcon
+                name="i-lucide-star"
+                class="w-6 h-6 text-yellow-400 group-hover:scale-110 transition-transform"
+              />
+              <div class="text-left">
+                <div class="font-semibold text-charcoal-100">
+                  {{ $t("support.star") }}
+                </div>
+                <div class="text-xs text-charcoal-500">
+                  {{ $t("support.starDescription") }}
+                </div>
+              </div>
+            </a>
+            <a
+              href="https://github.com/sponsors/flo0806"
+              target="_blank"
+              rel="noopener"
+              class="group flex items-center gap-3 px-8 py-4 rounded-xl bg-charcoal-800 border border-charcoal-700/50 hover:border-jano-500/50 hover:bg-charcoal-800/80 transition-all"
+            >
+              <UIcon
+                name="i-lucide-heart"
+                class="w-6 h-6 text-jano-400 group-hover:scale-110 transition-transform"
+              />
+              <div class="text-left">
+                <div class="font-semibold text-charcoal-100">
+                  {{ $t("support.sponsor") }}
+                </div>
+                <div class="text-xs text-charcoal-500">
+                  {{ $t("support.sponsorDescription") }}
+                </div>
+              </div>
+            </a>
+            <a
+              href="https://www.buymeacoffee.com/flo0806"
+              target="_blank"
+              rel="noopener"
+              class="group flex items-center gap-3 px-8 py-4 rounded-xl bg-charcoal-800 border border-charcoal-700/50 hover:border-plum-500/50 hover:bg-charcoal-800/80 transition-all"
+            >
+              <UIcon
+                name="i-lucide-coffee"
+                class="w-6 h-6 text-plum-400 group-hover:scale-110 transition-transform"
+              />
+              <div class="text-left">
+                <div class="font-semibold text-charcoal-100">
+                  {{ $t("support.coffee") }}
+                </div>
+                <div class="text-xs text-charcoal-500">
+                  {{ $t("support.coffeeDescription") }}
+                </div>
+              </div>
+            </a>
           </div>
         </div>
       </div>
@@ -303,7 +380,7 @@
 </template>
 
 <script setup lang="ts">
-const { t } = useI18n();
+const { t, tm, rt } = useI18n();
 
 const { data: plugins } = await useAsyncData("plugins", () => $fetch("/api/plugins"));
 const pluginCount = computed(() => String(plugins.value?.length || 0));
@@ -318,6 +395,21 @@ const installCommand = computed(() =>
   activeTab.value === "Windows"
     ? "irm https://janoeditor.dev/install.ps1 | iex"
     : "curl -fsSL https://janoeditor.dev/install.sh | bash",
+);
+
+const factIcons = [
+  "i-lucide-keyboard",
+  "i-lucide-package",
+  "i-lucide-puzzle",
+  "i-lucide-zap",
+  "i-lucide-heart",
+];
+
+const facts = computed(() =>
+  (tm("whyJano.facts") as { title: unknown; description: unknown }[]).map((f) => ({
+    title: rt(f.title as string),
+    description: rt(f.description as string),
+  })),
 );
 
 const stats = computed(() => [
