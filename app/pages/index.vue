@@ -70,10 +70,10 @@
       <!-- Stats Bar -->
       <div class="flex justify-center -mt-2">
         <div
-          class="flex items-center px-10 py-6 rounded-2xl bg-charcoal-900/60 border border-charcoal-800/40 backdrop-blur-sm"
+          class="grid grid-cols-2 sm:flex sm:items-center gap-6 sm:gap-0 px-10 py-6 rounded-2xl bg-charcoal-900/60 border border-charcoal-800/40 backdrop-blur-sm"
         >
           <template v-for="(stat, i) in stats" :key="stat.label">
-            <div v-if="i > 0" class="stat-divider mx-6 md:mx-10" />
+            <div v-if="i > 0" class="stat-divider hidden sm:block mx-6 md:mx-10" />
             <div class="text-center">
               <div class="text-2xl md:text-3xl font-bold text-jano-400">{{ stat.value }}</div>
               <div class="text-xs text-charcoal-500 mt-1 uppercase tracking-wider">
@@ -306,7 +306,16 @@ const { t } = useI18n();
 const { data: plugins } = await useAsyncData("plugins", () => $fetch("/api/plugins"));
 const pluginCount = computed(() => String(plugins.value?.length || 0));
 
-const activeTab = ref("Linux/Mac");
+const detectedTab = computed(() => {
+  if (import.meta.server) return "Linux/Mac";
+  const ua = navigator.userAgent;
+  if (/Win/i.test(ua)) return "Windows";
+  return "Linux/Mac";
+});
+const activeTab = ref(detectedTab.value);
+onMounted(() => {
+  activeTab.value = detectedTab.value;
+});
 const copied = ref(false);
 const modalVideo = ref<string | null>(null);
 
