@@ -35,8 +35,20 @@ git add package.json
 git commit -m "release: v${VERSION}"
 git tag "$TAG"
 
-git push origin main
-git push origin "$TAG"
+# load token from .env if available
+if [ -z "$GH_TOKEN" ] && [ -f .env ]; then
+  source .env
+fi
+
+# push
+if [ -n "$GH_TOKEN" ]; then
+  REMOTE="https://Flo0806:${GH_TOKEN}@github.com/jano-editor/janoeditor.dev.git"
+  git push "$REMOTE" main
+  git push "$REMOTE" "$TAG"
+else
+  git push origin main
+  git push origin "$TAG"
+fi
 
 echo ""
 echo "Done! GitHub Action will build and push Docker image."
