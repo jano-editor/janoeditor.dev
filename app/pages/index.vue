@@ -26,7 +26,7 @@
             <div class="pt-10 space-y-3 max-w-xl mx-auto">
               <div class="flex gap-2 justify-center">
                 <button
-                  v-for="tab in ['Linux/Mac', 'Windows']"
+                  v-for="tab in ['Linux/Mac', 'Homebrew', 'Windows']"
                   :key="tab"
                   class="px-5 py-2 rounded-lg text-sm font-medium transition-all"
                   :class="
@@ -391,11 +391,12 @@ const activeTab = ref(
 const copied = ref(false);
 const modalVideo = ref<string | null>(null);
 
-const installCommand = computed(() =>
-  activeTab.value === "Windows"
-    ? "irm https://janoeditor.dev/install.ps1 | iex"
-    : "curl -fsSL https://janoeditor.dev/install.sh | bash",
-);
+const installCommands: Record<string, string> = {
+  "Linux/Mac": "curl -fsSL https://janoeditor.dev/install.sh | bash",
+  Homebrew: "brew tap jano-editor/jano && brew install jano",
+  Windows: "irm https://janoeditor.dev/install.ps1 | iex",
+};
+const installCommand = computed(() => installCommands[activeTab.value]);
 
 const factIcons = [
   "i-lucide-keyboard",

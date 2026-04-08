@@ -19,6 +19,9 @@ jano ist ein Terminal-basierter Texteditor, gebaut mit TypeScript und kompiliert
 Linux / macOS:
 curl -fsSL https://janoeditor.dev/install.sh | bash
 
+Homebrew (macOS / Linux):
+brew tap jano-editor/jano && brew install jano
+
 Windows (PowerShell):
 irm https://janoeditor.dev/install.ps1 | iex
 
