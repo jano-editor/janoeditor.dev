@@ -426,7 +426,7 @@ function openVideo(src: string) {
 }
 
 function copyInstall() {
-  void navigator.clipboard.writeText(installCommand.value);
+  void navigator.clipboard.writeText(installCommand.value ?? "");
   copied.value = true;
   setTimeout(() => {
     copied.value = false;

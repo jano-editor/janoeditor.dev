@@ -43,7 +43,7 @@
             <div
               v-for="cmd in cliCommands"
               :key="cmd.command"
-              class="flex gap-4 p-4 rounded-lg bg-charcoal-900/60 border border-charcoal-800/50 items-baseline"
+              class="flex flex-col sm:flex-row gap-1 sm:gap-4 p-4 rounded-lg bg-charcoal-900/60 border border-charcoal-800/50 sm:items-baseline"
             >
               <code
                 class="text-jano-400 font-mono text-sm shrink-0 bg-jano-600/10 px-2 py-0.5 rounded"
@@ -68,7 +68,7 @@
             <div
               v-for="cmd in pluginCommands"
               :key="cmd.command"
-              class="flex gap-4 p-4 rounded-lg bg-charcoal-900/60 border border-charcoal-800/50 items-baseline"
+              class="flex flex-col sm:flex-row gap-1 sm:gap-4 p-4 rounded-lg bg-charcoal-900/60 border border-charcoal-800/50 sm:items-baseline"
             >
               <code
                 class="text-plum-400 font-mono text-sm shrink-0 bg-plum-600/10 px-2 py-0.5 rounded"
@@ -123,7 +123,7 @@
           </h2>
           <div class="space-y-3">
             <div
-              class="flex gap-4 p-4 rounded-lg bg-charcoal-900/60 border border-charcoal-800/50 items-baseline"
+              class="flex flex-col sm:flex-row gap-1 sm:gap-4 p-4 rounded-lg bg-charcoal-900/60 border border-charcoal-800/50 sm:items-baseline"
             >
               <code
                 class="text-plum-400 font-mono text-sm shrink-0 bg-plum-600/10 px-2 py-0.5 rounded"
@@ -134,7 +134,7 @@
               }}</span>
             </div>
             <div
-              class="flex gap-4 p-4 rounded-lg bg-charcoal-900/60 border border-charcoal-800/50 items-baseline"
+              class="flex flex-col sm:flex-row gap-1 sm:gap-4 p-4 rounded-lg bg-charcoal-900/60 border border-charcoal-800/50 sm:items-baseline"
             >
               <code
                 class="text-plum-400 font-mono text-sm shrink-0 bg-plum-600/10 px-2 py-0.5 rounded"
