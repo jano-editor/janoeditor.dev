@@ -323,6 +323,7 @@ const cliCommands = computed(() => [
   { command: "jano", description: t("docs.cli.open") },
   { command: "jano <file>", description: t("docs.cli.openFile") },
   { command: "jano --version", description: t("docs.cli.version") },
+  { command: "jano --help", description: t("docs.cli.help") },
   { command: "jano update", description: t("docs.cli.update") },
 ]);
 
