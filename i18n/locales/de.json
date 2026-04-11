@@ -56,7 +56,8 @@
       "open": "Neue leere Datei öffnen",
       "openFile": "Datei öffnen oder erstellen",
       "version": "Installierte Version anzeigen",
-      "update": "jano auf die neueste Version aktualisieren"
+      "update": "jano auf die neueste Version aktualisieren",
+      "help": "Hilfe und verfügbare Befehle anzeigen"
     },
     "pluginCli": {
       "title": "Plugin-Befehle",
@@ -88,16 +89,27 @@
       "multiCursor": "Multi-Cursor",
       "addCursor": "Cursor hinzufügen (Linux/macOS)",
       "addCursorWin": "Cursor hinzufügen (Windows/WSL)",
+      "selectNext": "Nächstes Vorkommen auswählen",
       "clearCursors": "Extra-Cursor entfernen",
       "lines": "Zeilen",
       "moveLine": "Zeile hoch/runter verschieben",
       "deleteWordBack": "Wort rückwärts löschen",
       "deleteWordFwd": "Wort vorwärts löschen",
+      "autocomplete": "Autovervollständigung",
+      "triggerAutocomplete": "Autovervollständigung auslösen",
+      "acceptAutocomplete": "Annehmen / nächster Vorschlag",
+      "mouse": "Maus",
+      "mouseClick": "Cursor setzen",
+      "mouseDoubleClick": "Wort auswählen",
+      "mouseTripleClick": "Zeile auswählen",
+      "mouseDrag": "Zum Auswählen ziehen",
+      "mouseScroll": "Hoch/runter scrollen",
       "functionKeys": "Funktionstasten",
       "help": "Hilfe",
       "history": "Änderungsverlauf",
       "format": "Dokument formatieren (Plugin)",
-      "diagnostics": "Diagnose anzeigen (Plugin)"
+      "diagnostics": "Diagnose anzeigen (Plugin)",
+      "settings": "Einstellungen"
     }
   },
   "pluginDocs": {
@@ -117,7 +129,8 @@
       "onFormat": "Feuert bei F3. Gesamtes Dokument neu formatieren.",
       "onSave": "Feuert bei Ctrl+S. Edits vor dem Speichern anwenden.",
       "onOpen": "Feuert wenn eine Datei geöffnet wird.",
-      "onValidate": "Dokument validieren. Diagnostics (Fehler, Warnungen) werden inline angezeigt."
+      "onValidate": "Dokument validieren. Diagnostics (Fehler, Warnungen) werden inline angezeigt.",
+      "onComplete": "Autocomplete-Vorschläge liefern. Feuert bei Ctrl+Space oder automatisch beim Tippen (300ms Debounce). Completions für die aktuelle Cursor-Position zurückgeben."
     },
     "structure": "Dateistruktur",
     "structureDesc": "Dein GitHub Repo braucht diese Dateien:",
@@ -156,7 +169,7 @@
     "facts": [
       {
         "title": "Deine Finger kennen es schon.",
-        "description": "Ctrl+C, Ctrl+V, Ctrl+Z, Ctrl+S — jeder Shortcut funktioniert genau wie erwartet. Keine Modi, keine Überraschungen. Einfach öffnen und tippen."
+        "description": "Ctrl+C, Ctrl+V, Ctrl+Z, Ctrl+S, Ctrl+D — jeder Shortcut funktioniert genau wie erwartet. Mausklicks, Drag-to-Select, Scrollen — alles funktioniert einfach. Keine Modi, keine Überraschungen."
       },
       {
         "title": "Eine Binary. Null Setup.",
@@ -164,7 +177,7 @@
       },
       {
         "title": "Plugins machen es deins.",
-        "description": "YAML, JSON, Shell, Markdown — jede Sprache ist ein Plugin-Install entfernt. Schreib dein eigenes in einer einzigen TypeScript-Datei."
+        "description": "YAML, JSON, Shell, Markdown — jede Sprache ist ein Plugin-Install entfernt. Autocomplete, Formatierung, Diagnostics — alles über Plugins. Schreib dein eigenes in einer einzigen TypeScript-Datei."
       },
       {
         "title": "Schnell. Wirklich schnell.",

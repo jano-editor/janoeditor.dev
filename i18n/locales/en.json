@@ -56,7 +56,8 @@
       "open": "Open a new untitled file",
       "openFile": "Open or create a file",
       "version": "Show installed version",
-      "update": "Update jano to the latest version"
+      "update": "Update jano to the latest version",
+      "help": "Show help and available commands"
     },
     "pluginCli": {
       "title": "Plugin Commands",
@@ -88,16 +89,27 @@
       "multiCursor": "Multi-Cursor",
       "addCursor": "Add cursor (Linux/macOS)",
       "addCursorWin": "Add cursor (Windows/WSL)",
+      "selectNext": "Select next occurrence",
       "clearCursors": "Clear extra cursors",
       "lines": "Lines",
       "moveLine": "Move line up/down",
       "deleteWordBack": "Delete word backward",
       "deleteWordFwd": "Delete word forward",
+      "autocomplete": "Autocomplete",
+      "triggerAutocomplete": "Trigger autocomplete",
+      "acceptAutocomplete": "Accept / next suggestion",
+      "mouse": "Mouse",
+      "mouseClick": "Place cursor",
+      "mouseDoubleClick": "Select word",
+      "mouseTripleClick": "Select line",
+      "mouseDrag": "Drag to select",
+      "mouseScroll": "Scroll up/down",
       "functionKeys": "Function Keys",
       "help": "Help",
       "history": "History browser",
       "format": "Format document (plugin)",
-      "diagnostics": "Show diagnostics (plugin)"
+      "diagnostics": "Show diagnostics (plugin)",
+      "settings": "Settings"
     }
   },
   "pluginDocs": {
@@ -117,7 +129,8 @@
       "onFormat": "Fires on F3. Reformat the entire document.",
       "onSave": "Fires on Ctrl+S. Apply edits before saving.",
       "onOpen": "Fires when a file is opened.",
-      "onValidate": "Validate the document content. Return diagnostics (errors, warnings) shown inline."
+      "onValidate": "Validate the document content. Return diagnostics (errors, warnings) shown inline.",
+      "onComplete": "Provide autocomplete suggestions. Fires on Ctrl+Space or automatically after typing (300ms debounce). Return completions for the current cursor position."
     },
     "structure": "File Structure",
     "structureDesc": "Your GitHub repo needs these files:",
@@ -156,7 +169,7 @@
     "facts": [
       {
         "title": "Your fingers already know it.",
-        "description": "Ctrl+C, Ctrl+V, Ctrl+Z, Ctrl+S — every shortcut works exactly like you'd expect. No modes, no surprises. Just open and type."
+        "description": "Ctrl+C, Ctrl+V, Ctrl+Z, Ctrl+S, Ctrl+D — every shortcut works exactly like you'd expect. Mouse clicks, drag-to-select, scroll — it all just works. No modes, no surprises."
       },
       {
         "title": "One binary. Zero setup.",
@@ -164,7 +177,7 @@
       },
       {
         "title": "Plugins make it yours.",
-        "description": "YAML, JSON, Shell, Markdown — every language is one plugin install away. Write your own in a single TypeScript file."
+        "description": "YAML, JSON, Shell, Markdown — every language is one plugin install away. Autocomplete, formatting, diagnostics — all powered by plugins. Write your own in a single TypeScript file."
       },
       {
         "title": "Fast. Like, actually fast.",
