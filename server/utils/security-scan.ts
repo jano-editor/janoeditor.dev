@@ -14,7 +14,11 @@ interface Rule {
   severity: "critical" | "warning";
   message: string;
   pattern: RegExp;
+  /** Skip this rule when the match is inside a string literal */
+  ignoreInStrings?: boolean;
 }
+
+const TRUSTED_ORGS = ["jano-editor"];
 
 const rules: Rule[] = [
   // critical: shell execution
@@ -54,7 +58,7 @@ const rules: Rule[] = [
     id: "no-fs-import",
     severity: "warning",
     message: "Importing fs module - plugins should not access the file system",
-    pattern: /['"](?:node:)?fs['"]/g,
+    pattern: /(?:import|require)\s*\(?['"](?:node:)?fs['"]/g,
   },
   // critical: network access
   {
@@ -62,6 +66,7 @@ const rules: Rule[] = [
     severity: "critical",
     message: "Network access detected - plugins must not make external requests",
     pattern: /\b(fetch)\s*\(|['"](?:node:)?(?:http|https|net|dgram|tls)['"]/g,
+    ignoreInStrings: true,
   },
   // critical: process manipulation
   {
@@ -107,7 +112,31 @@ function collectFiles(dir: string, base: string): string[] {
   return files;
 }
 
-export function scanPlugin(pluginDir: string): SecurityIssue[] {
+/** Check if a regex match is inside a string literal on the given line */
+function isInsideString(line: string, pattern: RegExp): boolean {
+  pattern.lastIndex = 0;
+  const match = pattern.exec(line);
+  if (!match) return false;
+  const idx = match.index;
+  // Walk the line to determine if idx falls inside a string
+  let inStr: string | null = null;
+  for (let i = 0; i < idx; i++) {
+    const ch = line[i];
+    if (ch === "\\" && inStr) {
+      i++; // skip escaped char
+      continue;
+    }
+    if (!inStr && (ch === '"' || ch === "'" || ch === "`")) {
+      inStr = ch;
+    } else if (ch === inStr) {
+      inStr = null;
+    }
+  }
+  return inStr !== null;
+}
+
+export function scanPlugin(pluginDir: string, repo?: string): SecurityIssue[] {
+  const isTrusted = repo ? TRUSTED_ORGS.some((org) => repo.startsWith(`${org}/`)) : false;
   const issues: SecurityIssue[] = [];
   const files = collectFiles(pluginDir, pluginDir);
 
@@ -124,11 +153,15 @@ export function scanPlugin(pluginDir: string): SecurityIssue[] {
       for (const rule of rules) {
         rule.pattern.lastIndex = 0;
         if (rule.pattern.test(line)) {
+          // Skip URLs/module names that are just string content, not actual API calls
+          if (rule.ignoreInStrings && isInsideString(line, rule.pattern)) continue;
+
           issues.push({
             file,
             line: i + 1,
             rule: rule.id,
-            severity: rule.severity,
+            // Downgrade critical to warning for trusted org plugins
+            severity: isTrusted && rule.severity === "critical" ? "warning" : rule.severity,
             message: rule.message,
           });
         }
