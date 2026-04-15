@@ -325,6 +325,7 @@ const cliCommands = computed(() => [
   { command: "jano --version", description: t("docs.cli.version") },
   { command: "jano --help", description: t("docs.cli.help") },
   { command: "jano update", description: t("docs.cli.update") },
+  { command: "jano --help, -h", description: t("docs.cli.help") },
 ]);
 
 const pluginCommands = computed(() => [
@@ -373,6 +374,7 @@ const shortcutGroups = computed(() => [
     items: [
       { keys: "Ctrl+Shift+Up/Down", action: t("docs.shortcuts.addCursor") },
       { keys: "Ctrl+Alt+Up/Down", action: t("docs.shortcuts.addCursorWin") },
+      { keys: "Ctrl+D", action: t("docs.shortcuts.selectNext") },
       { keys: "Escape", action: t("docs.shortcuts.clearCursors") },
     ],
   },
@@ -385,12 +387,30 @@ const shortcutGroups = computed(() => [
     ],
   },
   {
+    label: t("docs.shortcuts.autocomplete"),
+    items: [
+      { keys: "Ctrl+Space", action: t("docs.shortcuts.triggerAutocomplete") },
+      { keys: "Ctrl+N", action: t("docs.shortcuts.acceptAutocomplete") },
+    ],
+  },
+  {
+    label: t("docs.shortcuts.mouse"),
+    items: [
+      { keys: "Click", action: t("docs.shortcuts.mouseClick") },
+      { keys: "Double-Click", action: t("docs.shortcuts.mouseDoubleClick") },
+      { keys: "Triple-Click", action: t("docs.shortcuts.mouseTripleClick") },
+      { keys: "Drag", action: t("docs.shortcuts.mouseDrag") },
+      { keys: "Scroll", action: t("docs.shortcuts.mouseScroll") },
+    ],
+  },
+  {
     label: t("docs.shortcuts.functionKeys"),
     items: [
       { keys: "F1", action: t("docs.shortcuts.help") },
       { keys: "F2", action: t("docs.shortcuts.history") },
       { keys: "F3", action: t("docs.shortcuts.format") },
       { keys: "F4", action: t("docs.shortcuts.diagnostics") },
+      { keys: "F9", action: t("docs.shortcuts.settings") },
     ],
   },
 ]);
@@ -404,6 +424,7 @@ const hooks = computed(() => ({
   onSave: t("pluginDocs.optionalHooks.onSave"),
   onOpen: t("pluginDocs.optionalHooks.onOpen"),
   onValidate: t("pluginDocs.optionalHooks.onValidate"),
+  onComplete: t("pluginDocs.optionalHooks.onComplete"),
 }));
 
 const tipsCount = 6;

@@ -141,7 +141,7 @@ export default defineEventHandler(async (event) => {
 
     // Step 7: Security scan
     sendStep("security", "running");
-    const issues = scanPlugin(join(tmpDir, "src"));
+    const issues = scanPlugin(join(tmpDir, "src"), repo);
     if (hasCritical(issues)) {
       const report = formatIssues(issues);
       rmSync(tmpDir, { recursive: true, force: true });
