@@ -56,8 +56,8 @@
       "open": "Open a new untitled file",
       "openFile": "Open or create a file",
       "version": "Show installed version",
-      "update": "Update jano to the latest version",
-      "help": "Show help and available commands"
+      "help": "Show help with all commands",
+      "update": "Update jano to the latest version"
     },
     "pluginCli": {
       "title": "Plugin Commands",

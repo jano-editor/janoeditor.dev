@@ -56,8 +56,8 @@
       "open": "Neue leere Datei öffnen",
       "openFile": "Datei öffnen oder erstellen",
       "version": "Installierte Version anzeigen",
-      "update": "jano auf die neueste Version aktualisieren",
-      "help": "Hilfe und verfügbare Befehle anzeigen"
+      "help": "Hilfe mit allen Befehlen anzeigen",
+      "update": "jano auf die neueste Version aktualisieren"
     },
     "pluginCli": {
       "title": "Plugin-Befehle",

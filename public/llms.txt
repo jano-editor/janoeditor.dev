@@ -8,6 +8,7 @@ jano is a terminal-based text editor built with TypeScript and compiled into a s
 
 - Single binary installation — no Node.js, no runtime, no dependencies
 - Familiar shortcuts: Ctrl+C, Ctrl+V, Ctrl+Z, Ctrl+S work out of the box
+- Built-in help: run `jano --help` to see all commands and options
 - Plugin system: syntax highlighting, formatting, validation — one `jano plugin install` away
 - Multi-cursor editing (Ctrl+Shift+Up/Down)
 - Handles 60,000+ lines without lag
