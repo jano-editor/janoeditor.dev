@@ -427,5 +427,5 @@ const hooks = computed(() => ({
   onComplete: t("pluginDocs.optionalHooks.onComplete"),
 }));
 
-const tipsCount = 6;
+const tipsCount = 8;
 </script>

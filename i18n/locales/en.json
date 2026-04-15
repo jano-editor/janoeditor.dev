@@ -114,7 +114,7 @@
   },
   "pluginDocs": {
     "title": "Build a Plugin",
-    "intro": "A jano plugin is a single TypeScript file that exports a LanguagePlugin object. No build system required -esbuild bundles it for you.",
+    "intro": "A jano plugin is a single TypeScript file that exports a LanguagePlugin object. No build system required - esbuild bundles it for you.",
     "required": "Required",
     "requiredFields": {
       "name": "Plugin display name",
@@ -122,14 +122,14 @@
     },
     "optional": "Optional Hooks",
     "optionalHooks": {
-      "highlight": "Regex-based syntax highlighting -define patterns for comments, strings, keywords etc.",
-      "highlightLine": "Full custom highlighting -return tokens per line, with access to all lines (for multiline strings, block comments etc.)",
+      "highlight": "Regex-based syntax highlighting - define patterns for comments, strings, keywords etc.",
+      "highlightLine": "Full custom highlighting - return tokens per line, with access to all lines (for multiline strings, block comments etc.)",
       "onKeyDown": "Intercept any key press before the editor handles it. Return handled: true to prevent default behavior. Great for auto-close brackets, snippets, custom shortcuts.",
       "onCursorAction": "Fires after each edit (char typed, newline, backspace, delete, tab, paste). Use for auto-indent, auto-close, list continuation etc.",
       "onFormat": "Fires on F3. Reformat the entire document.",
       "onSave": "Fires on Ctrl+S. Apply edits before saving.",
       "onOpen": "Fires when a file is opened.",
-      "onValidate": "Validate the document content. Return diagnostics (errors, warnings) shown inline.",
+      "onValidate": "Validate the document content. Return diagnostics (errors, warnings) shown inline. Debounced and called in the background while the user types.",
       "onComplete": "Provide autocomplete suggestions. Fires on Ctrl+Space or automatically after typing (300ms debounce). Return completions for the current cursor position."
     },
     "structure": "File Structure",
@@ -140,12 +140,14 @@
     "exampleRepo": "See a real plugin as reference:",
     "tips": "Tips",
     "tipsList": [
-      "All hooks are optional -start with just highlight and add more as needed",
+      "All hooks are optional - start with just highlight and add more as needed",
       "onKeyDown gets the full key info (name, ctrl, alt, shift) and can prevent default editor behavior",
-      "onCursorAction receives deletedText for backspace/delete -useful for auto-close bracket pairs",
+      "onCursorAction receives deletedText for backspace/delete - useful for auto-close bracket pairs",
       "highlightLine overrides regex-based highlight when both are defined",
       "Use replaceAll in EditResult to replace the entire document (e.g. for formatting)",
-      "The plugin never sees editor internals -it only works with lines, cursors, and edits"
+      "onComplete items can include a 'kind' (keyword, function, variable, property, type, constant, snippet) - jano shows an icon for each",
+      "Plugin crashes never break the editor - jano runs all hooks through an isolating wrapper",
+      "The plugin never sees editor internals - it only works with lines, cursors, and edits"
     ]
   },
   "stats": {
