@@ -114,7 +114,7 @@
   },
   "pluginDocs": {
     "title": "Plugin bauen",
-    "intro": "Ein jano Plugin ist eine einzelne TypeScript-Datei die ein LanguagePlugin-Objekt exportiert. Kein Build-System nötig -esbuild bundlet es für dich.",
+    "intro": "Ein jano Plugin ist eine einzelne TypeScript-Datei die ein LanguagePlugin-Objekt exportiert. Kein Build-System nötig - esbuild bundlet es für dich.",
     "required": "Pflichtfelder",
     "requiredFields": {
       "name": "Anzeigename des Plugins",
@@ -122,14 +122,14 @@
     },
     "optional": "Optionale Hooks",
     "optionalHooks": {
-      "highlight": "Regex-basiertes Syntax-Highlighting -Patterns für Kommentare, Strings, Keywords etc.",
-      "highlightLine": "Eigenes Highlighting -Tokens pro Zeile, mit Zugriff auf alle Zeilen (für mehrzeilige Strings, Block-Kommentare etc.)",
+      "highlight": "Regex-basiertes Syntax-Highlighting - Patterns für Kommentare, Strings, Keywords etc.",
+      "highlightLine": "Eigenes Highlighting - Tokens pro Zeile, mit Zugriff auf alle Zeilen (für mehrzeilige Strings, Block-Kommentare etc.)",
       "onKeyDown": "Jede Taste abfangen bevor der Editor sie verarbeitet. handled: true verhindert Standardverhalten. Für Auto-Close Brackets, Snippets, Custom Shortcuts.",
       "onCursorAction": "Feuert nach jedem Edit (Zeichen, Newline, Backspace, Delete, Tab, Paste). Für Auto-Indent, Auto-Close, Listen-Fortsetzung etc.",
       "onFormat": "Feuert bei F3. Gesamtes Dokument neu formatieren.",
       "onSave": "Feuert bei Ctrl+S. Edits vor dem Speichern anwenden.",
       "onOpen": "Feuert wenn eine Datei geöffnet wird.",
-      "onValidate": "Dokument validieren. Diagnostics (Fehler, Warnungen) werden inline angezeigt.",
+      "onValidate": "Dokument validieren. Diagnostics (Fehler, Warnungen) werden inline angezeigt. Debounced, läuft im Hintergrund während der User tippt.",
       "onComplete": "Autocomplete-Vorschläge liefern. Feuert bei Ctrl+Space oder automatisch beim Tippen (300ms Debounce). Completions für die aktuelle Cursor-Position zurückgeben."
     },
     "structure": "Dateistruktur",
@@ -140,12 +140,14 @@
     "exampleRepo": "Ein echtes Plugin als Referenz:",
     "tips": "Tipps",
     "tipsList": [
-      "Alle Hooks sind optional -fang mit highlight an und erweitere nach Bedarf",
+      "Alle Hooks sind optional - fang mit highlight an und erweitere nach Bedarf",
       "onKeyDown bekommt die volle Key-Info (name, ctrl, alt, shift) und kann das Editor-Standardverhalten verhindern",
-      "onCursorAction erhält deletedText bei Backspace/Delete -nützlich für Auto-Close Bracket-Paare",
+      "onCursorAction erhält deletedText bei Backspace/Delete - nützlich für Auto-Close Bracket-Paare",
       "highlightLine überschreibt regex-basiertes highlight wenn beides definiert ist",
       "replaceAll in EditResult ersetzt das gesamte Dokument (z.B. für Formatierung)",
-      "Das Plugin sieht nie Editor-Internals -es arbeitet nur mit Lines, Cursors und Edits"
+      "onComplete-Items können ein 'kind' haben (keyword, function, variable, property, type, constant, snippet) - jano zeigt passende Icons",
+      "Plugin-Crashes beschädigen jano nicht - alle Hooks laufen durch einen Isolations-Wrapper",
+      "Das Plugin sieht nie Editor-Internals - es arbeitet nur mit Lines, Cursors und Edits"
     ]
   },
   "stats": {
