@@ -42,21 +42,43 @@ case "$(uname -m)" in
 esac
 
 BINARY="jano-${OS}-${ARCH}"
-DOWNLOAD_URL="https://github.com/jano-editor/jano/releases/latest/download/${BINARY}"
-INSTALL_DIR="$HOME/.local/bin"
+INSTALL_DIR="${JANO_INSTALL_DIR:-$HOME/.local/bin}"
+RELEASES="https://github.com/jano-editor/jano/releases"
+API_URL="https://api.github.com/repos/jano-editor/jano/releases?per_page=100"
 
 echo -e "  Platform: ${BOLD}${OS}-${ARCH}${RESET}"
-echo ""
 
 # Check if curl or wget is available
 if command -v curl &> /dev/null; then
   DOWNLOAD_CMD="curl -fSL --progress-bar -o"
+  FETCH_CMD="curl -fsSL --max-time 15"
 elif command -v wget &> /dev/null; then
   DOWNLOAD_CMD="wget -q --show-progress -O"
+  FETCH_CMD="wget -qO- --timeout=15"
 else
   echo -e "${RED}✗ curl or wget required${RESET}"
   exit 1
 fi
+
+# Find the newest editor release. ui and plugin-types releases live in the same repo,
+# so "releases/latest" may point to a release without binaries.
+if [ -n "$JANO_VERSION" ]; then
+  TAG="editor-v${JANO_VERSION#v}"
+else
+  TAG=$($FETCH_CMD "$API_URL" 2>/dev/null \
+    | grep -o '"tag_name": *"editor-v[^"]*"' \
+    | head -n 1 \
+    | sed 's/.*"\(editor-v[^"]*\)"/\1/' || true)
+fi
+
+if [ -n "$TAG" ]; then
+  DOWNLOAD_URL="${RELEASES}/download/${TAG}/${BINARY}"
+  echo -e "  Version:  ${BOLD}${TAG#editor-v}${RESET}"
+else
+  echo -e "${YELLOW}⚠ Could not reach the GitHub API, falling back to the latest release${RESET}"
+  DOWNLOAD_URL="${RELEASES}/latest/download/${BINARY}"
+fi
+echo ""
 
 # Download binary
 echo "Downloading jano..."
@@ -69,6 +91,25 @@ if ! $DOWNLOAD_CMD "$TMPFILE" "$DOWNLOAD_URL"; then
   echo "  No binary available for ${OS}-${ARCH}."
   echo "  Please visit https://github.com/jano-editor/jano/releases"
   exit 1
+fi
+
+# Verify checksum (older releases don't publish SHA256SUMS)
+if command -v sha256sum &> /dev/null; then
+  HASH_CMD="sha256sum"
+else
+  HASH_CMD="shasum -a 256"
+fi
+SUMS=$($FETCH_CMD "${DOWNLOAD_URL%/*}/SHA256SUMS" 2>/dev/null || true)
+EXPECTED=$(echo "$SUMS" | grep -E " \*?${BINARY}$" | cut -d' ' -f1)
+if [ -n "$EXPECTED" ]; then
+  ACTUAL=$($HASH_CMD "$TMPFILE" | cut -d' ' -f1)
+  if [ "$ACTUAL" != "$EXPECTED" ]; then
+    echo -e "${RED}✗ Checksum mismatch, the download may be corrupted. Nothing was installed.${RESET}"
+    exit 1
+  fi
+  echo -e "${GREEN}✓ Checksum verified${RESET}"
+else
+  echo -e "${YELLOW}⚠ No checksum published for this release, skipping verification${RESET}"
 fi
 
 # Install
@@ -103,7 +144,7 @@ if ! echo "$PATH" | tr ':' '\n' | grep -qx "$INSTALL_DIR"; then
   if [ "$SHELL_NAME" = "fish" ]; then
     echo "    fish_add_path $INSTALL_DIR"
   else
-    echo "    echo 'export PATH=\"\$HOME/.local/bin:\$PATH\"' >> ${RC_FILE}"
+    echo "    echo 'export PATH=\"${INSTALL_DIR}:\$PATH\"' >> ${RC_FILE}"
   fi
   echo ""
   echo "  Then restart your terminal or run:"
