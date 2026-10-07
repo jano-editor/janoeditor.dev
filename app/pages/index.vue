@@ -60,6 +60,7 @@
             </dd>
           </div>
         </dl>
+        <p v-if="isMac" class="mac-hint">{{ $t("landing.keys.macHint") }}</p>
       </section>
 
       <!-- nano / vim / jano -->
@@ -169,6 +170,12 @@ const activeTab = ref(
   import.meta.client && /Win/i.test(navigator.userAgent) ? "Windows" : "Linux/Mac",
 );
 const copied = ref(false);
+
+// on macOS jano uses Ctrl too, the terminal keeps Cmd for itself
+const isMac = ref(false);
+onMounted(() => {
+  isMac.value = /Mac|iPhone|iPad/i.test(navigator.userAgent);
+});
 
 const installCommands: Record<string, string> = {
   "Linux/Mac": "curl -fsSL https://janoeditor.dev/install.sh | bash",
@@ -336,6 +343,11 @@ function copyInstall() {
   color: #dcdcdc;
   border-bottom: 2px solid #23262d;
   border-radius: 3px;
+}
+.mac-hint {
+  margin-top: 1rem;
+  font-size: 0.95rem;
+  color: #8a909b;
 }
 .keys-title {
   color: #e6e9ee;

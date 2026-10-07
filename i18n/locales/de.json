@@ -223,7 +223,8 @@
           "title": "Hilfe ist eine Taste entfernt.",
           "text": "Alle Shortcuts, im Editor, immer."
         }
-      ]
+      ],
+      "macHint": "Auf dem Mac auch Ctrl, nicht Cmd: die Cmd-Taste behält dein Terminal für sich."
     },
     "plugins": {
       "title": "Sprachen sind Plugins",

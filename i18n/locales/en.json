@@ -223,7 +223,8 @@
           "title": "Help is one key away.",
           "text": "Every shortcut, in the editor, always."
         }
-      ]
+      ],
+      "macHint": "On a Mac it's Ctrl too, not Cmd: your terminal keeps the Cmd key for itself."
     },
     "plugins": {
       "title": "Languages are plugins",
