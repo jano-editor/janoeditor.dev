@@ -8,12 +8,31 @@ export default defineNuxtConfig({
     "@nuxt/image",
     "@nuxt/test-utils",
     "@nuxt/ui",
+    "@nuxt/content",
     "@nuxtjs/i18n",
     "@nuxtjs/sitemap",
     "nuxt-auth-utils",
   ],
 
   css: ["~/assets/css/main.css"],
+
+  content: {
+    build: {
+      markdown: {
+        // One Dark: the same colors jano's plugins use in the terminal
+        highlight: {
+          theme: "one-dark-pro",
+          langs: ["ts", "js", "json", "bash", "ini", "makefile", "yaml", "python", "toml"],
+        },
+      },
+    },
+  },
+
+  // the docs start with getting started, jano's error messages link to /docs
+  routeRules: {
+    "/docs": { redirect: "/docs/getting-started" },
+    "/de/docs": { redirect: "/de/docs/getting-started" },
+  },
 
   colorMode: {
     preference: "dark",

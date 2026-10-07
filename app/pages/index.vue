@@ -251,8 +251,6 @@ function copyInstall() {
 <style scoped>
 .landing {
   min-height: 100vh;
-  background: var(--color-ink);
-  color: var(--color-text);
 }
 .page {
   max-width: 68rem;

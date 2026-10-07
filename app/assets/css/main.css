@@ -127,3 +127,13 @@
   height: 32px;
   background: linear-gradient(to bottom, transparent, rgba(210, 80, 239, 0.3), transparent);
 }
+
+/* one background for every page: jano's editor background */
+:root,
+.dark {
+  --ui-bg: #1b1e24;
+}
+body {
+  background: var(--color-ink);
+  color: var(--color-text);
+}

@@ -103,7 +103,8 @@
       "format": "Dokument formatieren (Plugin)",
       "diagnostics": "Diagnose anzeigen (Plugin)",
       "settings": "Einstellungen"
-    }
+    },
+    "onThisPage": "Auf dieser Seite"
   },
   "pluginDocs": {
     "title": "Plugin bauen",

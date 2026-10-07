@@ -103,7 +103,8 @@
       "format": "Format document (plugin)",
       "diagnostics": "Show diagnostics (plugin)",
       "settings": "Settings"
-    }
+    },
+    "onThisPage": "On this page"
   },
   "pluginDocs": {
     "title": "Build a Plugin",
