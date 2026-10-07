@@ -31,7 +31,9 @@
           </div>
         </ClientOnly>
 
-        <NuxtLink to="/plugins" class="hero-link">{{ $t("hero.pluginStore") }}</NuxtLink>
+        <NuxtLink :to="$localePath('/plugins')" class="hero-link">{{
+          $t("hero.pluginStore")
+        }}</NuxtLink>
       </div>
 
       <JanoShowcase class="hero-demo" :scenes="scenes" :labels="sceneLabels" />
@@ -91,7 +93,7 @@
             <NuxtLink
               v-for="p in pluginList"
               :key="p.name"
-              :to="`/plugins?name=${p.name}`"
+              :to="{ path: $localePath('/plugins'), query: { name: p.name } }"
               class="plugin-row"
             >
               <span class="plugin-name">{{ p.name }}</span>
@@ -102,7 +104,9 @@
           <div class="console-gap"><span class="prompt">$</span> jano plugin install python</div>
           <div class="ok">[jano] ✓ Installed python.</div>
         </div>
-        <NuxtLink to="/plugins" class="link">{{ $t("landing.plugins.store") }}</NuxtLink>
+        <NuxtLink :to="$localePath('/plugins')" class="link">{{
+          $t("landing.plugins.store")
+        }}</NuxtLink>
       </section>
 
       <!-- roadmap, read like git log --graph -->

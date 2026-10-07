@@ -6,12 +6,12 @@
       <span class="footer-mid">{{ $t("footer.madeWith") }}</span>
       <nav class="footer-links">
         <a href="https://github.com/jano-editor/jano" target="_blank" rel="noopener">GitHub</a>
-        <NuxtLink to="/plugins">Plugins</NuxtLink>
-        <NuxtLink to="/docs">Docs</NuxtLink>
+        <NuxtLink :to="$localePath('/plugins')">Plugins</NuxtLink>
+        <NuxtLink :to="$localePath('/docs/getting-started')">Docs</NuxtLink>
         <a href="https://fh-softdev.de/imprint" target="_blank" rel="noopener">{{
           $t("footer.imprint")
         }}</a>
-        <NuxtLink to="/privacy">{{ $t("footer.privacy") }}</NuxtLink>
+        <NuxtLink :to="$localePath('/privacy')">{{ $t("footer.privacy") }}</NuxtLink>
       </nav>
     </div>
   </footer>

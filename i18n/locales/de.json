@@ -1,7 +1,8 @@
 {
   "nav": {
     "plugins": "Plugins",
-    "docs": "Docs"
+    "docs": "Docs",
+    "language": "Sprache"
   },
   "hero": {
     "tagline": "Ein moderner Terminal-Editor mit Plugin-Unterstützung.",
@@ -152,5 +153,15 @@
         "Plugin-Vorschläge beim ersten Start"
       ]
     }
+  },
+  "search": {
+    "open": "Docs durchsuchen",
+    "button": "Suchen",
+    "title": "Suchen",
+    "placeholder": "Docs durchsuchen",
+    "empty": "Nichts gefunden für \"{query}\"",
+    "move": "Bewegen",
+    "go": "Öffnen",
+    "close": "Schließen"
   }
 }

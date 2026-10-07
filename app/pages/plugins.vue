@@ -52,7 +52,7 @@
 
         <p class="text-xs text-charcoal-500 mt-3">
           {{ $t("pluginStore.publishHint") }}
-          <NuxtLink to="/docs" class="text-jano-400 hover:underline ml-1">
+          <NuxtLink :to="$localePath('/docs/plugins')" class="text-jano-400 hover:underline ml-1">
             {{ $t("nav.docs") }} →
           </NuxtLink>
         </p>
@@ -251,7 +251,10 @@
 
       <div v-else class="text-center py-24">
         <p class="text-charcoal-500 text-lg">{{ $t("pluginStore.comingSoon") }}</p>
-        <NuxtLink to="/docs" class="text-jano-400 hover:underline text-sm mt-2 inline-block">
+        <NuxtLink
+          :to="$localePath('/docs/plugins')"
+          class="text-jano-400 hover:underline text-sm mt-2 inline-block"
+        >
           {{ $t("nav.docs") }} →
         </NuxtLink>
       </div>

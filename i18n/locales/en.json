@@ -1,7 +1,8 @@
 {
   "nav": {
     "plugins": "Plugins",
-    "docs": "Docs"
+    "docs": "Docs",
+    "language": "Language"
   },
   "hero": {
     "tagline": "A modern terminal editor with plugin support.",
@@ -152,5 +153,15 @@
         "Plugin suggestions on first start"
       ]
     }
+  },
+  "search": {
+    "open": "Search the docs",
+    "button": "Search",
+    "title": "Search",
+    "placeholder": "Search the docs",
+    "empty": "Nothing found for \"{query}\"",
+    "move": "Move",
+    "go": "Open",
+    "close": "Close"
   }
 }
