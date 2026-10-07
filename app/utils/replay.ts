@@ -156,6 +156,29 @@ export class Script {
     this.state = { ...this.state, lines, cursors, selections: [], dirty: true };
   }
 
+  /** Deletes the grapheme before every cursor, like jano (an emoji goes as a whole). */
+  backspace() {
+    const lines = [...this.state.lines];
+    const order = [...this.state.cursors].sort((a, b) => b.line - a.line || b.col - a.col);
+    const removed = new Map<string, number>();
+    for (const c of order) {
+      const line = lines[c.line] ?? "";
+      const graphemes = Array.from(segmenter.segment(line.slice(0, c.col)));
+      const last = graphemes[graphemes.length - 1]?.segment ?? "";
+      lines[c.line] = line.slice(0, c.col - last.length) + line.slice(c.col);
+      removed.set(`${c.line}:${c.col}`, last.length);
+    }
+    // every cursor moves back by what was removed at or before it on its line
+    const cursors = this.state.cursors.map((c) => {
+      let shift = 0;
+      for (const o of this.state.cursors) {
+        if (o.line === c.line && o.col <= c.col) shift += removed.get(`${o.line}:${o.col}`) ?? 0;
+      }
+      return { line: c.line, col: c.col - shift };
+    });
+    return this.push(160, { lines, cursors, dirty: true, key: "Backspace" });
+  }
+
   /** Inserts a newline at the (single) cursor, with the given indent. */
   newline(indent = "") {
     const c = this.state.cursors[0] ?? { line: 0, col: 0 };
@@ -185,6 +208,8 @@ export class Script {
     return this.frames;
   }
 }
+
+const segmenter = new Intl.Segmenter(undefined, { granularity: "grapheme" });
 
 // ----- highlighting -----
 

@@ -13,9 +13,9 @@ const segmenter = new Intl.Segmenter(undefined, { granularity: "grapheme" });
 /** Emoji and CJK take two cells in a terminal, like in jano itself. */
 function isWide(g: string): boolean {
   const cp = g.codePointAt(0) ?? 0;
-  if (g.includes("️") && cp >= 0x80) return true;
+  if (g.includes("\uFE0F") && cp >= 0x80) return true;
   return (
-    cp >= 0x1f000 ||
+    /^\p{Emoji_Presentation}/u.test(g) ||
     (cp >= 0x1100 && cp <= 0x115f) ||
     (cp >= 0x2e80 && cp <= 0xa4cf) ||
     (cp >= 0xac00 && cp <= 0xd7a3) ||
@@ -232,7 +232,8 @@ const revealLetters = computed(() => {
 
 .body {
   position: relative;
-  height: calc(var(--rows) * var(--lh));
+  /* extra room below the code, so dialogs have space around them */
+  height: calc(var(--rows) * var(--lh) + 80px);
   padding: 0.25em 0;
 }
 .row {
