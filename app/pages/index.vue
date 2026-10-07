@@ -1,72 +1,41 @@
 <template>
   <div class="min-h-screen bg-charcoal-950 text-charcoal-50">
-    <!-- Hero with gradient background -->
-    <div class="hero-bg">
-      <div class="max-w-5xl mx-auto px-6 pt-24 pb-16">
-        <div class="text-center space-y-6 animate-fade-up">
-          <img
-            src="/images/logo_180-180.png"
-            alt="jano"
-            class="w-28 h-28 mx-auto rounded-2xl glow-jano"
-            width="112"
-            height="112"
-          />
-          <h1 class="text-7xl font-extrabold tracking-tight">
-            <span class="text-gradient">jano</span>
-          </h1>
-          <p class="text-xl text-charcoal-300 max-w-md mx-auto">
-            {{ $t("hero.tagline") }}
-          </p>
-          <p class="text-charcoal-500 text-lg">
-            {{ $t("hero.subtitle") }}
-          </p>
+    <!-- Hero: the headline next to a replayed jano session -->
+    <section class="hero">
+      <div class="hero-text">
+        <h1 class="hero-title">{{ $t("hero.headline") }}</h1>
+        <p class="hero-sub">{{ $t("hero.subtitle") }}</p>
 
-          <!-- Install commands -->
-          <ClientOnly>
-            <div class="pt-10 space-y-3 max-w-xl mx-auto">
-              <div class="flex gap-2 justify-center">
-                <button
-                  v-for="tab in ['Linux/Mac', 'Homebrew', 'Windows']"
-                  :key="tab"
-                  class="px-5 py-2 rounded-lg text-sm font-medium transition-all"
-                  :class="
-                    activeTab === tab
-                      ? 'bg-jano-600 text-white shadow-lg shadow-jano-600/20'
-                      : 'bg-charcoal-800 text-charcoal-400 hover:bg-charcoal-700 hover:text-charcoal-300'
-                  "
-                  @click="activeTab = tab"
-                >
-                  {{ tab }}
-                </button>
-              </div>
-
-              <div
-                class="p-4 rounded-xl bg-charcoal-900/80 border border-charcoal-700/50 backdrop-blur-sm font-mono text-sm text-left flex items-center justify-between"
+        <ClientOnly>
+          <div class="install">
+            <div class="install-tabs" role="tablist">
+              <button
+                v-for="tab in ['Linux/Mac', 'Homebrew', 'Windows']"
+                :key="tab"
+                role="tab"
+                :aria-selected="activeTab === tab"
+                class="install-tab"
+                :class="{ active: activeTab === tab }"
+                @click="activeTab = tab"
               >
-                <code class="text-jano-400">{{ installCommand }}</code>
-                <button
-                  class="ml-3 shrink-0 px-3 py-1 rounded-md text-sm transition-all"
-                  :class="
-                    copied
-                      ? 'text-green-400 bg-green-400/10'
-                      : 'text-charcoal-500 hover:text-charcoal-300 hover:bg-charcoal-800'
-                  "
-                  @click="copyInstall"
-                >
-                  {{ copied ? "✓ Copied!" : "Copy" }}
-                </button>
-              </div>
+                {{ tab }}
+              </button>
             </div>
-          </ClientOnly>
-
-          <div class="flex justify-center gap-4 pt-6">
-            <UButton size="lg" color="plum" variant="outline" to="/plugins" class="px-8">
-              {{ $t("hero.pluginStore") }}
-            </UButton>
+            <div class="install-line">
+              <span class="install-prompt">$</span>
+              <code class="install-cmd">{{ installCommand }}</code>
+              <button class="install-copy" @click="copyInstall">
+                {{ copied ? $t("hero.copied") : $t("hero.copy") }}
+              </button>
+            </div>
           </div>
-        </div>
+        </ClientOnly>
+
+        <NuxtLink to="/plugins" class="hero-link">{{ $t("hero.pluginStore") }}</NuxtLink>
       </div>
-    </div>
+
+      <JanoShowcase class="hero-demo" :scenes="scenes" :labels="sceneLabels" />
+    </section>
 
     <div class="max-w-5xl mx-auto px-6">
       <!-- Stats Bar -->
@@ -382,6 +351,17 @@
 <script setup lang="ts">
 const { t, tm, rt } = useI18n();
 
+// the hero replays, built once (same frames on server and client)
+const scenes = buildScenes();
+const sceneLabels = computed(() => [
+  t("showcase.multiCursor"),
+  t("showcase.recovery"),
+  t("showcase.plugins"),
+  t("showcase.unicode"),
+  t("showcase.projectSettings"),
+  t("showcase.autocomplete"),
+]);
+
 const { data: plugins } = await useAsyncData("plugins", () => $fetch("/api/plugins"));
 const pluginCount = computed(() => String(plugins.value?.length || 0));
 
@@ -435,6 +415,105 @@ function copyInstall() {
 </script>
 
 <style scoped>
+.hero {
+  max-width: 68rem;
+  margin: 0 auto;
+  padding: 5rem 1.5rem 4rem;
+  text-align: center;
+}
+.hero-title {
+  font-family: var(--font-mono);
+  font-size: clamp(1.7rem, 4.2vw, 3.1rem);
+  line-height: 1.15;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  color: var(--color-title);
+  text-wrap: balance;
+  max-width: 24ch;
+  margin: 0 auto;
+}
+.hero-sub {
+  margin-top: 1rem;
+  font-size: 1.15rem;
+  color: var(--color-text);
+}
+.install {
+  margin: 2rem auto 0;
+  max-width: 46rem;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+}
+.install-tabs {
+  display: flex;
+  justify-content: center;
+  gap: 1.5ch;
+}
+.install-tab {
+  padding: 0.15rem 0;
+  border-bottom: 2px solid transparent;
+  color: #8a909b;
+  cursor: pointer;
+}
+.install-tab.active {
+  color: var(--color-title);
+  border-color: var(--color-cursor);
+}
+.install-tab:focus-visible,
+.install-copy:focus-visible,
+.hero-link:focus-visible {
+  outline: 2px solid var(--color-cursor);
+  outline-offset: 2px;
+}
+.install-line {
+  margin-top: 0.6rem;
+  display: flex;
+  align-items: center;
+  gap: 1ch;
+  padding: 0.7rem 1ch;
+  background: var(--color-panel);
+  border: 1px solid var(--color-line);
+  border-radius: 6px;
+}
+.install-prompt {
+  color: var(--color-cursor);
+}
+.install-cmd {
+  flex: 1;
+  text-align: left;
+  min-width: 0;
+  overflow-wrap: anywhere;
+  color: #d7dae0;
+}
+.install-copy {
+  color: #8a909b;
+  cursor: pointer;
+}
+.install-copy:hover {
+  color: var(--color-title);
+}
+.hero-link {
+  display: inline-block;
+  margin-top: 1.5rem;
+  color: var(--color-cursor);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+.hero-demo {
+  display: block;
+  margin-top: 3.5rem;
+  text-align: left;
+  --term-size: clamp(9px, 1.35vw, 16px);
+}
+@media (max-width: 700px) {
+  .hero {
+    padding-top: 3rem;
+  }
+  .hero-demo {
+    margin-top: 2.5rem;
+    --term-size: clamp(7.5px, 2.3vw, 12px);
+  }
+}
+
 .modal-enter-active,
 .modal-leave-active {
   transition: opacity 0.2s ease;

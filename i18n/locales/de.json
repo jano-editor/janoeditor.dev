@@ -7,7 +7,10 @@
     "tagline": "Ein moderner Terminal-Editor mit Plugin-Unterstützung.",
     "subtitle": "nano Einfachheit. VS Code Power. Kein Ballast.",
     "getStarted": "Loslegen",
-    "pluginStore": "Plugin Store"
+    "pluginStore": "Plugin Store",
+    "headline": "Der Terminal-Editor, den du schon bedienen kannst.",
+    "copy": "Kopieren",
+    "copied": "Kopiert"
   },
   "features": {
     "formatValidation": {
@@ -222,5 +225,13 @@
   "footer": {
     "license": "MIT Lizenz",
     "madeWith": "Gebaut mit TypeScript"
+  },
+  "showcase": {
+    "multiCursor": "Multi-Cursor",
+    "recovery": "Wiederherstellen",
+    "plugins": "Plugins",
+    "unicode": "Unicode",
+    "projectSettings": "Projekt-Settings",
+    "autocomplete": "Autocomplete"
   }
 }

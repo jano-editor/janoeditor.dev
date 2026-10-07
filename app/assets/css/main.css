@@ -42,6 +42,19 @@
   --color-charcoal-950: #1a1a1a;
 }
 
+/* Redesign tokens: colors straight from the editor, fonts with character */
+@theme {
+  --font-sans: "Atkinson Hyperlegible Next", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "Martian Mono", ui-monospace, "SFMono-Regular", monospace;
+
+  --color-ink: #1b1e24; /* background */
+  --color-panel: #2d323c; /* status bar, surfaces */
+  --color-line: #373c46; /* borders */
+  --color-text: #abb2bf; /* body text */
+  --color-title: #e6c864; /* headings, like jano's title bar */
+  --color-cursor: #d250ef; /* the one accent: cursor, active key, links */
+}
+
 /* Gradient text */
 .text-gradient {
   background: linear-gradient(135deg, #d250ef 0%, #de6df7 50%, #f09ec8 100%);
