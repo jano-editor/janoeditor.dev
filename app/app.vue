@@ -13,14 +13,14 @@ useSeoMeta({
   ogTitle: "jano",
   description,
   ogDescription: description,
-  ogImage: "https://janoeditor.dev/og-image.png",
+  ogImage: "https://janoeditor.dev/og-image.png?v=2",
   ogUrl: "https://janoeditor.dev",
   ogType: "website",
   ogLocale,
   twitterCard: "summary_large_image",
   twitterTitle: "jano",
   twitterDescription: description,
-  twitterImage: "https://janoeditor.dev/og-image.png",
+  twitterImage: "https://janoeditor.dev/og-image.png?v=2",
 });
 </script>
 
