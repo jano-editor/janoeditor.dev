@@ -33,13 +33,11 @@ function date(iso: string) {
   });
 }
 
-const copied = ref<string | null>(null);
-function copy(text: string) {
-  void navigator.clipboard.writeText(text);
-  copied.value = text;
-  setTimeout(() => {
-    if (copied.value === text) copied.value = null;
-  }, 2000);
+const { copied, failed, copy } = useCopy();
+function copyLabel(text: string, idle: string) {
+  if (copied.value === text) return t("hero.copied");
+  if (failed.value === text) return t("hero.copyFailed");
+  return idle;
 }
 const installCommand = computed(() => `jano plugin install ${name.value}`);
 
@@ -72,7 +70,7 @@ async function deletePlugin() {
       <span class="prompt" aria-hidden="true">$</span>
       <code class="cmd">{{ installCommand }}</code>
       <button class="copy" @click="copy(installCommand)">
-        {{ copied === installCommand ? $t("hero.copied") : $t("hero.copy") }}
+        {{ copyLabel(installCommand, $t("hero.copy")) }}
       </button>
     </div>
 
@@ -121,9 +119,10 @@ async function deletePlugin() {
               @click="copy(`jano plugin install ${plugin.name}@${v.version}`)"
             >
               {{
-                copied === `jano plugin install ${plugin.name}@${v.version}`
-                  ? $t("hero.copied")
-                  : $t("pluginStore.copyInstall")
+                copyLabel(
+                  `jano plugin install ${plugin.name}@${v.version}`,
+                  $t("pluginStore.copyInstall"),
+                )
               }}
             </button>
             <button

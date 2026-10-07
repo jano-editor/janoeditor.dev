@@ -5,13 +5,12 @@
     "language": "Sprache"
   },
   "hero": {
-    "tagline": "Ein moderner Terminal-Editor mit Plugin-Unterstützung.",
     "subtitle": "nano Einfachheit. VS Code Power. Kein Ballast.",
-    "getStarted": "Loslegen",
     "pluginStore": "Plugin Store",
     "headline": "Der Terminal-Editor, den du schon bedienen kannst.",
     "copy": "Kopieren",
-    "copied": "Kopiert"
+    "copied": "Kopiert",
+    "copyFailed": "Kopieren ging nicht"
   },
   "pluginStore": {
     "title": "Plugin Store",
@@ -65,7 +64,7 @@
     "nano": {
       "name": "nano",
       "verdict": "Zu simpel.",
-      "description": "Keine Plugins. Kein Multi-Cursor. Kein Syntax-Highlighting. Gut für schnelle Edits -aber das war's."
+      "description": "Keine Plugins. Kein Multi-Cursor. Kein Syntax-Highlighting. Gut für schnelle Edits, aber das war's."
     },
     "vim": {
       "name": "vim",
@@ -90,7 +89,8 @@
     "plugins": "Plugins",
     "unicode": "Unicode",
     "projectSettings": "Projekt-Settings",
-    "autocomplete": "Autocomplete"
+    "autocomplete": "Autocomplete",
+    "label": "jano-Demo. Die Tasten 1 bis 6 wechseln die Szene, die Pfeile blättern."
   },
   "landing": {
     "stats": {
@@ -105,30 +105,37 @@
       "subtitle": "Keine Modi, nichts vorher lernen. Das machen die Tasten.",
       "items": [
         {
+          "keys": ["Ctrl+S", "Ctrl+Z", "Ctrl+F"],
           "title": "Deine Finger kennen es schon.",
           "text": "Speichern, Rückgängig, Suchen, Kopieren, Einfügen. Jeder Shortcut funktioniert wie überall, die Maus auch."
         },
         {
+          "keys": ["Ctrl+D"],
           "title": "Multi-Cursor.",
           "text": "Nächsten Treffer markieren, einmal tippen, alle ändern. Ctrl+Shift+Hoch/Runter setzt Cursor Zeile für Zeile."
         },
         {
+          "keys": ["F3", "F4"],
           "title": "Formatieren und Fehler.",
           "text": "Plugins formatieren deine Datei und zeigen Fehler direkt in der Zeile."
         },
         {
+          "keys": ["Ctrl+R"],
           "title": "Nichts geht verloren.",
           "text": "jano sichert beim Tippen mit. Wird es abgeschossen, bietet der nächste Start deinen Text wieder an."
         },
         {
+          "keys": ["F9"],
           "title": "Projekt-Settings.",
           "text": "jano liest .editorconfig. Tabs im Makefile, zwei Leerzeichen im YAML, ohne deine eigenen Settings anzufassen."
         },
         {
+          "keys": ["F2"],
           "title": "Änderungsverlauf.",
           "text": "Jede Änderung der Sitzung durchblättern und an jeden Punkt zurückspringen."
         },
         {
+          "keys": ["F1"],
           "title": "Hilfe ist eine Taste entfernt.",
           "text": "Alle Shortcuts, im Editor, immer."
         }
@@ -147,18 +154,54 @@
       "later": "later",
       "shipped": "shipped",
       "items": [
-        "Soft-Wrap für lange Zeilen",
-        "Read-only-Modus",
-        "Tabs für mehrere Dateien",
-        "Split View",
-        "Regex-Suche",
-        "Plugin-Manager im Editor",
-        "Makros",
-        "Crash-Wiederherstellung",
-        "Unterstützung für .editorconfig",
-        "Asynchrone Plugin-API",
-        "Korrekte Emoji, CJK und Tabs",
-        "Plugin-Vorschläge beim ersten Start"
+        {
+          "stage": "next",
+          "text": "Soft-Wrap für lange Zeilen"
+        },
+        {
+          "stage": "next",
+          "text": "Read-only-Modus"
+        },
+        {
+          "stage": "next",
+          "text": "Tabs für mehrere Dateien"
+        },
+        {
+          "stage": "later",
+          "text": "Split View"
+        },
+        {
+          "stage": "later",
+          "text": "Regex-Suche"
+        },
+        {
+          "stage": "later",
+          "text": "Plugin-Manager im Editor"
+        },
+        {
+          "stage": "later",
+          "text": "Makros"
+        },
+        {
+          "stage": "shipped",
+          "text": "Crash-Wiederherstellung"
+        },
+        {
+          "stage": "shipped",
+          "text": "Unterstützung für .editorconfig"
+        },
+        {
+          "stage": "shipped",
+          "text": "Asynchrone Plugin-API"
+        },
+        {
+          "stage": "shipped",
+          "text": "Korrekte Emoji, CJK und Tabs"
+        },
+        {
+          "stage": "shipped",
+          "text": "Plugin-Vorschläge beim ersten Start"
+        }
       ]
     }
   },

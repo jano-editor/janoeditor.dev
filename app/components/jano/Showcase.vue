@@ -77,7 +77,7 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <div ref="root" class="showcase" tabindex="0" @keydown="onKey">
+  <div ref="root" class="showcase" role="group" tabindex="0" @keydown="onKey">
     <JanoTerminal :frame="frame" :rows="rows" />
     <div class="keys" role="tablist">
       <button

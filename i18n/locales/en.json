@@ -5,13 +5,12 @@
     "language": "Language"
   },
   "hero": {
-    "tagline": "A modern terminal editor with plugin support.",
     "subtitle": "nano simplicity. VS Code power. Zero bloat.",
-    "getStarted": "Get Started",
     "pluginStore": "Plugin Store",
     "headline": "The terminal editor you already know how to use.",
     "copy": "Copy",
-    "copied": "Copied"
+    "copied": "Copied",
+    "copyFailed": "Copy failed"
   },
   "pluginStore": {
     "title": "Plugin Store",
@@ -65,7 +64,7 @@
     "nano": {
       "name": "nano",
       "verdict": "Too simple.",
-      "description": "No plugins. No multi-cursor. No syntax highlighting. Great for quick edits -but that's it."
+      "description": "No plugins. No multi-cursor. No syntax highlighting. Great for quick edits, but that's it."
     },
     "vim": {
       "name": "vim",
@@ -90,7 +89,8 @@
     "plugins": "Plugins",
     "unicode": "Unicode",
     "projectSettings": "Project settings",
-    "autocomplete": "Autocomplete"
+    "autocomplete": "Autocomplete",
+    "label": "jano demo. Keys 1 to 6 switch the scene, arrows step through them."
   },
   "landing": {
     "stats": {
@@ -105,30 +105,37 @@
       "subtitle": "No modes, nothing to learn first. Here is what the keys do.",
       "items": [
         {
+          "keys": ["Ctrl+S", "Ctrl+Z", "Ctrl+F"],
           "title": "Your fingers already know it.",
           "text": "Save, undo, find, copy, paste. Every shortcut works like everywhere else, and so does the mouse."
         },
         {
+          "keys": ["Ctrl+D"],
           "title": "Multi-cursor.",
           "text": "Select the next match, type once, change them all. Ctrl+Shift+Up/Down adds cursors line by line."
         },
         {
+          "keys": ["F3", "F4"],
           "title": "Format and diagnostics.",
           "text": "Plugins format your file and point at errors right in the line."
         },
         {
+          "keys": ["Ctrl+R"],
           "title": "Nothing gets lost.",
           "text": "jano keeps a backup while you type. If it gets killed, the next start offers to bring your text back."
         },
         {
+          "keys": ["F9"],
           "title": "Project settings.",
           "text": "jano reads .editorconfig. Tabs in the Makefile, two spaces in the YAML, without touching your own settings."
         },
         {
+          "keys": ["F2"],
           "title": "Undo history.",
           "text": "Browse every change of the session and jump back to any point."
         },
         {
+          "keys": ["F1"],
           "title": "Help is one key away.",
           "text": "Every shortcut, in the editor, always."
         }
@@ -147,18 +154,54 @@
       "later": "later",
       "shipped": "shipped",
       "items": [
-        "Soft-wrap for long lines",
-        "Read-only mode",
-        "Tabs for multiple files",
-        "Split view",
-        "Regex search",
-        "Plugin manager in the editor",
-        "Macros",
-        "Crash recovery",
-        "Support for .editorconfig",
-        "Async plugin API",
-        "Correct emoji, CJK and tab handling",
-        "Plugin suggestions on first start"
+        {
+          "stage": "next",
+          "text": "Soft-wrap for long lines"
+        },
+        {
+          "stage": "next",
+          "text": "Read-only mode"
+        },
+        {
+          "stage": "next",
+          "text": "Tabs for multiple files"
+        },
+        {
+          "stage": "later",
+          "text": "Split view"
+        },
+        {
+          "stage": "later",
+          "text": "Regex search"
+        },
+        {
+          "stage": "later",
+          "text": "Plugin manager in the editor"
+        },
+        {
+          "stage": "later",
+          "text": "Macros"
+        },
+        {
+          "stage": "shipped",
+          "text": "Crash recovery"
+        },
+        {
+          "stage": "shipped",
+          "text": "Support for .editorconfig"
+        },
+        {
+          "stage": "shipped",
+          "text": "Async plugin API"
+        },
+        {
+          "stage": "shipped",
+          "text": "Correct emoji, CJK and tab handling"
+        },
+        {
+          "stage": "shipped",
+          "text": "Plugin suggestions on first start"
+        }
       ]
     }
   },

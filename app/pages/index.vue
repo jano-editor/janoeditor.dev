@@ -6,37 +6,40 @@
         <h1 class="hero-title">{{ $t("hero.headline") }}</h1>
         <p class="hero-sub">{{ $t("hero.subtitle") }}</p>
 
-        <ClientOnly>
-          <div class="install">
-            <div class="install-tabs" role="tablist">
-              <button
-                v-for="tab in ['Linux/Mac', 'Homebrew', 'Windows']"
-                :key="tab"
-                role="tab"
-                :aria-selected="activeTab === tab"
-                class="install-tab"
-                :class="{ active: activeTab === tab }"
-                @click="activeTab = tab"
-              >
-                {{ tab }}
-              </button>
-            </div>
-            <div class="install-line">
-              <span class="install-prompt">$</span>
-              <code class="install-cmd">{{ installCommand }}</code>
-              <button class="install-copy" @click="copyInstall">
-                {{ copied ? $t("hero.copied") : $t("hero.copy") }}
-              </button>
-            </div>
+        <div class="install">
+          <div class="install-tabs" role="tablist">
+            <button
+              v-for="tab in ['Linux/Mac', 'Homebrew', 'Windows']"
+              :key="tab"
+              role="tab"
+              :aria-selected="activeTab === tab"
+              class="install-tab"
+              :class="{ active: activeTab === tab }"
+              @click="activeTab = tab"
+            >
+              {{ tab }}
+            </button>
           </div>
-        </ClientOnly>
+          <div class="install-line">
+            <span class="install-prompt">$</span>
+            <code class="install-cmd">{{ installCommand }}</code>
+            <button class="install-copy" @click="copy(installCommand)">
+              {{ copyLabel(installCommand) }}
+            </button>
+          </div>
+        </div>
 
         <NuxtLink :to="$localePath('/plugins')" class="hero-link">{{
           $t("hero.pluginStore")
         }}</NuxtLink>
       </div>
 
-      <JanoShowcase class="hero-demo" :scenes="scenes" :labels="sceneLabels" />
+      <JanoShowcase
+        class="hero-demo"
+        :scenes="scenes"
+        :labels="sceneLabels"
+        :aria-label="$t('showcase.label')"
+      />
     </section>
 
     <div class="page">
@@ -102,7 +105,7 @@
             </NuxtLink>
           </div>
           <div class="console-gap"><span class="prompt">$</span> jano plugin install python</div>
-          <div class="ok">[jano] ✓ Installed python.</div>
+          <div class="ok">[jano] ✓ python v{{ pythonVersion }} installed.</div>
         </div>
         <NuxtLink :to="$localePath('/plugins')" class="link">{{
           $t("landing.plugins.store")
@@ -156,16 +159,26 @@ const sceneLabels = computed(() => [
 
 const { data: plugins } = await useAsyncData("plugins", () => $fetch("/api/plugins"));
 const pluginList = computed(() => (plugins.value ?? []).slice(0, 8));
-
-const activeTab = ref(
-  import.meta.client && /Win/i.test(navigator.userAgent) ? "Windows" : "Linux/Mac",
+// the example install below prints the real version, like jano does
+const pythonVersion = computed(
+  () => plugins.value?.find((p) => p.name === "python")?.latestVersion ?? "1.0.0",
 );
-const copied = ref(false);
+
+// rendered on the server with the common case, switched to Windows after load
+const activeTab = ref("Linux/Mac");
+const { copied, failed, copy } = useCopy();
+
+function copyLabel(text: string) {
+  if (copied.value === text) return t("hero.copied");
+  if (failed.value === text) return t("hero.copyFailed");
+  return t("hero.copy");
+}
 
 // on macOS jano uses Ctrl too, the terminal keeps Cmd for itself
 const isMac = ref(false);
 onMounted(() => {
   isMac.value = /Mac|iPhone|iPad/i.test(navigator.userAgent);
+  if (/Win/i.test(navigator.userAgent)) activeTab.value = "Windows";
 });
 
 const installCommands: Record<string, string> = {
@@ -173,7 +186,7 @@ const installCommands: Record<string, string> = {
   Homebrew: "brew tap jano-editor/jano && brew install jano",
   Windows: "irm https://janoeditor.dev/install.ps1 | iex",
 };
-const installCommand = computed(() => installCommands[activeTab.value]);
+const installCommand = computed(() => installCommands[activeTab.value] ?? "");
 
 const stats = computed(() => [
   { value: "1", label: t("landing.stats.binary") },
@@ -183,42 +196,21 @@ const stats = computed(() => [
   { value: "MIT", label: t("landing.stats.license") },
 ]);
 
-// the keys stay the same in every language, only the texts are translated
-const KEYS = [
-  ["Ctrl+S", "Ctrl+Z", "Ctrl+F"],
-  ["Ctrl+D"],
-  ["F3", "F4"],
-  ["Ctrl+R"],
-  ["F9"],
-  ["F2"],
-  ["F1"],
-];
+// keys and roadmap stages sit next to their texts in the locale files, so nothing can shift
 const keyItems = computed(() =>
-  (tm("landing.keys.items") as { title: unknown; text: unknown }[]).map((item, i) => ({
-    keys: KEYS[i] ?? [],
-    title: rt(item.title as string),
-    text: rt(item.text as string),
-  })),
+  (tm("landing.keys.items") as { keys: unknown[]; title: unknown; text: unknown }[]).map(
+    (item) => ({
+      keys: item.keys.map((k) => rt(k as string)),
+      title: rt(item.title as string),
+      text: rt(item.text as string),
+    }),
+  ),
 );
 
-const ROADMAP_STAGES = [
-  "next",
-  "next",
-  "next",
-  "later",
-  "later",
-  "later",
-  "later",
-  "shipped",
-  "shipped",
-  "shipped",
-  "shipped",
-  "shipped",
-] as const;
 const roadmap = computed(() =>
-  (tm("landing.roadmap.items") as unknown[]).map((text, i) => ({
-    stage: ROADMAP_STAGES[i] ?? "shipped",
-    text: rt(text as string),
+  (tm("landing.roadmap.items") as { stage: unknown; text: unknown }[]).map((item) => ({
+    stage: rt(item.stage as string),
+    text: rt(item.text as string),
   })),
 );
 
@@ -242,14 +234,6 @@ const support = computed(() => [
     text: t("support.coffeeDescription"),
   },
 ]);
-
-function copyInstall() {
-  void navigator.clipboard.writeText(installCommand.value ?? "");
-  copied.value = true;
-  setTimeout(() => {
-    copied.value = false;
-  }, 2000);
-}
 </script>
 
 <style scoped>
