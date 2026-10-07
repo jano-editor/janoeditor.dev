@@ -42,75 +42,135 @@
   --color-charcoal-950: #1a1a1a;
 }
 
-/* Gradient text */
-.text-gradient {
-  background: linear-gradient(135deg, #d250ef 0%, #de6df7 50%, #f09ec8 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+/* Redesign tokens: colors straight from the editor, fonts with character */
+@theme {
+  --font-sans: "Atkinson Hyperlegible Next", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "Martian Mono", ui-monospace, "SFMono-Regular", monospace;
+
+  --color-ink: #1b1e24; /* background */
+  --color-panel: #2d323c; /* status bar, surfaces */
+  --color-line: #373c46; /* borders */
+  --color-text: #abb2bf; /* body text */
+  --color-title: #e6c864; /* headings, like jano's title bar */
+  --color-cursor: #d250ef; /* the one accent: cursor, active key, links */
 }
 
-/* Glow effects */
-.glow-jano {
-  box-shadow:
-    0 0 40px rgba(210, 80, 239, 0.15),
-    0 0 80px rgba(210, 80, 239, 0.05);
+/* one background for every page: jano's editor background */
+:root,
+.dark {
+  --ui-bg: #1b1e24;
+}
+body {
+  background: var(--color-ink);
+  color: var(--color-text);
 }
 
-.glow-card {
-  transition:
-    box-shadow 0.3s,
-    border-color 0.3s,
-    transform 0.3s;
+/* markdown content: the docs (rendered without prose components) and plugin READMEs */
+.prose {
+  margin-top: 2rem;
+  line-height: 1.7;
+  max-width: 70ch;
 }
-.glow-card:hover {
-  box-shadow: 0 0 30px rgba(210, 80, 239, 0.1);
-  transform: translateY(-2px);
+.prose > * + * {
+  margin-top: 1rem;
 }
-
-/* Terminal frame shadow */
-.terminal-frame {
-  box-shadow:
-    0 8px 32px rgba(0, 0, 0, 0.4),
-    0 2px 8px rgba(0, 0, 0, 0.2);
-  transition:
-    box-shadow 0.3s,
-    transform 0.3s;
+.prose h2 {
+  margin-top: 3rem;
+  font-family: var(--font-mono);
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--color-title);
+  scroll-margin-top: 5rem;
 }
-.terminal-frame:hover {
-  box-shadow:
-    0 12px 48px rgba(0, 0, 0, 0.5),
-    0 4px 12px rgba(0, 0, 0, 0.3);
-  transform: translateY(-3px);
+.prose h3 {
+  margin-top: 2rem;
+  font-family: var(--font-mono);
+  font-size: 1.02rem;
+  font-weight: 700;
+  color: #e6e9ee;
+  scroll-margin-top: 5rem;
 }
-
-/* Fade in animation */
-@keyframes fade-up {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+.prose h2 a,
+.prose h3 a {
+  color: inherit;
+  text-decoration: none;
 }
-.animate-fade-up {
-  animation: fade-up 0.6s ease-out both;
+.prose a {
+  color: var(--color-cursor);
+  text-decoration: underline;
+  text-underline-offset: 3px;
 }
-
-/* Hero background gradient */
-.hero-bg {
-  background: radial-gradient(
-    ellipse 80% 50% at 50% -20%,
-    rgba(210, 80, 239, 0.12) 0%,
-    transparent 70%
-  );
+.prose strong {
+  color: #e6e9ee;
 }
-
-/* Stats separator */
-.stat-divider {
-  width: 1px;
-  height: 32px;
-  background: linear-gradient(to bottom, transparent, rgba(210, 80, 239, 0.3), transparent);
+.prose ul,
+.prose ol {
+  padding-left: 1.4rem;
+}
+.prose ul {
+  list-style: disc;
+}
+.prose ol {
+  list-style: decimal;
+}
+.prose li + li {
+  margin-top: 0.35rem;
+}
+.prose li::marker {
+  color: #5c6370;
+}
+.prose :not(pre) > code {
+  padding: 0.05rem 0.45ch;
+  font-family: var(--font-mono);
+  font-size: 0.85em;
+  background: var(--color-panel);
+  color: #e6e9ee;
+  border-radius: 3px;
+}
+.prose pre {
+  padding: 1rem 1.5ch;
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  line-height: 1.65;
+  background: #111317;
+  border: 1px solid var(--color-line);
+  border-radius: 6px;
+  overflow-x: auto;
+}
+.prose pre code {
+  font-family: inherit;
+}
+.prose table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+}
+.prose th {
+  text-align: left;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  font-weight: 400;
+  color: #8a909b;
+  padding: 0.4rem 1ch;
+  border-bottom: 1px solid var(--color-line);
+}
+.prose td {
+  padding: 0.5rem 1ch;
+  border-bottom: 1px solid var(--color-line);
+  vertical-align: top;
+}
+.prose td:first-child {
+  white-space: nowrap;
+}
+.prose blockquote {
+  padding: 0.6rem 1.5ch;
+  border-left: 3px solid var(--color-cursor);
+  background: var(--color-panel);
+}
+.prose blockquote > * + * {
+  margin-top: 0.5rem;
+}
+/* READMEs come with shiki's own background, use ours */
+.prose pre.shiki {
+  background: #111317 !important;
 }

@@ -1,195 +1,53 @@
 {
   "nav": {
     "plugins": "Plugins",
-    "docs": "Docs"
+    "docs": "Docs",
+    "language": "Sprache"
   },
   "hero": {
-    "tagline": "Ein moderner Terminal-Editor mit Plugin-Unterstützung.",
     "subtitle": "nano Einfachheit. VS Code Power. Kein Ballast.",
-    "getStarted": "Loslegen",
-    "pluginStore": "Plugin Store"
-  },
-  "features": {
-    "formatValidation": {
-      "title": "Formatieren & Validieren",
-      "description": "Ein Tastendruck zum Formatieren. Fehler werden inline angezeigt -sofort beheben."
-    },
-    "multiCursor": {
-      "title": "Multi-Cursor Editing",
-      "description": "Cursors nach oben oder unten hinzufügen. 20 Zeilen wie eine bearbeiten."
-    }
+    "pluginStore": "Plugin Store",
+    "headline": "Der Terminal-Editor, den du schon bedienen kannst.",
+    "copy": "Kopieren",
+    "copied": "Kopiert",
+    "copyFailed": "Kopieren ging nicht"
   },
   "pluginStore": {
     "title": "Plugin Store",
-    "loginWithGithub": "Mit GitHub anmelden",
+    "loginWithGithub": "Mit GitHub anmelden und veröffentlichen",
     "logout": "Abmelden",
     "publishPlugin": "Veröffentlichen",
     "repoPlaceholder": "owner/repo oder GitHub URL",
-    "searchPlaceholder": "Plugins suchen...",
+    "searchPlaceholder": "Name, Beschreibung oder Dateityp",
     "comingSoon": "Noch keine Plugins. Sei der Erste!",
-    "by": "von",
     "versions": "Versionen",
     "deletePlugin": "Plugin löschen",
     "deleteVersion": "Löschen",
     "confirmDeletePlugin": "Bist du sicher, dass du dieses Plugin und alle Versionen löschen willst?",
     "confirmDeleteVersion": "Bist du sicher, dass du Version {version} löschen willst?",
-    "install": "Installieren",
-    "publishHint": "GitHub Repo-URL einfügen (z.B. owner/repo). Der Store liest deine plugin.json und baut das Plugin automatisch. Für Updates: neue Version pushen und nochmal publishen.",
-    "howItWorks": "So funktioniert's",
-    "howItWorksSteps": [
-      "Plugin-Code in ein öffentliches GitHub Repo pushen",
-      "Repo braucht eine plugin.json und src/index.ts",
-      "Repo-URL oben einfügen und Publish klicken",
-      "Der Store klont, baut und verpackt automatisch",
-      "Für Updates: Version in plugin.json hochsetzen und nochmal publishen"
-    ]
+    "publishHint": "Plugin in ein öffentliches GitHub-Repository pushen und die Adresse hier einfügen. Der Store liest die plugin.json, baut das Plugin und veröffentlicht es. Für ein Update die Version in der plugin.json erhöhen und noch einmal veröffentlichen.",
+    "lead": "Sprachen, Formatter und Werkzeuge für jano. Jedes Plugin installiert sich mit einem Befehl.",
+    "downloads": "{n} Downloads",
+    "noResults": "Kein Plugin passt zu \"{query}\".",
+    "publishTitle": "Eigenes Plugin veröffentlichen",
+    "publishDocs": "So schreibst du ein Plugin",
+    "signedInAs": "Angemeldet als",
+    "publishing": "Wird veröffentlicht…",
+    "publishedLink": "{name} ist online, zur Seite",
+    "noReadme": "Dieses Plugin hat noch kein README.",
+    "version": "Version",
+    "files": "Dateien",
+    "author": "Autor",
+    "license": "Lizenz",
+    "repository": "Repo",
+    "downloadsLabel": "Downloads",
+    "api": "API",
+    "updated": "Aktualisiert",
+    "copyInstall": "Befehl kopieren"
   },
   "docs": {
     "title": "Dokumentation",
-    "intro": "Alles was du brauchst um jano zu nutzen und Plugins dafür zu bauen.",
-    "tabs": {
-      "usage": "Bedienung & Shortcuts",
-      "plugins": "Plugin bauen"
-    },
-    "cli": {
-      "title": "CLI-Befehle",
-      "open": "Neue leere Datei öffnen",
-      "openFile": "Datei öffnen oder erstellen",
-      "version": "Installierte Version anzeigen",
-      "help": "Hilfe mit allen Befehlen anzeigen",
-      "update": "jano auf die neueste Version aktualisieren"
-    },
-    "pluginCli": {
-      "title": "Plugin-Befehle",
-      "install": "Plugin aus dem Store installieren",
-      "installVersion": "Eine bestimmte Version installieren",
-      "remove": "Installiertes Plugin entfernen",
-      "list": "Alle installierten Plugins auflisten",
-      "search": "Alle verfügbaren Plugins auflisten",
-      "searchQuery": "Plugins nach Name suchen"
-    },
-    "shortcuts": {
-      "title": "Tastenkürzel",
-      "fileOps": "Datei",
-      "save": "Datei speichern",
-      "quit": "Editor beenden",
-      "editing": "Bearbeiten",
-      "undo": "Rückgängig",
-      "redo": "Wiederherstellen",
-      "cut": "Auswahl oder Zeile ausschneiden",
-      "copy": "Auswahl oder Zeile kopieren",
-      "paste": "Aus Zwischenablage einfügen",
-      "selectAll": "Alles auswählen",
-      "navigation": "Navigation",
-      "search": "Suchen & Ersetzen",
-      "goToLine": "Zu Zeile springen",
-      "wordNav": "Wortweise springen",
-      "lineNav": "Zeilenanfang / -ende",
-      "pageNav": "Seitenweise scrollen",
-      "multiCursor": "Multi-Cursor",
-      "addCursor": "Cursor hinzufügen (Linux/macOS)",
-      "addCursorWin": "Cursor hinzufügen (Windows/WSL)",
-      "selectNext": "Nächstes Vorkommen auswählen",
-      "clearCursors": "Extra-Cursor entfernen",
-      "lines": "Zeilen",
-      "moveLine": "Zeile hoch/runter verschieben",
-      "deleteWordBack": "Wort rückwärts löschen",
-      "deleteWordFwd": "Wort vorwärts löschen",
-      "autocomplete": "Autovervollständigung",
-      "triggerAutocomplete": "Autovervollständigung auslösen",
-      "acceptAutocomplete": "Annehmen / nächster Vorschlag",
-      "mouse": "Maus",
-      "mouseClick": "Cursor setzen",
-      "mouseDoubleClick": "Wort auswählen",
-      "mouseTripleClick": "Zeile auswählen",
-      "mouseDrag": "Zum Auswählen ziehen",
-      "mouseScroll": "Hoch/runter scrollen",
-      "functionKeys": "Funktionstasten",
-      "help": "Hilfe",
-      "history": "Änderungsverlauf",
-      "format": "Dokument formatieren (Plugin)",
-      "diagnostics": "Diagnose anzeigen (Plugin)",
-      "settings": "Einstellungen"
-    }
-  },
-  "pluginDocs": {
-    "title": "Plugin bauen",
-    "intro": "Ein jano Plugin ist eine einzelne TypeScript-Datei die ein LanguagePlugin-Objekt exportiert. Kein Build-System nötig - esbuild bundlet es für dich.",
-    "required": "Pflichtfelder",
-    "requiredFields": {
-      "name": "Anzeigename des Plugins",
-      "extensions": "Dateiendungen die das Plugin behandelt (z.B. [\".yaml\", \".yml\"])"
-    },
-    "optional": "Optionale Hooks",
-    "optionalHooks": {
-      "highlight": "Regex-basiertes Syntax-Highlighting - Patterns für Kommentare, Strings, Keywords etc.",
-      "highlightLine": "Eigenes Highlighting - Tokens pro Zeile, mit Zugriff auf alle Zeilen (für mehrzeilige Strings, Block-Kommentare etc.)",
-      "onKeyDown": "Jede Taste abfangen bevor der Editor sie verarbeitet. handled: true verhindert Standardverhalten. Für Auto-Close Brackets, Snippets, Custom Shortcuts.",
-      "onCursorAction": "Feuert nach jedem Edit (Zeichen, Newline, Backspace, Delete, Tab, Paste). Für Auto-Indent, Auto-Close, Listen-Fortsetzung etc.",
-      "onFormat": "Feuert bei F3. Gesamtes Dokument neu formatieren.",
-      "onSave": "Feuert bei Ctrl+S. Edits vor dem Speichern anwenden.",
-      "onOpen": "Feuert wenn eine Datei geöffnet wird.",
-      "onValidate": "Dokument validieren. Diagnostics (Fehler, Warnungen) werden inline angezeigt. Debounced, läuft im Hintergrund während der User tippt.",
-      "onComplete": "Autocomplete-Vorschläge liefern. Feuert bei Ctrl+Space oder automatisch beim Tippen (300ms Debounce). Completions für die aktuelle Cursor-Position zurückgeben."
-    },
-    "structure": "Dateistruktur",
-    "structureDesc": "Dein GitHub Repo braucht diese Dateien:",
-    "manifest": "Plugin Manifest",
-    "manifestDesc": "Die plugin.json sagt jano was dein Plugin macht:",
-    "example": "Minimales Beispiel",
-    "exampleRepo": "Ein echtes Plugin als Referenz:",
-    "tips": "Tipps",
-    "tipsList": [
-      "Alle Hooks sind optional - fang mit highlight an und erweitere nach Bedarf",
-      "onKeyDown bekommt die volle Key-Info (name, ctrl, alt, shift) und kann das Editor-Standardverhalten verhindern",
-      "onCursorAction erhält deletedText bei Backspace/Delete - nützlich für Auto-Close Bracket-Paare",
-      "highlightLine überschreibt regex-basiertes highlight wenn beides definiert ist",
-      "replaceAll in EditResult ersetzt das gesamte Dokument (z.B. für Formatierung)",
-      "onComplete-Items können ein 'kind' haben (keyword, function, variable, property, type, constant, snippet) - jano zeigt passende Icons",
-      "Plugin-Crashes beschädigen jano nicht - alle Hooks laufen durch einen Isolations-Wrapper",
-      "Das Plugin sieht nie Editor-Internals - es arbeitet nur mit Lines, Cursors und Edits"
-    ]
-  },
-  "stats": {
-    "size": "1",
-    "sizeLabel": "Single Binary",
-    "deps": "0",
-    "depsLabel": "Dependencies",
-    "plugins": "4",
-    "pluginsLabel": "Plugins",
-    "js": "100%",
-    "jsLabel": "TypeScript",
-    "oss": "open",
-    "ossLabel": "source"
-  },
-  "highlights": {
-    "subtitle": "Sieh was jano in Sekunden kann."
-  },
-  "whyJano": {
-    "title": "Warum du jano lieben wirst",
-    "subtitle": "Ein Editor, der sich anfühlt als würde er Gedanken lesen.",
-    "facts": [
-      {
-        "title": "Deine Finger kennen es schon.",
-        "description": "Ctrl+C, Ctrl+V, Ctrl+Z, Ctrl+S, Ctrl+D — jeder Shortcut funktioniert genau wie erwartet. Mausklicks, Drag-to-Select, Scrollen — alles funktioniert einfach. Keine Modi, keine Überraschungen."
-      },
-      {
-        "title": "Eine Binary. Null Setup.",
-        "description": "Ein Befehl installiert jano. Kein Node.js, kein Paketmanager, keine Config-Dateien. Es läuft einfach."
-      },
-      {
-        "title": "Plugins machen es deins.",
-        "description": "YAML, JSON, Shell, Markdown — jede Sprache ist ein Plugin-Install entfernt. Autocomplete, Formatierung, Diagnostics — alles über Plugins. Schreib dein eigenes in einer einzigen TypeScript-Datei."
-      },
-      {
-        "title": "Schnell. Wirklich schnell.",
-        "description": "60.000+ Zeilen ohne Ruckler. Startet in Millisekunden. Gebaut mit TypeScript, kompiliert zu einer nativen Binary mit Bun."
-      },
-      {
-        "title": "Open Source. Offene Türen.",
-        "description": "MIT-lizenziert. Jede Zeile Code ist auf GitHub. Idee? Öffne ein Issue. Willst du mitbauen? Schick einen PR. Wir würden uns freuen."
-      }
-    ]
+    "onThisPage": "Auf dieser Seite"
   },
   "support": {
     "title": "Unterstütze jano",
@@ -206,7 +64,7 @@
     "nano": {
       "name": "nano",
       "verdict": "Zu simpel.",
-      "description": "Keine Plugins. Kein Multi-Cursor. Kein Syntax-Highlighting. Gut für schnelle Edits -aber das war's."
+      "description": "Keine Plugins. Kein Multi-Cursor. Kein Syntax-Highlighting. Gut für schnelle Edits, aber das war's."
     },
     "vim": {
       "name": "vim",
@@ -221,6 +79,140 @@
   },
   "footer": {
     "license": "MIT Lizenz",
-    "madeWith": "Gebaut mit TypeScript"
+    "madeWith": "Gebaut mit TypeScript",
+    "imprint": "Impressum",
+    "privacy": "Datenschutz"
+  },
+  "showcase": {
+    "multiCursor": "Multi-Cursor",
+    "recovery": "Wiederherstellen",
+    "plugins": "Plugins",
+    "unicode": "Unicode",
+    "projectSettings": "Projekt-Settings",
+    "autocomplete": "Autocomplete",
+    "label": "jano-Demo. Die Tasten 1 bis 6 wechseln die Szene, die Pfeile blättern."
+  },
+  "landing": {
+    "stats": {
+      "binary": "Binary",
+      "setup": "Setup",
+      "plugins": "Plugins",
+      "typescript": "TypeScript",
+      "license": "Lizenz"
+    },
+    "keys": {
+      "title": "Shortcuts, die du schon kennst",
+      "subtitle": "Keine Modi, nichts vorher lernen. Das machen die Tasten.",
+      "items": [
+        {
+          "keys": ["Ctrl+S", "Ctrl+Z", "Ctrl+F"],
+          "title": "Deine Finger kennen es schon.",
+          "text": "Speichern, Rückgängig, Suchen, Kopieren, Einfügen. Jeder Shortcut funktioniert wie überall, die Maus auch."
+        },
+        {
+          "keys": ["Ctrl+D"],
+          "title": "Multi-Cursor.",
+          "text": "Nächsten Treffer markieren, einmal tippen, alle ändern. Ctrl+Shift+Hoch/Runter setzt Cursor Zeile für Zeile."
+        },
+        {
+          "keys": ["F3", "F4"],
+          "title": "Formatieren und Fehler.",
+          "text": "Plugins formatieren deine Datei und zeigen Fehler direkt in der Zeile."
+        },
+        {
+          "keys": ["Ctrl+R"],
+          "title": "Nichts geht verloren.",
+          "text": "jano sichert beim Tippen mit. Wird es abgeschossen, bietet der nächste Start deinen Text wieder an."
+        },
+        {
+          "keys": ["F9"],
+          "title": "Projekt-Settings.",
+          "text": "jano liest .editorconfig. Tabs im Makefile, zwei Leerzeichen im YAML, ohne deine eigenen Settings anzufassen."
+        },
+        {
+          "keys": ["F2"],
+          "title": "Änderungsverlauf.",
+          "text": "Jede Änderung der Sitzung durchblättern und an jeden Punkt zurückspringen."
+        },
+        {
+          "keys": ["F1"],
+          "title": "Hilfe ist eine Taste entfernt.",
+          "text": "Alle Shortcuts, im Editor, immer."
+        }
+      ],
+      "macHint": "Auf dem Mac auch Ctrl, nicht Cmd: die Cmd-Taste behält dein Terminal für sich."
+    },
+    "plugins": {
+      "title": "Sprachen sind Plugins",
+      "subtitle": "Highlighting, Formatierung, Autocomplete. Installier nur, was du brauchst, oder schreib dein eigenes in einer TypeScript-Datei.",
+      "store": "Alle Plugins ansehen"
+    },
+    "roadmap": {
+      "title": "Roadmap",
+      "subtitle": "Was als Nächstes kommt, was später kommt und was gerade fertig wurde.",
+      "next": "next",
+      "later": "later",
+      "shipped": "shipped",
+      "items": [
+        {
+          "stage": "next",
+          "text": "Soft-Wrap für lange Zeilen"
+        },
+        {
+          "stage": "next",
+          "text": "Read-only-Modus"
+        },
+        {
+          "stage": "next",
+          "text": "Tabs für mehrere Dateien"
+        },
+        {
+          "stage": "later",
+          "text": "Split View"
+        },
+        {
+          "stage": "later",
+          "text": "Regex-Suche"
+        },
+        {
+          "stage": "later",
+          "text": "Plugin-Manager im Editor"
+        },
+        {
+          "stage": "later",
+          "text": "Makros"
+        },
+        {
+          "stage": "shipped",
+          "text": "Crash-Wiederherstellung"
+        },
+        {
+          "stage": "shipped",
+          "text": "Unterstützung für .editorconfig"
+        },
+        {
+          "stage": "shipped",
+          "text": "Asynchrone Plugin-API"
+        },
+        {
+          "stage": "shipped",
+          "text": "Korrekte Emoji, CJK und Tabs"
+        },
+        {
+          "stage": "shipped",
+          "text": "Plugin-Vorschläge beim ersten Start"
+        }
+      ]
+    }
+  },
+  "search": {
+    "open": "Docs durchsuchen",
+    "button": "Suchen",
+    "title": "Suchen",
+    "placeholder": "Docs durchsuchen",
+    "empty": "Nichts gefunden für \"{query}\"",
+    "move": "Bewegen",
+    "go": "Öffnen",
+    "close": "Schließen"
   }
 }

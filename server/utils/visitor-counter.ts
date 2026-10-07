@@ -1,5 +1,6 @@
 import { readFileSync, writeFileSync, existsSync, mkdirSync } from "node:fs";
 import { join } from "node:path";
+import { createHash, randomBytes } from "node:crypto";
 
 const DATA_DIR = join(process.cwd(), "data");
 const STATS_FILE = join(DATA_DIR, "visitors.json");
@@ -38,20 +39,18 @@ const BOT_PATTERNS = [
   /uptimerobot/i,
 ];
 
+// Unique visitors are counted per day only. The IP is hashed with a random salt that changes
+// every day, and the salt plus all hashes are dropped when the day is over, so a hash can't be
+// traced back to an IP afterwards. Monthly and total visitors are sums of the daily counts.
 interface Stats {
   views: { total: number; [key: string]: number };
   visitors: { total: number; [key: string]: number };
-  ips: { [key: string]: boolean };
+  /** today's salt and hashes, replaced on the first visit of a new day */
+  today?: { date: string; salt: string; seen: string[] };
 }
 
-function hashIP(ip: string): string {
-  let hash = 0;
-  for (let i = 0; i < ip.length; i++) {
-    const char = ip.charCodeAt(i);
-    hash = (hash << 5) - hash + char;
-    hash = hash & hash;
-  }
-  return Math.abs(hash).toString(36);
+function hashIP(ip: string, salt: string): string {
+  return createHash("sha256").update(salt).update(ip).digest("hex");
 }
 
 function load(): Stats {
@@ -62,7 +61,7 @@ function load(): Stats {
   } catch {
     // corrupted file, start fresh
   }
-  return { views: { total: 0 }, visitors: { total: 0 }, ips: {} };
+  return { views: { total: 0 }, visitors: { total: 0 } };
 }
 
 function save(stats: Stats) {
@@ -82,24 +81,25 @@ export function trackVisit(ip: string, userAgent: string | undefined) {
   const now = new Date();
   const today = now.toISOString().split("T")[0]!;
   const month = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}`;
-  const ipHash = hashIP(ip);
+
+  // a new day: fresh salt, yesterday's hashes are gone
+  if (stats.today?.date !== today) {
+    stats.today = { date: today, salt: randomBytes(32).toString("hex"), seen: [] };
+  }
+  // files from the old counter kept unsalted hashes forever
+  delete (stats as { ips?: unknown }).ips;
 
   // views
   stats.views.total = (stats.views.total || 0) + 1;
   stats.views[`day:${today}`] = (stats.views[`day:${today}`] || 0) + 1;
   stats.views[`month:${month}`] = (stats.views[`month:${month}`] || 0) + 1;
 
-  // unique visitors
-  if (!stats.ips[`day:${today}:${ipHash}`]) {
-    stats.ips[`day:${today}:${ipHash}`] = true;
+  // unique visitors of the day, added up into month and total
+  const ipHash = hashIP(ip, stats.today.salt);
+  if (!stats.today.seen.includes(ipHash)) {
+    stats.today.seen.push(ipHash);
     stats.visitors[`day:${today}`] = (stats.visitors[`day:${today}`] || 0) + 1;
-  }
-  if (!stats.ips[`month:${month}:${ipHash}`]) {
-    stats.ips[`month:${month}:${ipHash}`] = true;
     stats.visitors[`month:${month}`] = (stats.visitors[`month:${month}`] || 0) + 1;
-  }
-  if (!stats.ips[`total:${ipHash}`]) {
-    stats.ips[`total:${ipHash}`] = true;
     stats.visitors.total = (stats.visitors.total || 0) + 1;
   }
 

@@ -9,7 +9,8 @@ export default defineEventHandler(async () => {
     .orderBy(desc(schema.plugins.totalDownloads))
     .all();
 
-  return allPlugins.map((p) => ({
+  // the list never shows READMEs, the detail endpoint serves them rendered
+  return allPlugins.map(({ readme: _readme, ...p }) => ({
     ...p,
     extensions: JSON.parse(p.extensions) as string[],
   }));
