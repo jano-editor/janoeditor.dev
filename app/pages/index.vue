@@ -93,7 +93,7 @@
             <NuxtLink
               v-for="p in pluginList"
               :key="p.name"
-              :to="{ path: $localePath('/plugins'), query: { name: p.name } }"
+              :to="$localePath(`/plugins/${p.name}`)"
               class="plugin-row"
             >
               <span class="plugin-name">{{ p.name }}</span>
