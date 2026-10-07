@@ -1,5 +1,6 @@
 import { useDB, schema } from "~~/server/database";
 import { eq, desc } from "drizzle-orm";
+import { cachedReadme } from "~~/server/utils/readme";
 
 export default defineEventHandler(async (event) => {
   const name = getRouterParam(event, "name");
@@ -17,9 +18,16 @@ export default defineEventHandler(async (event) => {
     .orderBy(desc(schema.pluginVersions.createdAt))
     .all();
 
+  // the README is untrusted, the page only gets the sanitized HTML
+  const { readme, ...rest } = plugin;
+  const readmeHtml = readme
+    ? await cachedReadme(`${plugin.name}@${plugin.latestVersion}`, readme, plugin.repoUrl)
+    : null;
+
   return {
-    ...plugin,
+    ...rest,
     extensions: JSON.parse(plugin.extensions) as string[],
+    readmeHtml,
     versions,
   };
 });
