@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen bg-charcoal-950 text-charcoal-50">
+  <div class="landing">
     <!-- Hero: the headline next to a replayed jano session -->
     <section class="hero">
       <div class="hero-text">
@@ -37,314 +37,114 @@
       <JanoShowcase class="hero-demo" :scenes="scenes" :labels="sceneLabels" />
     </section>
 
-    <div class="max-w-5xl mx-auto px-6">
-      <!-- Stats Bar -->
-      <div class="flex justify-center -mt-2">
-        <div
-          class="grid grid-cols-2 sm:flex sm:items-center gap-6 sm:gap-0 px-10 py-6 rounded-2xl bg-charcoal-900/60 border border-charcoal-800/40 backdrop-blur-sm"
+    <div class="page">
+      <!-- the numbers, as one quiet status line under the demo -->
+      <p class="stats">
+        <span v-for="stat in stats" :key="stat.label" class="stat"
+          ><b>{{ stat.value }}</b> {{ stat.label }}</span
         >
-          <template v-for="(stat, i) in stats" :key="stat.label">
-            <div v-if="i > 0" class="stat-divider hidden sm:block mx-6 md:mx-10" />
-            <div class="text-center">
-              <div class="text-2xl md:text-3xl font-bold text-jano-400">{{ stat.value }}</div>
-              <div class="text-xs text-charcoal-500 mt-1 uppercase tracking-wider">
-                {{ stat.label }}
-              </div>
-            </div>
-          </template>
-        </div>
-      </div>
-
-      <!-- Video Showcases -->
-      <h2 class="text-4xl font-bold text-center mt-32 mb-4">Highlights</h2>
-      <p class="text-center text-charcoal-500 mb-14 max-w-md mx-auto">
-        {{ $t("highlights.subtitle") }}
       </p>
-      <div class="space-y-32">
-        <!-- Format & Validation -->
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-          <div class="space-y-4">
-            <div
-              class="inline-block px-3 py-1 rounded-full bg-jano-600/10 text-jano-400 text-xs font-medium uppercase tracking-wider"
-            >
-              F3 Format · F4 Diagnostics
-            </div>
-            <h2 class="text-4xl font-bold text-charcoal-100">
-              {{ $t("features.formatValidation.title") }}
-            </h2>
-            <p class="text-charcoal-400 text-lg leading-relaxed">
-              {{ $t("features.formatValidation.description") }}
-            </p>
-          </div>
-          <div
-            class="terminal-frame rounded-xl overflow-hidden border border-charcoal-700/50 bg-charcoal-900 cursor-pointer group"
-            @click="openVideo('/videos/vid-format-validation.webm')"
-          >
-            <div
-              class="flex items-center gap-2 px-4 py-2.5 bg-charcoal-800/80 border-b border-charcoal-700/50"
-            >
-              <span class="w-3 h-3 rounded-full bg-red-500/70" />
-              <span class="w-3 h-3 rounded-full bg-yellow-500/70" />
-              <span class="w-3 h-3 rounded-full bg-green-500/70" />
-              <span class="ml-3 text-xs text-charcoal-500 font-mono">jano - test.json</span>
-            </div>
-            <video autoplay loop muted playsinline preload="none" class="w-full">
-              <source src="/videos/vid-format-validation.webm" type="video/webm" />
-            </video>
-          </div>
-        </div>
 
-        <!-- Multi-Cursor -->
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-          <div
-            class="order-2 lg:order-1 terminal-frame rounded-xl overflow-hidden border border-charcoal-700/50 bg-charcoal-900 cursor-pointer group"
-            @click="openVideo('/videos/vid-multi-cursor.webm')"
-          >
-            <div
-              class="flex items-center gap-2 px-4 py-2.5 bg-charcoal-800/80 border-b border-charcoal-700/50"
-            >
-              <span class="w-3 h-3 rounded-full bg-red-500/70" />
-              <span class="w-3 h-3 rounded-full bg-yellow-500/70" />
-              <span class="w-3 h-3 rounded-full bg-green-500/70" />
-              <span class="ml-3 text-xs text-charcoal-500 font-mono">jano - config.yaml</span>
-            </div>
-            <video autoplay loop muted playsinline preload="none" class="w-full">
-              <source src="/videos/vid-multi-cursor.webm" type="video/webm" />
-            </video>
+      <!-- features: the key you press, and what it does -->
+      <section class="section">
+        <h2 class="section-title">{{ $t("landing.keys.title") }}</h2>
+        <p class="section-sub">{{ $t("landing.keys.subtitle") }}</p>
+        <dl class="keys">
+          <div v-for="item in keyItems" :key="item.title" class="keys-row">
+            <dt class="keys-chips">
+              <kbd v-for="k in item.keys" :key="k" class="kbd">{{ k }}</kbd>
+            </dt>
+            <dd>
+              <span class="keys-title">{{ item.title }}</span>
+              {{ item.text }}
+            </dd>
           </div>
-          <div class="order-1 lg:order-2 space-y-4">
-            <div
-              class="inline-block px-3 py-1 rounded-full bg-plum-600/10 text-plum-400 text-xs font-medium uppercase tracking-wider"
-            >
-              Ctrl+Shift+Arrow
-            </div>
-            <h2 class="text-4xl font-bold text-charcoal-100">
-              {{ $t("features.multiCursor.title") }}
-            </h2>
-            <p class="text-charcoal-400 text-lg leading-relaxed">
-              {{ $t("features.multiCursor.description") }}
-            </p>
-          </div>
-        </div>
-      </div>
+        </dl>
+      </section>
 
-      <!-- Why you'll love jano -->
-      <div class="mt-32">
-        <h2 class="text-4xl font-bold text-center mb-4">
-          {{ $t("whyJano.title") }}
-        </h2>
-        <p class="text-center text-charcoal-500 mb-14 max-w-md mx-auto">
-          {{ $t("whyJano.subtitle") }}
-        </p>
-        <div class="space-y-6 max-w-3xl mx-auto">
-          <div
-            v-for="(fact, i) in facts"
-            :key="i"
-            class="flex items-start gap-5 p-6 rounded-xl bg-charcoal-900/40 border border-charcoal-800/40 hover:border-charcoal-700/60 transition-colors"
-          >
-            <div
-              class="shrink-0 w-12 h-12 rounded-xl flex items-center justify-center"
-              :class="i % 2 === 0 ? 'bg-jano-600/10' : 'bg-plum-600/10'"
-            >
-              <UIcon
-                :name="factIcons[i]"
-                class="w-6 h-6"
-                :class="i % 2 === 0 ? 'text-jano-400' : 'text-plum-400'"
-              />
-            </div>
-            <div>
-              <h3 class="text-lg font-semibold text-charcoal-100 mb-1">
-                {{ fact.title }}
-              </h3>
-              <p class="text-sm text-charcoal-400 leading-relaxed">
-                {{ fact.description }}
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Why jano? Comparison -->
-      <div class="mt-32">
-        <h2 class="text-4xl font-bold text-center mb-4">
-          {{ $t("compare.title") }}
-        </h2>
-        <p class="text-center text-charcoal-500 mb-14 max-w-md mx-auto">
-          Terminal editors shouldn't make you choose between power and simplicity.
-        </p>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <!-- nano / vim / jano -->
+      <section class="section">
+        <h2 class="section-title">{{ $t("compare.title") }}</h2>
+        <div class="compare">
           <div
             v-for="editor in ['nano', 'vim', 'jano'] as const"
             :key="editor"
-            class="p-8 rounded-xl border text-center transition-all duration-300"
-            :class="
-              editor === 'jano'
-                ? 'bg-jano-950/30 border-jano-500/30 ring-1 ring-jano-500/10 glow-jano scale-105'
-                : 'bg-charcoal-900/50 border-charcoal-800 opacity-70 hover:opacity-100'
-            "
+            class="compare-row"
+            :class="{ ours: editor === 'jano' }"
           >
-            <h3
-              class="text-3xl font-bold mb-3 font-mono"
-              :class="editor === 'jano' ? 'text-gradient' : 'text-charcoal-400'"
-            >
-              {{ $t(`compare.${editor}.name`) }}
-            </h3>
-            <p
-              class="text-sm font-bold mb-4 uppercase tracking-wider"
-              :class="editor === 'jano' ? 'text-green-400' : 'text-red-400/60'"
-            >
-              {{ $t(`compare.${editor}.verdict`) }}
-            </p>
-            <p class="text-sm text-charcoal-400 leading-relaxed">
-              {{ $t(`compare.${editor}.description`) }}
-            </p>
+            <span class="compare-name">{{ $t(`compare.${editor}.name`) }}</span>
+            <span class="compare-verdict">{{ $t(`compare.${editor}.verdict`) }}</span>
+            <span class="compare-text">{{ $t(`compare.${editor}.description`) }}</span>
           </div>
         </div>
-      </div>
-    </div>
+      </section>
 
-    <!-- Support -->
-    <div class="max-w-5xl mx-auto px-6 mt-32">
-      <div
-        class="relative overflow-hidden rounded-2xl bg-gradient-to-br from-charcoal-900 to-charcoal-950 border border-charcoal-800/40 p-12 text-center"
-      >
-        <div
-          class="absolute inset-0 bg-gradient-to-br from-jano-600/5 to-plum-600/5 pointer-events-none"
-        />
-        <div class="relative">
-          <h2 class="text-4xl font-bold mb-4">
-            {{ $t("support.title") }}
-          </h2>
-          <p class="text-charcoal-400 mb-10 max-w-md mx-auto">
-            {{ $t("support.subtitle") }}
-          </p>
-          <div
-            class="flex flex-col md:flex-row items-stretch md:items-center justify-center gap-4 md:gap-6"
-          >
-            <a
-              href="https://github.com/jano-editor/jano"
-              target="_blank"
-              rel="noopener"
-              class="group flex items-center gap-3 px-8 py-4 rounded-xl bg-charcoal-800 border border-charcoal-700/50 hover:border-yellow-500/50 hover:bg-charcoal-800/80 transition-all"
+      <!-- plugins, live from the registry, like `jano plugin search` prints them -->
+      <section class="section">
+        <h2 class="section-title">{{ $t("landing.plugins.title") }}</h2>
+        <p class="section-sub">{{ $t("landing.plugins.subtitle") }}</p>
+        <div class="console">
+          <div><span class="prompt">$</span> jano plugin search</div>
+          <div class="dim">Available plugins:</div>
+          <div class="plugin-list">
+            <NuxtLink
+              v-for="p in pluginList"
+              :key="p.name"
+              :to="`/plugins?name=${p.name}`"
+              class="plugin-row"
             >
-              <UIcon
-                name="i-lucide-star"
-                class="w-6 h-6 text-yellow-400 group-hover:scale-110 transition-transform"
-              />
-              <div class="text-left">
-                <div class="font-semibold text-charcoal-100">
-                  {{ $t("support.star") }}
-                </div>
-                <div class="text-xs text-charcoal-500">
-                  {{ $t("support.starDescription") }}
-                </div>
-              </div>
-            </a>
-            <a
-              href="https://github.com/sponsors/flo0806"
-              target="_blank"
-              rel="noopener"
-              class="group flex items-center gap-3 px-8 py-4 rounded-xl bg-charcoal-800 border border-charcoal-700/50 hover:border-jano-500/50 hover:bg-charcoal-800/80 transition-all"
-            >
-              <UIcon
-                name="i-lucide-heart"
-                class="w-6 h-6 text-jano-400 group-hover:scale-110 transition-transform"
-              />
-              <div class="text-left">
-                <div class="font-semibold text-charcoal-100">
-                  {{ $t("support.sponsor") }}
-                </div>
-                <div class="text-xs text-charcoal-500">
-                  {{ $t("support.sponsorDescription") }}
-                </div>
-              </div>
-            </a>
-            <a
-              href="https://www.buymeacoffee.com/flo0806"
-              target="_blank"
-              rel="noopener"
-              class="group flex items-center gap-3 px-8 py-4 rounded-xl bg-charcoal-800 border border-charcoal-700/50 hover:border-plum-500/50 hover:bg-charcoal-800/80 transition-all"
-            >
-              <UIcon
-                name="i-lucide-coffee"
-                class="w-6 h-6 text-plum-400 group-hover:scale-110 transition-transform"
-              />
-              <div class="text-left">
-                <div class="font-semibold text-charcoal-100">
-                  {{ $t("support.coffee") }}
-                </div>
-                <div class="text-xs text-charcoal-500">
-                  {{ $t("support.coffeeDescription") }}
-                </div>
-              </div>
-            </a>
+              <span class="plugin-name">{{ p.name }}</span>
+              <span class="plugin-version">v{{ p.latestVersion }}</span>
+              <span class="plugin-desc">{{ p.description }}</span>
+            </NuxtLink>
           </div>
+          <div class="console-gap"><span class="prompt">$</span> jano plugin install python</div>
+          <div class="ok">[jano] ✓ Installed python.</div>
         </div>
-      </div>
+        <NuxtLink to="/plugins" class="link">{{ $t("landing.plugins.store") }}</NuxtLink>
+      </section>
+
+      <!-- roadmap, read like git log --graph -->
+      <section class="section">
+        <h2 class="section-title">{{ $t("landing.roadmap.title") }}</h2>
+        <p class="section-sub">{{ $t("landing.roadmap.subtitle") }}</p>
+        <ol class="graph">
+          <li v-for="(item, i) in roadmap" :key="i" class="graph-row" :class="item.stage">
+            <span class="graph-dot" aria-hidden="true">*</span>
+            <span class="graph-ref">({{ $t(`landing.roadmap.${item.stage}`) }})</span>
+            <span class="graph-msg">{{ item.text }}</span>
+          </li>
+        </ol>
+      </section>
+
+      <!-- support -->
+      <section class="section">
+        <h2 class="section-title">{{ $t("support.title") }}</h2>
+        <p class="section-sub">{{ $t("support.subtitle") }}</p>
+        <ul class="support">
+          <li v-for="s in support" :key="s.href">
+            <a :href="s.href" target="_blank" rel="noopener" class="support-link">
+              <span class="support-icon" aria-hidden="true">{{ s.icon }}</span>
+              <span class="support-title">{{ s.title }}</span>
+              <span class="support-text">{{ s.text }}</span>
+            </a>
+          </li>
+        </ul>
+      </section>
     </div>
 
-    <!-- Footer -->
-    <footer class="border-t border-charcoal-800/30 mt-32">
-      <div
-        class="max-w-5xl mx-auto px-6 py-10 flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-charcoal-600"
-      >
-        <div class="flex items-center gap-4">
-          <span>{{ $t("footer.license") }}</span>
-          <span class="text-charcoal-800">·</span>
-          <span>{{ $t("footer.madeWith") }}</span>
-        </div>
-        <div class="flex items-center gap-4">
-          <a
-            href="https://github.com/jano-editor/jano"
-            target="_blank"
-            rel="noopener"
-            class="hover:text-charcoal-400 transition-colors"
-          >
-            GitHub
-          </a>
-          <span class="text-charcoal-800">·</span>
-          <NuxtLink to="/plugins" class="hover:text-charcoal-400 transition-colors">
-            Plugins
-          </NuxtLink>
-          <span class="text-charcoal-800">·</span>
-          <NuxtLink to="/docs" class="hover:text-charcoal-400 transition-colors"> Docs </NuxtLink>
-        </div>
+    <!-- footer, drawn like jano's status bar -->
+    <footer class="footer">
+      <div class="footer-inner">
+        <span>jano · {{ $t("footer.license") }}</span>
+        <span class="footer-mid">{{ $t("footer.madeWith") }}</span>
+        <nav class="footer-links">
+          <a href="https://github.com/jano-editor/jano" target="_blank" rel="noopener">GitHub</a>
+          <NuxtLink to="/plugins">Plugins</NuxtLink>
+          <NuxtLink to="/docs">Docs</NuxtLink>
+        </nav>
       </div>
     </footer>
-
-    <!-- Video Modal -->
-    <Teleport to="body">
-      <Transition name="modal">
-        <div
-          v-if="modalVideo"
-          class="fixed inset-0 z-50 flex items-center justify-center bg-black/85 backdrop-blur-md"
-          @click.self="modalVideo = null"
-        >
-          <div class="relative w-full max-w-5xl mx-4">
-            <button
-              class="absolute -top-12 right-0 text-charcoal-500 hover:text-white text-2xl transition-colors"
-              @click="modalVideo = null"
-            >
-              ✕
-            </button>
-            <div
-              class="terminal-frame rounded-xl overflow-hidden border border-charcoal-700/50 bg-charcoal-900"
-            >
-              <div
-                class="flex items-center gap-2 px-4 py-2.5 bg-charcoal-800/80 border-b border-charcoal-700/50"
-              >
-                <span class="w-3 h-3 rounded-full bg-red-500/70" />
-                <span class="w-3 h-3 rounded-full bg-yellow-500/70" />
-                <span class="w-3 h-3 rounded-full bg-green-500/70" />
-              </div>
-              <video autoplay loop muted playsinline class="w-full">
-                <source :src="modalVideo" type="video/webm" />
-              </video>
-            </div>
-          </div>
-        </div>
-      </Transition>
-    </Teleport>
   </div>
 </template>
 
@@ -363,13 +163,12 @@ const sceneLabels = computed(() => [
 ]);
 
 const { data: plugins } = await useAsyncData("plugins", () => $fetch("/api/plugins"));
-const pluginCount = computed(() => String(plugins.value?.length || 0));
+const pluginList = computed(() => (plugins.value ?? []).slice(0, 8));
 
 const activeTab = ref(
   import.meta.client && /Win/i.test(navigator.userAgent) ? "Windows" : "Linux/Mac",
 );
 const copied = ref(false);
-const modalVideo = ref<string | null>(null);
 
 const installCommands: Record<string, string> = {
   "Linux/Mac": "curl -fsSL https://janoeditor.dev/install.sh | bash",
@@ -378,32 +177,73 @@ const installCommands: Record<string, string> = {
 };
 const installCommand = computed(() => installCommands[activeTab.value]);
 
-const factIcons = [
-  "i-lucide-keyboard",
-  "i-lucide-package",
-  "i-lucide-puzzle",
-  "i-lucide-zap",
-  "i-lucide-heart",
-];
+const stats = computed(() => [
+  { value: "1", label: t("landing.stats.binary") },
+  { value: "0", label: t("landing.stats.setup") },
+  { value: String(plugins.value?.length ?? 0), label: t("landing.stats.plugins") },
+  { value: "100%", label: t("landing.stats.typescript") },
+  { value: "MIT", label: t("landing.stats.license") },
+]);
 
-const facts = computed(() =>
-  (tm("whyJano.facts") as { title: unknown; description: unknown }[]).map((f) => ({
-    title: rt(f.title as string),
-    description: rt(f.description as string),
+// the keys stay the same in every language, only the texts are translated
+const KEYS = [
+  ["Ctrl+S", "Ctrl+Z", "Ctrl+F"],
+  ["Ctrl+D"],
+  ["F3", "F4"],
+  ["Ctrl+R"],
+  ["F9"],
+  ["F2"],
+  ["F1"],
+];
+const keyItems = computed(() =>
+  (tm("landing.keys.items") as { title: unknown; text: unknown }[]).map((item, i) => ({
+    keys: KEYS[i] ?? [],
+    title: rt(item.title as string),
+    text: rt(item.text as string),
   })),
 );
 
-const stats = computed(() => [
-  { value: t("stats.size"), label: t("stats.sizeLabel") },
-  { value: t("stats.deps"), label: t("stats.depsLabel") },
-  { value: pluginCount.value, label: t("stats.pluginsLabel") },
-  { value: t("stats.js"), label: t("stats.jsLabel") },
-  { value: t("stats.oss"), label: t("stats.ossLabel") },
-]);
+const ROADMAP_STAGES = [
+  "next",
+  "next",
+  "next",
+  "later",
+  "later",
+  "later",
+  "later",
+  "shipped",
+  "shipped",
+  "shipped",
+  "shipped",
+  "shipped",
+] as const;
+const roadmap = computed(() =>
+  (tm("landing.roadmap.items") as unknown[]).map((text, i) => ({
+    stage: ROADMAP_STAGES[i] ?? "shipped",
+    text: rt(text as string),
+  })),
+);
 
-function openVideo(src: string) {
-  modalVideo.value = src;
-}
+const support = computed(() => [
+  {
+    icon: "★",
+    href: "https://github.com/jano-editor/jano",
+    title: t("support.star"),
+    text: t("support.starDescription"),
+  },
+  {
+    icon: "♥",
+    href: "https://github.com/sponsors/flo0806",
+    title: t("support.sponsor"),
+    text: t("support.sponsorDescription"),
+  },
+  {
+    icon: "☕",
+    href: "https://www.buymeacoffee.com/flo0806",
+    title: t("support.coffee"),
+    text: t("support.coffeeDescription"),
+  },
+]);
 
 function copyInstall() {
   void navigator.clipboard.writeText(installCommand.value ?? "");
@@ -415,6 +255,309 @@ function copyInstall() {
 </script>
 
 <style scoped>
+.landing {
+  min-height: 100vh;
+  background: var(--color-ink);
+  color: var(--color-text);
+}
+.page {
+  max-width: 68rem;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+.stats {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.4rem 2.5ch;
+  margin-top: -1.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: #8a909b;
+}
+.stats b {
+  color: var(--color-title);
+  font-weight: 700;
+}
+.section {
+  margin-top: 7rem;
+}
+.section-title {
+  font-family: var(--font-mono);
+  font-size: clamp(1.35rem, 2.6vw, 1.9rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--color-title);
+}
+.section-sub {
+  margin-top: 0.5rem;
+  max-width: 60ch;
+  font-size: 1.05rem;
+}
+.link {
+  display: inline-block;
+  margin-top: 1.25rem;
+  color: var(--color-cursor);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+.link:focus-visible,
+.plugin-row:focus-visible,
+.support-link:focus-visible,
+.footer a:focus-visible {
+  outline: 2px solid var(--color-cursor);
+  outline-offset: 2px;
+}
+
+/* keys */
+.keys {
+  margin-top: 2.25rem;
+  border-top: 1px solid var(--color-line);
+}
+.keys-row {
+  display: grid;
+  grid-template-columns: 16rem minmax(0, 1fr);
+  gap: 1.5rem;
+  padding: 1.1rem 0;
+  border-bottom: 1px solid var(--color-line);
+  line-height: 1.6;
+}
+.keys-chips {
+  display: flex;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  gap: 0.4rem;
+}
+.kbd {
+  padding: 0.05rem 0.6ch;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  background: #3c414b;
+  color: #dcdcdc;
+  border-bottom: 2px solid #23262d;
+  border-radius: 3px;
+}
+.keys-title {
+  color: #e6e9ee;
+  font-weight: 700;
+}
+
+/* compare */
+.compare {
+  margin-top: 2rem;
+  font-size: 1rem;
+}
+.compare-row {
+  display: grid;
+  grid-template-columns: 6ch 14ch minmax(0, 1fr);
+  gap: 1.5rem;
+  padding: 0.9rem 1rem;
+  border-left: 3px solid transparent;
+  color: #7d838e;
+}
+.compare-name,
+.compare-verdict {
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+}
+.compare-row.ours {
+  border-color: var(--color-cursor);
+  background: var(--color-panel);
+  color: var(--color-text);
+}
+.compare-row.ours .compare-name {
+  color: var(--color-title);
+  font-weight: 700;
+}
+.compare-row.ours .compare-verdict {
+  color: #98c379;
+}
+
+/* console */
+.console {
+  margin-top: 2rem;
+  padding: 1rem 1.5ch;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  line-height: 1.75;
+  background: #111317;
+  border: 1px solid var(--color-line);
+  border-radius: 6px;
+  overflow-x: auto;
+}
+.prompt {
+  color: var(--color-cursor);
+}
+.dim {
+  color: #7d838e;
+}
+.ok {
+  color: #98c379;
+}
+.console-gap {
+  margin-top: 0.9rem;
+}
+.plugin-list {
+  margin-top: 0.3rem;
+}
+.plugin-row {
+  display: grid;
+  grid-template-columns: 13ch 9ch minmax(0, 1fr);
+  gap: 1ch;
+  padding-left: 2ch;
+  color: #c8ccd4;
+}
+.plugin-row:hover {
+  background: #3c64b4;
+  color: #fff;
+}
+.plugin-row:hover .plugin-version,
+.plugin-row:hover .plugin-desc {
+  color: #fff;
+}
+.plugin-name {
+  color: #61afef;
+}
+.plugin-version {
+  color: #d19a66;
+}
+.plugin-desc {
+  color: #8a909b;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* roadmap */
+.graph {
+  margin-top: 2rem;
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+}
+.graph-row {
+  position: relative;
+  display: flex;
+  gap: 1.5ch;
+  padding: 0.35rem 0 0.35rem 3ch;
+}
+.graph-row::before {
+  /* the vertical line of the graph */
+  content: "";
+  position: absolute;
+  left: 0.5ch;
+  top: 0;
+  bottom: 0;
+  border-left: 1px solid var(--color-line);
+}
+.graph-row:first-child::before {
+  top: 50%;
+}
+.graph-row:last-child::before {
+  bottom: 50%;
+}
+.graph-dot {
+  position: absolute;
+  left: 0;
+  width: 1ch;
+  text-align: center;
+  background: var(--color-ink);
+  color: var(--color-cursor);
+}
+.graph-ref {
+  flex: none;
+  width: 10ch;
+}
+.next .graph-ref {
+  color: var(--color-title);
+}
+.later .graph-ref {
+  color: #61afef;
+}
+.shipped .graph-ref,
+.shipped .graph-dot {
+  color: #5c6370;
+}
+.shipped .graph-msg {
+  color: #7d838e;
+}
+.next .graph-msg,
+.later .graph-msg {
+  color: #e6e9ee;
+}
+
+/* support */
+.support {
+  margin-top: 2rem;
+}
+.support-link {
+  display: grid;
+  grid-template-columns: 2ch 14rem minmax(0, 1fr);
+  gap: 1rem;
+  padding: 0.8rem 0;
+  border-bottom: 1px solid var(--color-line);
+}
+.support-icon {
+  color: var(--color-cursor);
+}
+.support-title {
+  color: #e6e9ee;
+  font-weight: 700;
+}
+.support-link:hover .support-title {
+  color: var(--color-title);
+}
+
+/* footer */
+.footer {
+  margin-top: 7rem;
+  background: var(--color-panel);
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: #b4b9c3;
+}
+.footer-inner {
+  max-width: 68rem;
+  margin: 0 auto;
+  padding: 0.5rem 1.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 0.5rem 2ch;
+}
+.footer-mid {
+  color: #8a909b;
+}
+.footer-links {
+  display: flex;
+  gap: 2ch;
+}
+.footer a:hover {
+  color: var(--color-title);
+}
+
+@media (max-width: 700px) {
+  .section {
+    margin-top: 4.5rem;
+  }
+  .keys-row,
+  .compare-row,
+  .support-link {
+    grid-template-columns: 1fr;
+    gap: 0.4rem;
+  }
+  .support-link {
+    grid-template-columns: 2ch minmax(0, 1fr);
+  }
+  .support-text {
+    grid-column: 2;
+  }
+  .plugin-row {
+    grid-template-columns: 13ch minmax(0, 1fr);
+  }
+  .plugin-desc {
+    display: none;
+  }
+}
 .hero {
   max-width: 68rem;
   margin: 0 auto;
@@ -512,14 +655,5 @@ function copyInstall() {
     margin-top: 2.5rem;
     --term-size: clamp(7.5px, 2.3vw, 12px);
   }
-}
-
-.modal-enter-active,
-.modal-leave-active {
-  transition: opacity 0.2s ease;
-}
-.modal-enter-from,
-.modal-leave-to {
-  opacity: 0;
 }
 </style>

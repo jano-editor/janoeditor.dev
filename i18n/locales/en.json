@@ -12,16 +12,6 @@
     "copy": "Copy",
     "copied": "Copied"
   },
-  "features": {
-    "formatValidation": {
-      "title": "Format & Validate",
-      "description": "One keypress to format. Errors show inline -fix them as you type."
-    },
-    "multiCursor": {
-      "title": "Multi-Cursor Editing",
-      "description": "Add cursors above or below. Edit 20 lines like one."
-    }
-  },
   "pluginStore": {
     "title": "Plugin Store",
     "loginWithGithub": "Login with GitHub",
@@ -153,47 +143,6 @@
       "The plugin never sees editor internals - it only works with lines, cursors, and edits"
     ]
   },
-  "stats": {
-    "size": "1",
-    "sizeLabel": "single binary",
-    "deps": "0",
-    "depsLabel": "dependencies",
-    "plugins": "4",
-    "pluginsLabel": "plugins",
-    "js": "100%",
-    "jsLabel": "TypeScript",
-    "oss": "open",
-    "ossLabel": "source"
-  },
-  "highlights": {
-    "subtitle": "See what jano can do in seconds."
-  },
-  "whyJano": {
-    "title": "Why you'll love jano",
-    "subtitle": "An editor that feels like it reads your mind.",
-    "facts": [
-      {
-        "title": "Your fingers already know it.",
-        "description": "Ctrl+C, Ctrl+V, Ctrl+Z, Ctrl+S, Ctrl+D — every shortcut works exactly like you'd expect. Mouse clicks, drag-to-select, scroll — it all just works. No modes, no surprises."
-      },
-      {
-        "title": "One binary. Zero setup.",
-        "description": "One command installs jano. No Node.js, no package manager, no config files. It just runs."
-      },
-      {
-        "title": "Plugins make it yours.",
-        "description": "YAML, JSON, Shell, Markdown — every language is one plugin install away. Autocomplete, formatting, diagnostics — all powered by plugins. Write your own in a single TypeScript file."
-      },
-      {
-        "title": "Fast. Like, actually fast.",
-        "description": "60,000+ lines without a stutter. Starts in milliseconds. Built with TypeScript, compiled to a native binary with Bun."
-      },
-      {
-        "title": "Open source. Open doors.",
-        "description": "MIT licensed. Every line of code is on GitHub. Got an idea? Open an issue. Want to build it? Send a PR. We'd love that."
-      }
-    ]
-  },
   "support": {
     "title": "Support jano",
     "subtitle": "jano is free, open source, and built with love. Here's how you can help it grow.",
@@ -233,5 +182,74 @@
     "unicode": "Unicode",
     "projectSettings": "Project settings",
     "autocomplete": "Autocomplete"
+  },
+  "landing": {
+    "stats": {
+      "binary": "binary",
+      "setup": "setup",
+      "plugins": "plugins",
+      "typescript": "TypeScript",
+      "license": "licensed"
+    },
+    "keys": {
+      "title": "Shortcuts you already know",
+      "subtitle": "No modes, nothing to learn first. Here is what the keys do.",
+      "items": [
+        {
+          "title": "Your fingers already know it.",
+          "text": "Save, undo, find, copy, paste. Every shortcut works like everywhere else, and so does the mouse."
+        },
+        {
+          "title": "Multi-cursor.",
+          "text": "Select the next match, type once, change them all. Ctrl+Shift+Up/Down adds cursors line by line."
+        },
+        {
+          "title": "Format and diagnostics.",
+          "text": "Plugins format your file and point at errors right in the line."
+        },
+        {
+          "title": "Nothing gets lost.",
+          "text": "jano keeps a backup while you type. If it gets killed, the next start offers to bring your text back."
+        },
+        {
+          "title": "Project settings.",
+          "text": "jano reads .editorconfig. Tabs in the Makefile, two spaces in the YAML, without touching your own settings."
+        },
+        {
+          "title": "Undo history.",
+          "text": "Browse every change of the session and jump back to any point."
+        },
+        {
+          "title": "Help is one key away.",
+          "text": "Every shortcut, in the editor, always."
+        }
+      ]
+    },
+    "plugins": {
+      "title": "Languages are plugins",
+      "subtitle": "Highlighting, formatting, autocomplete. Install only what you use, or write your own in one TypeScript file.",
+      "store": "Browse all plugins"
+    },
+    "roadmap": {
+      "title": "Roadmap",
+      "subtitle": "What comes next, what comes later, and what just shipped.",
+      "next": "next",
+      "later": "later",
+      "shipped": "shipped",
+      "items": [
+        "Soft-wrap for long lines",
+        "Read-only mode",
+        "Tabs for multiple files",
+        "Split view",
+        "Regex search",
+        "Plugin manager in the editor",
+        "Macros",
+        "Crash recovery",
+        "Support for .editorconfig",
+        "Async plugin API",
+        "Correct emoji, CJK and tab handling",
+        "Plugin suggestions on first start"
+      ]
+    }
   }
 }
