@@ -188,8 +188,7 @@ my-plugin/
 │   └── index.ts        # plugin code
 ├── plugin.json         # manifest
 ├── package.json        # npm config + build script
-└── README.md           # shown in plugin store</pre
-          >
+└── README.md           # shown in plugin store</pre>
         </section>
 
         <!-- Plugin Manifest -->
@@ -220,8 +219,7 @@ my-plugin/
   "entry": "index.js",
   "author": "your-name",
   "license": "MIT"
-}</pre
-            >
+}</pre>
           </div>
         </section>
 
@@ -271,8 +269,7 @@ const plugin: LanguagePlugin = {
   },
 };
 
-export default plugin;</pre
-            >
+export default plugin;</pre>
           </div>
           <div
             class="mt-4 p-4 rounded-lg bg-jano-950/20 border border-jano-600/20 flex items-center gap-3"
