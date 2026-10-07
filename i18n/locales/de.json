@@ -173,7 +173,9 @@
   },
   "footer": {
     "license": "MIT Lizenz",
-    "madeWith": "Gebaut mit TypeScript"
+    "madeWith": "Gebaut mit TypeScript",
+    "imprint": "Impressum",
+    "privacy": "Datenschutz"
   },
   "showcase": {
     "multiCursor": "Multi-Cursor",
