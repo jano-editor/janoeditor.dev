@@ -54,14 +54,17 @@ function onKey(e: KeyboardEvent) {
 }
 
 let observer: IntersectionObserver | null = null;
+let motionQuery: MediaQueryList | null = null;
+
+function onMotionChange(e: MediaQueryListEvent) {
+  reducedMotion.value = e.matches;
+  schedule();
+}
 
 onMounted(() => {
-  const media = window.matchMedia("(prefers-reduced-motion: reduce)");
-  reducedMotion.value = media.matches;
-  media.addEventListener("change", (e) => {
-    reducedMotion.value = e.matches;
-    schedule();
-  });
+  motionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+  reducedMotion.value = motionQuery.matches;
+  motionQuery.addEventListener("change", onMotionChange);
   observer = new IntersectionObserver(([entry]) => {
     visible.value = entry.isIntersecting && !document.hidden;
     schedule();
@@ -73,6 +76,7 @@ onMounted(() => {
 onBeforeUnmount(() => {
   if (timer) clearTimeout(timer);
   observer?.disconnect();
+  motionQuery?.removeEventListener("change", onMotionChange);
 });
 </script>
 

@@ -19,10 +19,13 @@ const sections = ref<Section[]>([]);
 let loadedFor = "";
 
 async function load() {
-  if (loadedFor === locale.value) return;
-  const collection = locale.value === "de" ? "docs_de" : "docs_en";
-  sections.value = (await queryCollectionSearchSections(collection)) as Section[];
-  loadedFor = locale.value;
+  const lang = locale.value;
+  if (loadedFor === lang) return;
+  const result = await queryCollectionSearchSections(lang === "de" ? "docs_de" : "docs_en");
+  // the language may have changed while loading, then a newer load() takes over
+  if (locale.value !== lang) return;
+  sections.value = result as Section[];
+  loadedFor = lang;
 }
 
 const query = ref("");

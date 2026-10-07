@@ -9,9 +9,14 @@ const { isLoggedIn, user } = useAuth();
 
 const name = computed(() => String(route.params.name));
 
-const { data: plugin, refresh } = await useFetch(() => `/api/plugins/${name.value}`);
-if (!plugin.value) {
-  throw createError({ statusCode: 404, statusMessage: "Plugin not found", fatal: true });
+const { data: plugin, error, refresh } = await useFetch(() => `/api/plugins/${name.value}`);
+if (error.value || !plugin.value) {
+  const statusCode = error.value?.statusCode ?? 404;
+  throw createError({
+    statusCode,
+    statusMessage: statusCode === 404 ? "Plugin not found" : "Plugin could not be loaded",
+    fatal: true,
+  });
 }
 
 useSeoMeta({

@@ -26,9 +26,9 @@ const searchOpen = ref(false);
 <template>
   <header class="header">
     <div class="inner">
-      <NuxtLink :to="localePath('/')" class="brand">
+      <NuxtLink :to="localePath('/')" class="brand" aria-label="jano">
         <img src="/images/logo_180-180.png" alt="" class="logo" width="24" height="24" />
-        jano
+        <span class="brand-text">jano</span>
       </NuxtLink>
 
       <nav class="nav">
@@ -197,6 +197,16 @@ const searchOpen = ref(false);
   .search-btn::before {
     content: "/";
     color: var(--color-cursor);
+  }
+}
+/* the smallest phones (320px): GitHub is in the footer, the logo is enough as brand */
+@media (max-width: 400px) {
+  .nav {
+    gap: 0.75rem;
+  }
+  .icon-link,
+  .brand-text {
+    display: none;
   }
 }
 </style>

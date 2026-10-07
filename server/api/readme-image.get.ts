@@ -63,8 +63,21 @@ export default defineEventHandler(async (event) => {
   const length = Number(res.headers.get("content-length") ?? 0);
   if (length > MAX_BYTES) throw createError({ statusCode: 413, message: "Image too large" });
 
-  const body = Buffer.from(await res.arrayBuffer());
-  if (body.length > MAX_BYTES) throw createError({ statusCode: 413, message: "Image too large" });
+  // read in chunks and stop at the limit, content-length may be missing or wrong
+  const chunks: Uint8Array[] = [];
+  let size = 0;
+  const reader = res.body?.getReader();
+  while (reader) {
+    const { done, value } = await reader.read();
+    if (done) break;
+    size += value.byteLength;
+    if (size > MAX_BYTES) {
+      await reader.cancel();
+      throw createError({ statusCode: 413, message: "Image too large" });
+    }
+    chunks.push(value);
+  }
+  const body = Buffer.concat(chunks);
 
   setResponseHeaders(event, {
     "Content-Type": type,

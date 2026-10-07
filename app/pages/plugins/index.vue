@@ -67,6 +67,15 @@ async function publishPlugin() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ repoUrl: repoUrl.value }),
     });
+    if (!response.ok) {
+      const body = (await response.json().catch(() => null)) as { message?: string } | null;
+      publishSteps.value.push({
+        step: "connection",
+        status: "error",
+        message: body?.message ?? `HTTP ${response.status}`,
+      });
+      return;
+    }
     const reader = response.body?.getReader();
     if (!reader) return;
 
